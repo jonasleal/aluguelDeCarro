@@ -1,0 +1,64 @@
+package br.ufrpe.aluguelDeCarro.model.repositorios;
+
+import br.ufrpe.aluguelDeCarro.model.Gerente;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+/**
+ *
+ * @author Fernando
+ */
+public class GerenteRepositorio {
+
+    private ArrayList<Gerente> gerentes;
+
+    public GerenteRepositorio() {
+        this.gerentes = new ArrayList<>();
+    }
+
+    private Gerente buscarPorId(int id) {
+        return this.gerentes
+                .stream()
+                .filter(gerente -> gerente.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void cadastrar(Gerente gerente) {
+        this.setarId(gerente);
+        gerente.setAtivo(true);
+        this.gerentes.add(gerente);
+    }
+
+    public void alterar(Gerente gerenteEditado) {
+        this.gerentes
+                .stream()
+                .filter(gerente -> gerente.equals(gerenteEditado))
+                .forEach(gerente -> gerente = gerenteEditado);
+    }
+
+    public void deletar(int id) {
+        Gerente gerente = this.buscarPorId(id);
+        if (gerente != null)
+            gerente.setAtivo(false);
+    }
+
+    public ArrayList<Gerente> buscarTodos() {
+        return (ArrayList<Gerente>) this.gerentes
+                .stream()
+                .filter(Gerente::isAtivo)
+                .collect(Collectors.toList());
+    }
+
+    private void setarId(Gerente gerente) {
+        if (this.gerentes.isEmpty())
+            gerente.setId(0);
+        else
+            gerente.setId(this.gerentes
+                    .stream()
+                    .mapToInt(Gerente::getId)
+                    .max()
+                    .getAsInt() + 1);
+    }
+}
