@@ -5,8 +5,6 @@
  */
 package br.ufrpe.aluguelDeCarro;
 
-import br.ufrpe.aluguelDeCarro.constantes.TipoCarro;
-
 /**
  *
  * @author JonasJr
