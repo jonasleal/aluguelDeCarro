@@ -1,6 +1,6 @@
-package br.ufrpe.aluguelDeCarro.model.repositorios;
+package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
-import br.ufrpe.aluguelDeCarro.model.Aluguel;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 
 import java.util.*;
 import java.util.stream.Collectors;

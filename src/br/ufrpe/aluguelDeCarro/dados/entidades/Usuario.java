@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.model.genericas;
+package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 /**
  *
  * @author JonasJr
  */
-public abstract class Usuario extends Pessoa{
+public abstract class Usuario extends Entidade{
     private String senha;
 
     public String getSenha() {

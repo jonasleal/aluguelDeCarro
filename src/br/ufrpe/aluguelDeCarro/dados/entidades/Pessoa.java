@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.model.genericas;
+package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,7 +15,16 @@ public abstract class Pessoa extends Entidade {
 
     private String cpf;
     private String nome;
-    private LocalTime dataNascimento;
+    private LocalDate nascimento;
+
+    Pessoa() {
+    }
+
+    Pessoa(String cpf, String nome, LocalDate nascimento) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.nascimento = nascimento;
+    }
 
     public String getCpf() {
         return cpf;
@@ -33,11 +42,11 @@ public abstract class Pessoa extends Entidade {
         this.nome = nome;
     }
 
-    public LocalTime getDataNascimento() {
-        return dataNascimento;
+    public LocalDate getNascimento() {
+        return nascimento;
     }
 
-    public void setDataNascimento(LocalTime dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
 }
