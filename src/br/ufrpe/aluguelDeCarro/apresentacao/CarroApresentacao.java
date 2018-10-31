@@ -4,17 +4,12 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 
-import java.util.ArrayList;
-
 /**
  * @author Fernando
  */
 public class CarroApresentacao {
-    private Carro carro;
-    private ArrayList<Carro> carros;
-
-    public Carro lerDadosDoTeclado() {
-        carro = novo();
+    public Carro cadastrarPeloTeclado() {
+        Carro carro = new Carro();
         try {
             System.out.println("Informe a placa do carro");
             carro.setPlaca(InputUtil.getScan().next());
@@ -22,29 +17,21 @@ public class CarroApresentacao {
             carro.setPortas(InputUtil.getScan().nextInt());
             System.out.println("Informe a capacidade de passageiros do carro");
             carro.setOcupantes(InputUtil.getScan().nextInt());
-            System.out.println("Informe o tipo do carro\n" + getTipos());
-            carro.setCategoria(Categoria.values()[InputUtil.getScan().nextInt()]);
+            System.out.println("Informe o tipo do carro\n" + getCategorias());
+            carro.setCategoria(Categoria.values()[InputUtil.getScan().nextInt() - 1]);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return carro;
     }
 
-    private String getTipos() {
+    private String getCategorias() {
         Categoria[] tiposCarro = Categoria.values();
         StringBuilder tipos = new StringBuilder();
         for (Categoria tipo : tiposCarro)
             tipos.append(tipo.getValor()).append(" - ").append(tipo.getNome()).append("\n");
-        return tipos.deleteCharAt(tipos.length()-1).toString();
-    }
-
-    private Carro novo() {
-        return new Carro();
-    }
-
-    public static void main(String[] args) {
-        CarroApresentacao ca = new CarroApresentacao();
-        Carro c = ca.lerDadosDoTeclado();
-        System.out.println(c.getCategoria().getNome());
+        tipos.deleteCharAt(tipos.length() - 1);
+        tipos.deleteCharAt(tipos.length() - 1);
+        return tipos.toString();
     }
 }
