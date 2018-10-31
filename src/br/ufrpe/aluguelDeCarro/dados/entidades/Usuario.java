@@ -9,16 +9,6 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
  *
  * @author JonasJr
  */
-public abstract class Usuario extends Entidade{
-    private String senha;
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-    
-    
+public interface Usuario{
+    boolean login(String senha);
 }

@@ -5,22 +5,23 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Atendente extends Pessoa {
-    private Usuario usuario;
+public class Atendente extends Pessoa implements Usuario{
+    private String senha;
 
     public Atendente() {
     }
 
-    public Atendente(String cpf, String nome, LocalDate nascimento, Usuario usuario) {
+    public Atendente(String cpf, String nome, LocalDate nascimento, String senha) {
         super(cpf, nome, nascimento);
-        this.usuario = usuario;
+        this.senha = senha;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    @Override
+    public boolean login(String senha) {
+        return this.senha.equals(senha);
     }
 }
