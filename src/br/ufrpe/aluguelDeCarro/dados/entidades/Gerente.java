@@ -1,5 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.IdadeInvalidaExcetion;
 import java.time.LocalDate;
 
 /**
@@ -22,5 +24,11 @@ public class Gerente extends Pessoa {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+    
+    public boolean validar() throws CpfException, IdadeInvalidaExcetion{
+        super.valirdar();
+        
+        return true;
     }
 }
