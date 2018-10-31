@@ -53,7 +53,7 @@ public class ClienteRepositorio {
 
     private void setarId(Cliente cliente) {
         if (this.clientes.isEmpty())
-            cliente.setId(0);
+            cliente.setId(1);
         else
             cliente.setId(this.clientes
                     .stream()

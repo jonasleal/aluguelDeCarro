@@ -53,7 +53,7 @@ public class ManutencaoRepositorio {
 
     private void setarId(Manutencao manutencao) {
         if (this.manutencoes.isEmpty())
-            manutencao.setId(0);
+            manutencao.setId(1);
         else
             manutencao.setId(this.manutencoes
                     .stream()

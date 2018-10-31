@@ -53,7 +53,7 @@ public class GerenteRepositorio {
 
     private void setarId(Gerente gerente) {
         if (this.gerentes.isEmpty())
-            gerente.setId(0);
+            gerente.setId(1);
         else
             gerente.setId(this.gerentes
                     .stream()

@@ -54,7 +54,7 @@ public class CarroRepositorio {
 
     private void setarId(Carro carro) {
         if (this.carros.isEmpty())
-            carro.setId(0);
+            carro.setId(1);
         else
             carro.setId(this.carros
                     .stream()

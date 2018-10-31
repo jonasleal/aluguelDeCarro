@@ -53,7 +53,7 @@ public class ReservaRepositorio {
 
     private void setarId(Reserva reserva) {
         if (this.reservas.isEmpty())
-            reserva.setId(0);
+            reserva.setId(1);
         else
             reserva.setId(this.reservas
                     .stream()

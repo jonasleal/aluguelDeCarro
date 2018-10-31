@@ -53,7 +53,7 @@ public class AtendenteRepositorio {
 
     private void setarId(Atendente atendente) {
         if (this.atendentes.isEmpty())
-            atendente.setId(0);
+            atendente.setId(1);
         else
             atendente.setId(this.atendentes
                     .stream()
