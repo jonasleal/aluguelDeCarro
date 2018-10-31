@@ -10,11 +10,11 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
  * @author JonasJr
  */
 public enum Categoria {
-    PICKUP("Pickup", 0),
-    HATCH("Hatch", 1),
-    SEDA("Seda", 2),
-    PERUA("Perua", 3),
-    SUV("SUV", 4);
+    PICKUP("Pickup", 1),
+    HATCH("Hatch", 2),
+    SEDA("Seda", 3),
+    PERUA("Perua", 4),
+    SUV("SUV", 5);
 
     private String nome;
     private int valor;

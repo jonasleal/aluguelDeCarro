@@ -30,7 +30,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
     public Cliente buscarPorCpf(String cpf) {
         return this.clientes
                 .stream()
-                .filter(cliente -> cliente.getCpf()== cpf)
+                .filter(cliente -> cliente.getCpf().equals(cpf))
                 .findFirst()
                 .orElse(null);
     }
@@ -53,9 +53,8 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
     @Override
     public void deletar(int id) {
         Cliente cliente = this.buscarPorId(id);
-        if (cliente != null) {
+        if (cliente != null)
             cliente.setAtivo(false);
-        }
     }
 
     @Override
@@ -67,14 +66,13 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
     }
 
     private void setarId(Cliente cliente) {
-        if (this.clientes.isEmpty()) {
-            cliente.setId(0);
-        } else {
+        if (this.clientes.isEmpty())
+            cliente.setId(1);
+        else
             cliente.setId(this.clientes
                     .stream()
                     .mapToInt(Cliente::getId)
                     .max()
                     .getAsInt() + 1);
-        }
     }
 }

@@ -10,9 +10,9 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
  * @author JonasJr
  */
 public enum Cambio {
-    AUTOMATICO("Automático", 0),
-    MANUAL("Manual", 1),
-    CVT("CVT", 2);
+    AUTOMATICO("Automático", 1),
+    MANUAL("Manual", 2),
+    CVT("CVT", 3);
 
     private String nome;
     private int valor;

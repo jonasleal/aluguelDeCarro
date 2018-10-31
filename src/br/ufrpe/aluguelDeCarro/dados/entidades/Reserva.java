@@ -6,7 +6,7 @@ import java.time.LocalDate;
  * @author Fernando
  */
 public class Reserva extends Entidade {
-    private Atendente atendente;
+    private Usuario usuario;
     private Cliente cliente;
     private Carro carro;
     private LocalDate retiradaPrevista;
@@ -15,18 +15,18 @@ public class Reserva extends Entidade {
     }
 
     public Reserva(Atendente atendente, Cliente cliente, Carro carro, LocalDate retiradaPrevista) {
-        this.atendente = atendente;
+        this.usuario = atendente;
         this.cliente = cliente;
         this.carro = carro;
         this.retiradaPrevista = retiradaPrevista;
     }
 
-    public Atendente getAtendente() {
-        return atendente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setAtendente(Atendente atendente) {
-        this.atendente = atendente;
+    public void setUsuario(Atendente usuario) {
+        this.usuario = usuario;
     }
 
     public Cliente getCliente() {

@@ -52,7 +52,7 @@ public class AluguelRepositorio {
 
     private void setarId(Aluguel aluguel) {
         if (this.alugueis.isEmpty())
-            aluguel.setId(0);
+            aluguel.setId(1);
         else
             aluguel.setId(this.alugueis
                     .stream()

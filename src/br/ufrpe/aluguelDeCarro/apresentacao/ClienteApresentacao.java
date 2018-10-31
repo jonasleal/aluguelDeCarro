@@ -13,8 +13,8 @@ public class ClienteApresentacao {
     public ClienteApresentacao() {
     }
 
-    public Cliente escanearDadosDoTeclado(){
-        Cliente cliente = novo();
+    public Cliente cadastrarPeloTeclado() {
+        Cliente cliente = new Cliente();
         try {
             System.out.println("Informe o nome do cliente:");
             cliente.setNome(InputUtil.getScan().next());
@@ -24,19 +24,9 @@ public class ClienteApresentacao {
             cliente.setNascimento(LocalDate.parse(InputUtil.getScan().next()));
             System.out.println("Informe o número da hibilitacao do cliente:");
             cliente.setHabilitacao(InputUtil.getScan().next());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return cliente;
-    }
-
-    public static void main(String[] args) {
-        ClienteApresentacao cp =  new ClienteApresentacao();
-        Cliente c = cp.escanearDadosDoTeclado();
-        System.out.println(c.getNascimento());
-    }
-
-    private Cliente novo() {
-        return new Cliente();
     }
 }

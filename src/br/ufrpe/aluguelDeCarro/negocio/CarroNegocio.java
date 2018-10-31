@@ -8,6 +8,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
 /**
  *
@@ -21,7 +22,7 @@ public class CarroNegocio {
         this.repositorio = repositorio;
     }
     
-    private boolean validar(Carro carro){
+    private boolean validar(Carro carro) throws PlacaException{
         return carro != null && carro.validar();
     }
     

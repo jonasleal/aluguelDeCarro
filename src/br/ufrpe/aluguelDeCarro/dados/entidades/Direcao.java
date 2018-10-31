@@ -10,9 +10,9 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
  * @author JonasJr
  */
 public enum Direcao {
-    MECANICA("Mecaninca", 0),
-    HIDRAULICA("Hidraulica", 1),
-    ELETRICA("Elétrica", 2);
+    MECANICA("Mecaninca", 1),
+    HIDRAULICA("Hidraulica", 2),
+    ELETRICA("Elétrica", 3);
 
     private String nome;
     private int valor;

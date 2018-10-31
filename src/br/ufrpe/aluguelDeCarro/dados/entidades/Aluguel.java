@@ -13,12 +13,13 @@ public class Aluguel extends Entidade {
     private double valorFinal;
     private Cliente cliente;
     private Carro carro;
+    private Usuario usuario;
 
     public Aluguel() {
     }
 
     public Aluguel(LocalDate retirada, LocalDate devolucaoEstimada, LocalDate devolucaoReal, double valorEstimado,
-                   double valorFinal, Cliente cliente, Carro carro) {
+                   double valorFinal, Cliente cliente, Carro carro, Usuario usuario) {
         this.retirada = retirada;
         this.devolucaoEstimada = devolucaoEstimada;
         this.devolucaoReal = devolucaoReal;
@@ -26,6 +27,7 @@ public class Aluguel extends Entidade {
         this.valorFinal = valorFinal;
         this.cliente = cliente;
         this.carro = carro;
+        this.usuario = usuario;
     }
 
     public LocalDate getRetirada() {
@@ -82,5 +84,13 @@ public class Aluguel extends Entidade {
 
     public void setCarro(Carro carro) {
         this.carro = carro;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
