@@ -9,15 +9,16 @@ package br.ufrpe.aluguelDeCarro.excecoes;
  *
  * @author JonasJr
  */
-public class IdadeInvalidaExcetion extends Exception {
+public class NomeException extends Exception {
 
-    public static String MENOR = "Menor de idade.";
+    public static final String NULL = "Nome é obrigatório";
+    public static final String INVALIDO = "Nome deve conter apenas letras";
 
-    public IdadeInvalidaExcetion(String message) {
+    public NomeException(String message) {
         super(message);
     }
 
-    public IdadeInvalidaExcetion(String message, Throwable cause) {
+    public NomeException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -4,7 +4,8 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeInvalidaExcetion;
+import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
+import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 
 /**
  * @author Fernando
@@ -24,11 +25,11 @@ public class ClienteNegocio {
         return false;
     }
 
-    private boolean validar(Cliente cliente) throws CpfException, IdadeInvalidaExcetion {
+    private boolean validar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
         return cliente != null && cliente.valirdar();
     }
 
-    public boolean cadastrar(Cliente cliente) throws CpfException, IdadeInvalidaExcetion {
+    public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
         boolean saida = false;
         if (validar(cliente)) {
             repositorio.cadastrar(cliente);
@@ -38,7 +39,7 @@ public class ClienteNegocio {
         return saida;
     }
 
-    public boolean alterar(Cliente cliente) throws CpfException, IdadeInvalidaExcetion {
+    public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
         boolean saida = false;
         if (validar(cliente)) {
             repositorio.alterar(cliente);

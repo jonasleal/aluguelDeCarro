@@ -18,6 +18,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
         this.carros = new ArrayList<>();
     }
 
+    @Override
     public Carro buscarPorId(int id) {
         return this.carros
                 .stream()
@@ -26,12 +27,14 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .orElse(null);
     }
 
+    @Override
     public void cadastrar(Carro carro) {
         this.setarId(carro);
         carro.setAtivo(true);
         this.carros.add(carro);
     }
 
+    @Override
     public void alterar(Carro carroEditado) {
         this.carros
                 .stream()
@@ -39,12 +42,14 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .forEach(carro -> carro = carroEditado);
     }
 
+    @Override
     public void deletar(int id) {
         Carro carro = this.buscarPorId(id);
         if (carro != null)
             carro.setAtivo(false);
     }
 
+    @Override
     public ArrayList<Carro> buscarTodos() {
         return (ArrayList<Carro>) this.carros
                 .stream()

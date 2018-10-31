@@ -5,13 +5,18 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
+import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import java.time.LocalDate;
 
 /**
  *
  * @author JonasJr
  */
-public class Cliente extends Pessoa{
+public class Cliente extends Pessoa {
+
     private String habilitacao;
 
     public Cliente() {
@@ -28,5 +33,17 @@ public class Cliente extends Pessoa{
 
     public void setHabilitacao(String habilitacao) {
         this.habilitacao = habilitacao;
+    }
+
+    public boolean validar() throws CpfException, IdadeExcetion, HabilitacaoException, NomeException {
+
+        if (this.habilitacao == null) {
+            throw new HabilitacaoException(HabilitacaoException.NULL);
+        }
+        if (this.habilitacao.isEmpty() || this.habilitacao.length() != 11) {
+            throw new HabilitacaoException(HabilitacaoException.TAMANHO);
+        }
+
+        return super.valirdar();
     }
 }

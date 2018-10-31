@@ -5,11 +5,14 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+
 /**
  *
  * @author JonasJr
  */
 public class Carro extends Entidade {
+
     private String placa;
     private String modelo;
     private String moarca;
@@ -29,8 +32,8 @@ public class Carro extends Entidade {
     }
 
     public Carro(String placa, String modelo, String moarca, int portas, int ocupantes, Categoria categoria,
-                 Cambio cambio, Direcao direcao, boolean arCondicionado, boolean airBag, boolean travaEletrica,
-                 boolean freioAbs, boolean vidroEletrico, boolean disponivel) {
+            Cambio cambio, Direcao direcao, boolean arCondicionado, boolean airBag, boolean travaEletrica,
+            boolean freioAbs, boolean vidroEletrico, boolean disponivel) {
         this.placa = placa;
         this.modelo = modelo;
         this.moarca = moarca;
@@ -158,4 +161,33 @@ public class Carro extends Entidade {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
-}
+
+    public boolean validar() throws PlacaException {
+        boolean saida = true;
+        if (placa == null || placa.isEmpty()) {
+            throw new PlacaException(PlacaException.NULL);
+        }
+        if(!placa.matches("[a-zA-Z]{3}\\d{4}")){
+            throw new PlacaException(PlacaException.INVALIDA);
+        }
+
+            /*
+        private String placa;
+        private String modelo;
+        private String moarca;
+        private int portas;
+        private int ocupantes;
+        private Categoria categoria;
+        private Cambio cambio;
+        private Direcao direcao;
+        private boolean arCondicionado;
+        private boolean airBag;
+        private boolean travaEletrica;
+        private boolean freioAbs;
+        private boolean vidroEletrico;
+        private boolean disponivel;
+             */
+            return saida;
+        }
+
+    }
