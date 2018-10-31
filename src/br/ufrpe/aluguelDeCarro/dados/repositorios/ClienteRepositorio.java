@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
     public Cliente buscarPorCpf(String cpf) {
         return this.clientes
                 .stream()
-                .filter(cliente -> cliente.getCpf()== cpf)
+                .filter(cliente -> cliente.getCpf().equals(cpf))
                 .findFirst()
                 .orElse(null);
     }
