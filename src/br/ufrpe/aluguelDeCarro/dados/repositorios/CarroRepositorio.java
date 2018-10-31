@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -9,15 +10,15 @@ import java.util.stream.Collectors;
  *
  * @author Fernando
  */
-public class CarroRepositorio {
+public class CarroRepositorio implements CarroRepositorioInterface{
 
-    private ArrayList<Carro> carros;
+    private final ArrayList<Carro> carros;
 
     public CarroRepositorio() {
         this.carros = new ArrayList<>();
     }
 
-    private Carro buscarPorId(int id) {
+    public Carro buscarPorId(int id) {
         return this.carros
                 .stream()
                 .filter(carro -> carro.getId() == id)
