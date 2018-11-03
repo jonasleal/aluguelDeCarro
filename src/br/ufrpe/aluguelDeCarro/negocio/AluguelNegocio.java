@@ -18,10 +18,12 @@ import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
- *
  * @author JonasJr
  */
 public class AluguelNegocio {
@@ -52,39 +54,42 @@ public class AluguelNegocio {
         if (aluguel.getDevolucaoEstimada().compareTo(LocalDateTime.now()) < 1) {
             throw new AluguelException(AluguelException.DATAINVALIDA);
         }
-        CarroRepositorio repCarro = new CarroRepositorio();
-        Carro carro = repCarro.buscarPorPlaca(aluguel.getCarro().getPlaca());
-
+        Carro carro = aluguel.getCarro();
         if (carro == null || !carro.isAtivo() || !carro.isDisponivel()) {
             throw new AluguelException(AluguelException.INDISPONIVEL);
         }
         return true;
     }
-    
 
 
     public boolean cadastrar(Aluguel aluguel) throws AluguelException {
-        validarParaAlugar(aluguel);
-        repositorio.cadastrar(aluguel);
-        return true;
+        if (this.validarParaAlugar(aluguel)) {
+            aluguel.setAtivo(true);
+            return repositorio.cadastrar(aluguel);
+        }
+        return false;
     }
 
     public boolean alterar(Aluguel aluguel) throws AluguelException {
-        validar(aluguel);
-        repositorio.alterar(aluguel);
-        return true;
+        if (this.validar(aluguel))
+            return this.repositorio.alterar(aluguel);
+        return false;
     }
 
     public Aluguel recuperarPorId(int id) {
-        Aluguel aluguel = repositorio.buscarPorId(id);
-        return aluguel;
-    }
-    public Aluguel consultarDebitoPorCpf(String cpf){
+        if (id > 0)
+            return this.repositorio.buscarPorId(id);
         return null;
     }
-    public Aluguel consultarDebitoPorPlaca(String placa){
+
+    public Aluguel consultarDebitoPorCpf(String cpf) {
         return null;
     }
+
+    public Aluguel consultarDebitoPorPlaca(String placa) {
+        return null;
+    }
+
     public boolean devolucao(Aluguel aluguel) throws AluguelException {
         validar(aluguel);
         aluguel.setDevolucaoReal(LocalDateTime.now());

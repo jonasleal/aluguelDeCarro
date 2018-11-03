@@ -18,7 +18,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
 /**
- *
  * @author JonasJr
  */
 public class CarroNegocio {
@@ -39,45 +38,38 @@ public class CarroNegocio {
 
     public boolean cadastrar(Carro carro, Gerente gerente) throws PlacaException, CpfException,
             IdadeExcetion, NomeException, MarcaException, ModeloException, CarroException, HabilitacaoException {
-        boolean saida = false;
-        if (validar(carro) && validar(gerente)) {
-            repositorio.cadastrar(carro);
+        if (this.validar(carro) && this.validar(gerente)) {
+            carro.setAtivo(true);
+            carro.setDisponivel(true);
+            return this.repositorio.cadastrar(carro);
         }
-        return saida;
+        return false;
     }
 
     public boolean alterar(Carro carro, Gerente gerente) throws PlacaException, MarcaException,
             ModeloException, CarroException, CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        boolean saida = false;
-        if (validar(carro) && validar(gerente)) {
-            repositorio.alterar(carro);
+        if (this.validar(carro) && this.validar(gerente)) {
+            return this.repositorio.alterar(carro);
         }
-        return saida;
+        return false;
     }
-    
-    public Carro buscarPorId(int id){
-        Carro carro = null;
-        if(id > 0){
-            carro = repositorio.buscarPorId(id);
-        }
-        return carro;
+
+    public Carro buscarPorId(int id) {
+        if(id >0)
+        return this.repositorio.buscarPorId(id);
+        return null;
     }
-    
-    public Carro buscarPorPlaca(String placa){
-        Carro carro = null;
-        if(placa != null && placa.length() != 7){
-            carro = repositorio.buscarPorPlaca(placa);
-        }
-        return carro;
+
+    public Carro buscarPorPlaca(String placa) {
+        if (placa != null && placa.length() != 7)
+            return this.repositorio.buscarPorPlaca(placa);
+        return null;
     }
-    
-    public boolean desativar(int id){
-        boolean saida = false;
-        if(id > 0){
-            repositorio.deletar(id);
-            saida = true;
-        }
-        return saida;
+
+    public boolean desativar(int id) {
+        if (id > 0)
+            return this.repositorio.deletar(id);
+        return false;
     }
 
 }

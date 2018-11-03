@@ -1,7 +1,6 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
@@ -31,47 +30,35 @@ public class ClienteNegocio {
     }
 
     public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        boolean saida = false;
         if (validar(cliente)) {
-            repositorio.cadastrar(cliente);
-            saida = true;
+            cliente.setAtivo(true);
+            return repositorio.cadastrar(cliente);
         }
-
-        return saida;
+        return false;
     }
 
     public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        boolean saida = false;
-        if (validar(cliente)) {
-            repositorio.alterar(cliente);
-            saida = true;
-        }
-        return saida;
+        if (validar(cliente))
+            return repositorio.alterar(cliente);
+        return false;
     }
 
     public Cliente buscarPorId(int id) {
-        Cliente saida = null;
-        if (id > 0) {
-            saida = this.repositorio.buscarPorId(id);
-        }
-        return saida;
+        if (id > 0)
+            return this.repositorio.buscarPorId(id);
+        return null;
     }
 
     public Cliente buscarPorCpf(String cpf) {
-        Cliente saida = null;
-        if (cpf != null && !cpf.isEmpty()) {
-            saida = this.repositorio.buscarPorCpf(cpf);
-        }
-        return saida;
+        if (cpf != null && !cpf.isEmpty())
+            return this.repositorio.buscarPorCpf(cpf);
+        return null;
     }
 
     public boolean desativar(int id) {
-        boolean saida = false;
-        if (id > 0) {
-            repositorio.deletar(id);
-            saida = true;
-        }
-        return saida;
+        if (id > 0)
+            return repositorio.deletar(id);
+        return false;
     }
 
 }
