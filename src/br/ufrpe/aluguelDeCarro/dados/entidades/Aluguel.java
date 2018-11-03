@@ -22,7 +22,7 @@ public class Aluguel extends Entidade implements Cloneable {
     private LocalDateTime devolucaoReal;
     private BigDecimal valorEstimado;
     private BigDecimal custoAdicional;
-    private BigDecimal desconto;
+//    private BigDecimal desconto;
     private Cliente cliente;
     private Carro carro;
     private Usuario usuario;
@@ -81,13 +81,13 @@ public class Aluguel extends Entidade implements Cloneable {
         this.custoAdicional = custoAdicional;
     }
 
-    public BigDecimal getDesconto() {
-        return desconto;
-    }
-
-    public void setDesconto(BigDecimal desconto) {
-        this.desconto = desconto;
-    }
+//    public BigDecimal getDesconto() {
+//        return desconto;
+//    }
+//
+//    public void setDesconto(BigDecimal desconto) {
+//        this.desconto = desconto;
+//    }
 
     public Cliente getCliente() {
         return cliente;

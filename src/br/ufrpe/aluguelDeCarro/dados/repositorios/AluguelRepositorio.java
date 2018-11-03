@@ -29,6 +29,30 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .orElse(null);
     }
 
+    @Override
+    public Aluguel buscarPorCpf(String cpf) {
+        return this.alugueis
+                .stream()
+                .filter(Aluguel::isAtivo)
+                .filter(aluguel -> aluguel.getDevolucaoReal() == null)
+                .filter(aluguel -> aluguel.getCliente().getCpf().equals(cpf))
+                .findFirst()
+                .map(Aluguel::clone)
+                .orElse(null);
+    }
+
+    @Override
+    public Aluguel buscarPorPlaca(String placa) {
+        return this.alugueis
+                .stream()
+                .filter(Aluguel::isAtivo)
+                .filter(aluguel -> aluguel.getDevolucaoReal() == null)
+                .filter(aluguel -> aluguel.getCarro().getPlaca().equals(placa))
+                .findFirst()
+                .map(Aluguel::clone)
+                .orElse(null);
+    }
+
     private Aluguel buscarReferenciaPorId(int id) {
         return this.alugueis
                 .stream()

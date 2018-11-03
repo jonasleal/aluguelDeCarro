@@ -14,6 +14,9 @@ public class AluguelException extends Exception {
     public static final String INDISPONIVEL = "Veiculo indisponivel";
     public static final String DATAINVALIDA = "Data invalida";
     public static final String VALORINVALIDO = "Valor invalida";
+    public static final String ALUGUELFINALIZADO = "Aluguel ja finalizado";
+    public static final String DATAESTIMADAINCONSISTENTE = "Data de entrega não consistente";
+    public static final String DATARETIRADAINCONSISTENTE = "Data de retirada não consistente";
 
     public AluguelException(String message) {
         super(message);

@@ -16,6 +16,10 @@ public interface AluguelRepositorioInterface {
 
     Aluguel buscarPorId(int id);
 
+    Aluguel buscarPorCpf(String cpf);
+
+    Aluguel buscarPorPlaca(String placa);
+
     boolean cadastrar(Aluguel aluguel);
 
     boolean alterar(Aluguel aluguelEditado);
