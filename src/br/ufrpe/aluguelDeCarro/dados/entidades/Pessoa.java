@@ -56,13 +56,13 @@ public abstract class Pessoa extends Entidade {
         this.nascimento = nascimento;
     }
 
-    public int getIdade() {
+    private int getIdade() {
         return Period.between(nascimento, LocalDate.now()).getYears();
     }
 
     public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         CpfUtil.validarCPF(this.cpf);
-        if (getIdade() >= 18) {
+        if (getIdade() <= 18) {
             throw new IdadeExcetion(IdadeExcetion.MENOR);
         }
         if(!this.nome.matches("[a-zA-Z]{2,}")){
