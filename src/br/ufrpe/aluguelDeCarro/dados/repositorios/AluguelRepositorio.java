@@ -4,10 +4,10 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 
 /**
- *
  * @author Fernando
  */
 public class AluguelRepositorio implements AluguelRepositorioInterface {
@@ -22,32 +22,46 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
     public Aluguel buscarPorId(int id) {
         return this.alugueis
                 .stream()
+                .filter(Aluguel::isAtivo)
+                .filter(aluguel -> aluguel.getId() == id)
+                .findFirst()
+                .map(Aluguel::clone)
+                .orElse(null);
+    }
+
+    private Aluguel buscarReferenciaPorId(int id) {
+        return this.alugueis
+                .stream()
+                .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public void cadastrar(Aluguel aluguel) {
+    public boolean cadastrar(Aluguel aluguel) {
         this.setarId(aluguel);
-        aluguel.setAtivo(true);
-        this.alugueis.add(aluguel);
+        return this.alugueis.add(aluguel.clone());
     }
 
     @Override
-    public void alterar(Aluguel aluguelEditado) {
-        this.alugueis
-                .stream()
-                .filter(aluguel -> aluguel.equals(aluguelEditado))
-                .forEach(aluguel -> aluguel = aluguelEditado);
+    public boolean alterar(Aluguel aluguelEditado) {
+        int indexOf = this.alugueis.indexOf(aluguelEditado);
+        if (indexOf != -1) {
+            this.alugueis.set(indexOf, aluguelEditado.clone());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void deletar(int id) {
-        Aluguel aluguel = this.buscarPorId(id);
+    public boolean deletar(int id) {
+        Aluguel aluguel = this.buscarReferenciaPorId(id);
         if (aluguel != null) {
             aluguel.setAtivo(false);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -55,6 +69,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
         return (ArrayList<Aluguel>) this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
+                .map(Aluguel::clone)
                 .collect(Collectors.toList());
     }
 

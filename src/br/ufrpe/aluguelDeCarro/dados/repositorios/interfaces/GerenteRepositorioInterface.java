@@ -14,15 +14,15 @@ import java.util.ArrayList;
  */
 public interface GerenteRepositorioInterface {
 
-    public void cadastrar(Gerente gerente);
+    public boolean cadastrar(Gerente gerente);
 
-    public void alterar(Gerente gerenteEditado);
+    public boolean alterar(Gerente gerenteEditado);
 
     public Gerente buscarPorId(int id);
 
     public Gerente buscarPorCpf(String cpf);
 
-    public void deletar(int id);
+    public boolean deletar(int id);
 
     public ArrayList<Gerente> buscarTodos();
 

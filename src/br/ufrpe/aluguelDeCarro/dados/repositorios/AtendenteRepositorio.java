@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Atendente;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AtendenteRepositorioInterface;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
  *
  * @author Fernando
  */
-public class AtendenteRepositorio {
+public class AtendenteRepositorio implements AtendenteRepositorioInterface {
 
     private ArrayList<Atendente> atendentes;
 
@@ -17,37 +18,58 @@ public class AtendenteRepositorio {
         this.atendentes = new ArrayList<>();
     }
 
-    private Atendente buscarPorId(int id) {
+    @Override
+    public Atendente buscarPorId(int id) {
         return this.atendentes
                 .stream()
+                .filter(Atendente::isAtivo)
+                .filter(atendente -> atendente.getId() == id)
+                .findFirst()
+                .map(Atendente::clone)
+                .orElse(null);
+    }
+
+    private Atendente buscarReferenciaPorId(int id) {
+        return this.atendentes
+                .stream()
+                .filter(Atendente::isAtivo)
                 .filter(atendente -> atendente.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
-    public void cadastrar(Atendente atendente) {
+    @Override
+    public boolean cadastrar(Atendente atendente) {
         this.setarId(atendente);
-        atendente.setAtivo(true);
-        this.atendentes.add(atendente);
+        return this.atendentes.add(atendente.clone());
     }
 
-    public void alterar(Atendente atendenteEditado) {
-        this.atendentes
-                .stream()
-                .filter(atendente -> atendente.equals(atendenteEditado))
-                .forEach(atendente -> atendente = atendenteEditado);
+    @Override
+    public boolean alterar(Atendente atendenteEditado) {
+        int indexOf = this.atendentes.indexOf(atendenteEditado);
+        if (indexOf != -1) {
+            this.atendentes.set(indexOf, atendenteEditado.clone());
+            return true;
+        }
+        return false;
     }
 
-    public void deletar(int id) {
-        Atendente atendente = this.buscarPorId(id);
-        if (atendente != null)
+    @Override
+    public boolean deletar(int id) {
+        Atendente atendente = this.buscarReferenciaPorId(id);
+        if (atendente != null) {
             atendente.setAtivo(false);
+            return true;
+        }
+        return false;
     }
 
+    @Override
     public ArrayList<Atendente> buscarTodos() {
         return (ArrayList<Atendente>) this.atendentes
                 .stream()
                 .filter(Atendente::isAtivo)
+                .map(Atendente::clone)
                 .collect(Collectors.toList());
     }
 

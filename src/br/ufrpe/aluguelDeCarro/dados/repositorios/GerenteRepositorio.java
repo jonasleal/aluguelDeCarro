@@ -22,39 +22,57 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
     public Gerente buscarPorId(int id) {
         return this.gerentes
                 .stream()
+                .filter(Gerente::isAtivo)
+                .filter(gerente -> gerente.getId() == id)
+                .findFirst()
+                .map(Gerente::clone)
+                .orElse(null);
+    }
+
+    private Gerente buscarReferenciaPorId(int id) {
+        return this.gerentes
+                .stream()
+                .filter(Gerente::isAtivo)
                 .filter(gerente -> gerente.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
+
     @Override
     public Gerente buscarPorCpf(String cpf) {
         return this.gerentes
                 .stream()
                 .filter(gerente -> gerente.getCpf().equals(cpf))
+                .filter(Gerente::isAtivo)
                 .findFirst()
+                .map(Gerente::clone)
                 .orElse(null);
     }
 
     @Override
-    public void cadastrar(Gerente gerente) {
+    public boolean cadastrar(Gerente gerente) {
         this.setarId(gerente);
-        gerente.setAtivo(true);
-        this.gerentes.add(gerente);
+        return this.gerentes.add(gerente.clone());
     }
 
     @Override
-    public void alterar(Gerente gerenteEditado) {
-        this.gerentes
-                .stream()
-                .filter(gerente -> gerente.equals(gerenteEditado))
-                .forEach(gerente -> gerente = gerenteEditado);
+    public boolean alterar(Gerente gerenteEditado) {
+        int indexOf = this.gerentes.indexOf(gerenteEditado);
+        if (indexOf != -1) {
+            this.gerentes.set(indexOf, gerenteEditado.clone());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void deletar(int id) {
-        Gerente gerente = this.buscarPorId(id);
-        if (gerente != null)
+    public boolean deletar(int id) {
+        Gerente gerente = this.buscarReferenciaPorId(id);
+        if (gerente != null){
             gerente.setAtivo(false);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -62,6 +80,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
         return (ArrayList<Gerente>) this.gerentes
                 .stream()
                 .filter(Gerente::isAtivo)
+                .map(Gerente::clone)
                 .collect(Collectors.toList());
     }
 

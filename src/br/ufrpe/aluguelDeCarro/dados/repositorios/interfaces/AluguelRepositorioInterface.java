@@ -16,11 +16,11 @@ public interface AluguelRepositorioInterface {
 
     public Aluguel buscarPorId(int id);
 
-    public void cadastrar(Aluguel aluguel);
+    public boolean cadastrar(Aluguel aluguel);
 
-    public void alterar(Aluguel aluguelEditado);
+    public boolean alterar(Aluguel aluguelEditado);
 
-    public void deletar(int id);
+    public boolean deletar(int id);
 
     public ArrayList<Aluguel> buscarTodos();
 }

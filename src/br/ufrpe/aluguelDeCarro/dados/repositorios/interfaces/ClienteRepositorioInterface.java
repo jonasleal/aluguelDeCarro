@@ -17,11 +17,11 @@ public interface ClienteRepositorioInterface {
     public Cliente buscarPorId(int id);
     public Cliente buscarPorCpf(String cpf);
 
-    public void cadastrar(Cliente cliente);
+    public boolean cadastrar(Cliente cliente);
 
-    public void alterar(Cliente clienteEditado);
+    public boolean alterar(Cliente clienteEditado);
 
-    public void deletar(int id);
+    public boolean deletar(int id);
 
     public ArrayList<Cliente> buscarTodos();
 

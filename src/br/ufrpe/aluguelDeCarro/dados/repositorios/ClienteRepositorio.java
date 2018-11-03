@@ -22,39 +22,56 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
     public Cliente buscarPorId(int id) {
         return this.clientes
                 .stream()
+                .filter(Cliente::isAtivo)
+                .filter(cliente -> cliente.getId() == id)
+                .findFirst()
+                .map(Cliente::clone)
+                .orElse(null);
+    }
+
+    private Cliente buscarReferenciaPorId(int id) {
+        return this.clientes
+                .stream()
+                .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
+
     @Override
     public Cliente buscarPorCpf(String cpf) {
         return this.clientes
                 .stream()
                 .filter(cliente -> cliente.getCpf().equals(cpf))
                 .findFirst()
+                .map(Cliente::clone)
                 .orElse(null);
     }
 
     @Override
-    public void cadastrar(Cliente cliente) {
+    public boolean cadastrar(Cliente cliente) {
         this.setarId(cliente);
-        cliente.setAtivo(true);
-        this.clientes.add(cliente);
+        return this.clientes.add(cliente.clone());
     }
 
     @Override
-    public void alterar(Cliente clienteEditado) {
-        this.clientes
-                .stream()
-                .filter(cliente -> cliente.equals(clienteEditado))
-                .forEach(cliente -> cliente = clienteEditado);
+    public boolean alterar(Cliente clienteEditado) {
+        int indexOf = this.clientes.indexOf(clienteEditado);
+        if (indexOf != -1) {
+            this.clientes.set(indexOf, clienteEditado.clone());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void deletar(int id) {
-        Cliente cliente = this.buscarPorId(id);
-        if (cliente != null)
+    public boolean deletar(int id) {
+        Cliente cliente = this.buscarReferenciaPorId(id);
+        if (cliente != null){
             cliente.setAtivo(false);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -62,6 +79,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
         return (ArrayList<Cliente>) this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
+                .map(Cliente::clone)
                 .collect(Collectors.toList());
     }
 

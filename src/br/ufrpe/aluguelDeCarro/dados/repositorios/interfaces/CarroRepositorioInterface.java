@@ -16,11 +16,11 @@ public interface CarroRepositorioInterface {
     public Carro buscarPorId(int id);
     public Carro buscarPorPlaca(String placa);
 
-    public void cadastrar(Carro carro);
+    public boolean cadastrar(Carro carro);
 
-    public void alterar(Carro carroEditado);
+    public boolean alterar(Carro carroEditado);
 
-    public void deletar(int id);
+    public boolean deletar(int id);
 
     public ArrayList<Carro> buscarTodos();
 }

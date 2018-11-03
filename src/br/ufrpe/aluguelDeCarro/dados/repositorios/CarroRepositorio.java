@@ -22,40 +22,50 @@ public class CarroRepositorio implements CarroRepositorioInterface{
     public Carro buscarPorId(int id) {
         return this.carros
                 .stream()
+                .filter(Carro::isAtivo)
+                .filter(Carro::isDisponivel)
                 .filter(carro -> carro.getId() == id)
                 .findFirst()
+                .map(Carro::clone)
                 .orElse(null);
     }
+
     @Override
     public Carro buscarPorPlaca(String placa) {
         return this.carros
                 .stream()
+                .filter(Carro::isAtivo)
+                .filter(Carro::isDisponivel)
                 .filter(carro -> carro.getPlaca().equals(placa))
                 .findFirst()
+                .map(Carro::clone)
                 .orElse(null);
     }
 
     @Override
-    public void cadastrar(Carro carro) {
+    public boolean cadastrar(Carro carro) {
         this.setarId(carro);
-        carro.setAtivo(true);
-        carro.setDisponivel(true);
-        this.carros.add(carro);
+        return this.carros.add(carro.clone());
     }
 
     @Override
-    public void alterar(Carro carroEditado) {
-        this.carros
-                .stream()
-                .filter(carro -> carro.equals(carroEditado))
-                .forEach(carro -> carro = carroEditado);
+    public boolean alterar(Carro carroEditado) {
+        int indexOf = this.carros.indexOf(carroEditado);
+        if (indexOf != -1) {
+            this.carros.set(indexOf, carroEditado.clone());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void deletar(int id) {
-        Carro carro = this.buscarPorId(id);
-        if (carro != null)
+    public boolean deletar(int id) {
+        Carro carro = this.buscarReferenciaPorId(id);
+        if (carro != null) {
             carro.setAtivo(false);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -64,7 +74,18 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .stream()
                 .filter(Carro::isAtivo)
                 .filter(Carro::isDisponivel)
+                .map(Carro::clone)
                 .collect(Collectors.toList());
+    }
+
+    private Carro buscarReferenciaPorId(int id) {
+        return this.carros
+                .stream()
+                .filter(Carro::isAtivo)
+                .filter(Carro::isDisponivel)
+                .filter(carro -> carro.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     private void setarId(Carro carro) {
