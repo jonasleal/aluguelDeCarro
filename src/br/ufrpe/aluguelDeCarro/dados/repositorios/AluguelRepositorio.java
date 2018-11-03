@@ -4,19 +4,22 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 
 /**
  *
  * @author Fernando
  */
-public class AluguelRepositorio {
-    private ArrayList<Aluguel> alugueis;
+public class AluguelRepositorio implements AluguelRepositorioInterface {
+
+    private final ArrayList<Aluguel> alugueis;
 
     public AluguelRepositorio() {
         this.alugueis = new ArrayList<>();
     }
 
-    private Aluguel buscarPorId(int id) {
+    @Override
+    public Aluguel buscarPorId(int id) {
         return this.alugueis
                 .stream()
                 .filter(aluguel -> aluguel.getId() == id)
@@ -24,12 +27,14 @@ public class AluguelRepositorio {
                 .orElse(null);
     }
 
+    @Override
     public void cadastrar(Aluguel aluguel) {
         this.setarId(aluguel);
         aluguel.setAtivo(true);
         this.alugueis.add(aluguel);
     }
 
+    @Override
     public void alterar(Aluguel aluguelEditado) {
         this.alugueis
                 .stream()
@@ -37,12 +42,15 @@ public class AluguelRepositorio {
                 .forEach(aluguel -> aluguel = aluguelEditado);
     }
 
+    @Override
     public void deletar(int id) {
         Aluguel aluguel = this.buscarPorId(id);
-        if (aluguel != null)
+        if (aluguel != null) {
             aluguel.setAtivo(false);
+        }
     }
 
+    @Override
     public ArrayList<Aluguel> buscarTodos() {
         return (ArrayList<Aluguel>) this.alugueis
                 .stream()
@@ -51,13 +59,14 @@ public class AluguelRepositorio {
     }
 
     private void setarId(Aluguel aluguel) {
-        if (this.alugueis.isEmpty())
+        if (this.alugueis.isEmpty()) {
             aluguel.setId(1);
-        else
+        } else {
             aluguel.setId(this.alugueis
                     .stream()
                     .mapToInt(Aluguel::getId)
                     .max()
                     .getAsInt() + 1);
+        }
     }
 }

@@ -30,7 +30,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
     public Gerente buscarPorCpf(String cpf) {
         return this.gerentes
                 .stream()
-                .filter(gerente -> gerente.getCpf()== cpf)
+                .filter(gerente -> gerente.getCpf().equals(cpf))
                 .findFirst()
                 .orElse(null);
     }

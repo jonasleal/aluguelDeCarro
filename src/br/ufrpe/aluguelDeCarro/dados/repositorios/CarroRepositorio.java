@@ -26,11 +26,20 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .findFirst()
                 .orElse(null);
     }
+    @Override
+    public Carro buscarPorPlaca(String placa) {
+        return this.carros
+                .stream()
+                .filter(carro -> carro.getPlaca().equals(placa))
+                .findFirst()
+                .orElse(null);
+    }
 
     @Override
     public void cadastrar(Carro carro) {
         this.setarId(carro);
         carro.setAtivo(true);
+        carro.setDisponivel(true);
         this.carros.add(carro);
     }
 
