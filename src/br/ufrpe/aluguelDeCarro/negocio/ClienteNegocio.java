@@ -13,8 +13,8 @@ import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 public class ClienteNegocio {
 
     private final ClienteRepositorioInterface repositorio;
-    
-    public ClienteNegocio(ClienteRepositorioInterface repositorio){
+
+    public ClienteNegocio(ClienteRepositorioInterface repositorio) {
         this.repositorio = repositorio;
     }
 
@@ -38,26 +38,30 @@ public class ClienteNegocio {
     }
 
     public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(cliente))
+        if (validar(cliente)) {
             return repositorio.alterar(cliente);
+        }
         return false;
     }
 
     public Cliente buscarPorId(int id) {
-        if (id > 0)
+        if (id > 0) {
             return this.repositorio.buscarPorId(id);
+        }
         return null;
     }
 
     public Cliente buscarPorCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty())
+        if (cpf != null && !cpf.isEmpty()) {
             return this.repositorio.buscarPorCpf(cpf);
+        }
         return null;
     }
 
     public boolean desativar(int id) {
-        if (id > 0)
+        if (id > 0) {
             return repositorio.deletar(id);
+        }
         return false;
     }
 

@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class AluguelNegocio {
 
-    private AluguelRepositorioInterface repositorio;
+    private final AluguelRepositorioInterface repositorio;
 
     public AluguelNegocio(AluguelRepositorioInterface repositorio) {
         this.repositorio = repositorio;

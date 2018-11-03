@@ -224,6 +224,7 @@ public class Carro extends Entidade implements Cloneable{
         return true;
     }
 
+    @Override
     public Carro clone() {
         try {
             return (Carro) super.clone();

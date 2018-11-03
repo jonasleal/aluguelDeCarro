@@ -30,6 +30,7 @@ public class Gerente extends Pessoa implements Usuario, Cloneable {
         return super.validar();
     }
 
+    @Override
     public Gerente clone() {
         try {
             return (Gerente) super.clone();

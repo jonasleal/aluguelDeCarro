@@ -55,20 +55,23 @@ public class CarroNegocio {
     }
 
     public Carro buscarPorId(int id) {
-        if(id >0)
-        return this.repositorio.buscarPorId(id);
+        if (id > 0) {
+            return this.repositorio.buscarPorId(id);
+        }
         return null;
     }
 
     public Carro buscarPorPlaca(String placa) {
-        if (placa != null && placa.length() != 7)
+        if (placa != null && placa.length() != 7) {
             return this.repositorio.buscarPorPlaca(placa);
+        }
         return null;
     }
 
     public boolean desativar(int id) {
-        if (id > 0)
+        if (id > 0) {
             return this.repositorio.deletar(id);
+        }
         return false;
     }
 

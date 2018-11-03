@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 /**
  * @author Fernando
  */
-public class Aluguel extends Entidade implements Cloneable{
+public class Aluguel extends Entidade implements Cloneable {
 
     private LocalDateTime retirada;
     private LocalDateTime devolucaoEstimada;
@@ -117,7 +117,7 @@ public class Aluguel extends Entidade implements Cloneable{
         this.cliente.validar();
         this.carro.validar();
         this.usuario.validar();
-      
+
         if (this.valorEstimado.compareTo(BigDecimal.ZERO) < 0) {
             throw new AluguelException(AluguelException.VALORINVALIDO);
         }

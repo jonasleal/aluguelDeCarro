@@ -48,6 +48,7 @@ public class Cliente extends Pessoa implements Cloneable{
         return super.validar();
     }
 
+    @Override
     public Cliente clone() {
         try {
             return (Cliente) super.clone();

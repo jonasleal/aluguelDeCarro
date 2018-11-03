@@ -9,10 +9,12 @@ package br.ufrpe.aluguelDeCarro.excecoes;
  *
  * @author JonasJr
  */
-public class AluguelException extends Exception{
+public class AluguelException extends Exception {
+
     public static final String INDISPONIVEL = "Veiculo indisponivel";
     public static final String DATAINVALIDA = "Data invalida";
     public static final String VALORINVALIDO = "Valor invalida";
+
     public AluguelException(String message) {
         super(message);
     }
@@ -20,5 +22,5 @@ public class AluguelException extends Exception{
     public AluguelException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }

@@ -19,42 +19,48 @@ import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 public class GerenteNegocio {
 
     private final GerenteRepositorioInterface repositorio;
-    
-    public GerenteNegocio(GerenteRepositorioInterface repositorio){
+
+    public GerenteNegocio(GerenteRepositorioInterface repositorio) {
         this.repositorio = repositorio;
     }
-    
-    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException{
+
+    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         return gerente != null && gerente.validar();
     }
 
     public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(gerente))
+        if (validar(gerente)) {
             return repositorio.cadastrar(gerente);
+        }
         return false;
     }
-    
-    public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException{
-        if (validar(gerente))
+
+    public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+        if (validar(gerente)) {
             return this.repositorio.alterar(gerente);
+        }
         return false;
     }
-    
-    public Gerente buscarPorId(int id){
-        if (id > 0)
+
+    public Gerente buscarPorId(int id) {
+        if (id > 0) {
             return repositorio.buscarPorId(id);
+        }
         return null;
     }
-    public Gerente buscarPorCpr(String cpf){
-        if (cpf != null && !cpf.isEmpty())
+
+    public Gerente buscarPorCpr(String cpf) {
+        if (cpf != null && !cpf.isEmpty()) {
             return buscarPorCpr(cpf);
+        }
         return null;
     }
-    
-    public boolean desativar(int id){
-        if (id > 0)
+
+    public boolean desativar(int id) {
+        if (id > 0) {
             return repositorio.deletar(id);
+        }
         return false;
     }
-    
+
 }
