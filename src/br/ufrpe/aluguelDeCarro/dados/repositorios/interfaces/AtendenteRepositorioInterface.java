@@ -12,7 +12,7 @@ public interface AtendenteRepositorioInterface {
 
     boolean alterar(Atendente atendenteEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Atendente> buscarTodos();
 }

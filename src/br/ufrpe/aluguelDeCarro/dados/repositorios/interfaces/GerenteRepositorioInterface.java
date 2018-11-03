@@ -22,7 +22,7 @@ public interface GerenteRepositorioInterface {
 
     Gerente buscarPorCpf(String cpf);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Gerente> buscarTodos();
 

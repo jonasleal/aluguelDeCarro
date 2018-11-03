@@ -1,24 +1,39 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
+import br.ufrpe.aluguelDeCarro.dados.entidades.Cambio;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Direcao;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
+import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+
+import java.math.BigDecimal;
 
 /**
  * @author Fernando
  */
 public class CarroApresentacao {
-    public Carro cadastrarPeloTeclado() {
+    public Carro lerDadosPeloTeclado() {
         Carro carro = new Carro();
         try {
             System.out.println("Informe a placa do carro");
             carro.setPlaca(InputUtil.getScan().next());
+            System.out.println("Informe a marca do carro");
+            carro.setMarca(InputUtil.getScan().next());
+            System.out.println("Informe o modelo do carro");
+            carro.setModelo(InputUtil.getScan().next());
             System.out.println("Informe a quantidade de portas do carro");
             carro.setPortas(InputUtil.getScan().nextInt());
             System.out.println("Informe a capacidade de passageiros do carro");
             carro.setOcupantes(InputUtil.getScan().nextInt());
-            System.out.println("Informe o tipo do carro\n" + getCategorias());
+            System.out.println("Informe o valor da diaria do carro");
+            carro.setPreco(new BigDecimal(InputUtil.getScan().nextDouble()));
+            System.out.println("Informe a categoria do carro\n" + getCategorias());
             carro.setCategoria(Categoria.values()[InputUtil.getScan().nextInt() - 1]);
+            System.out.println("Informe o tipo do cambio carro\n" + getCambios());
+            carro.setCambio(Cambio.values()[InputUtil.getScan().nextInt() - 1]);
+            System.out.println("Informe o tipo de direcao do carro\n" + getDirecoes());
+            carro.setDirecao(Direcao.values()[InputUtil.getScan().nextInt() - 1]);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,12 +41,37 @@ public class CarroApresentacao {
     }
 
     private String getCategorias() {
-        Categoria[] tiposCarro = Categoria.values();
-        StringBuilder tipos = new StringBuilder();
-        for (Categoria tipo : tiposCarro)
-            tipos.append(tipo.getValor()).append(" - ").append(tipo.getNome()).append("\n");
-        tipos.deleteCharAt(tipos.length() - 1);
-        tipos.deleteCharAt(tipos.length() - 1);
-        return tipos.toString();
+        Categoria[] categorias = Categoria.values();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Categoria categoria : categorias)
+            stringBuilder.append(categoria.getValor()).append(" - ").append(categoria.getNome()).append("\n");
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
+    }
+
+    private String getCambios(){
+        Cambio[] cambios = Cambio.values();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Cambio cambio: cambios)
+            stringBuilder.append(cambio.getValor()).append(" - ").append(cambio.getNome()).append("\n");
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
+    }
+
+    private String getDirecoes(){
+        Direcao[] direcoes = Direcao.values();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Direcao direcao: direcoes)
+            stringBuilder.append(direcao.getValor()).append(" - ").append(direcao.getNome()).append("\n");
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
+    }
+
+    public void visualizarCarros() {
+        Singleton.getInstance().getCarroNegocio().buscarTodos().forEach(System.out::println);
+
     }
 }

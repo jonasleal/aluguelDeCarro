@@ -9,8 +9,10 @@ import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author Fernando
@@ -127,6 +129,7 @@ public class Aluguel extends Entidade implements Cloneable {
         return true;
     }
 
+    @Override
     public Aluguel clone() {
         try {
             return (Aluguel) super.clone();
@@ -134,5 +137,32 @@ public class Aluguel extends Entidade implements Cloneable {
             System.out.println("Clone não efetuado");
         }
         return this;
+    }
+
+    /**
+     * calcula o valor estimado do aluguel, multiplicando o valor do preço do carro (diária) pela quantidade de dias do
+     * aluguel, e coloca o valor no atributo valorEstimado
+     */
+    public void calcularValorEstimado() {
+        if (this.retirada != null && this.devolucaoEstimada != null && this.carro != null) {
+            long horas = ChronoUnit.HOURS.between(this.retirada, this.devolucaoEstimada);
+            double dias = horas / 24.0;
+            this.valorEstimado = new BigDecimal((dias * this.carro.getPreco().doubleValue()));
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Aluguel{" +
+                "retirada=" + retirada +
+                ", devolucaoEstimada=" + devolucaoEstimada +
+                ", devolucaoReal=" + devolucaoReal +
+                ", valorEstimado=" + valorEstimado +
+                ", custoAdicional=" + custoAdicional +
+//                ", desconto=" + desconto +
+                ", cliente=" + cliente +
+                ", carro=" + carro +
+                ", usuario=" + usuario +
+                '}';
     }
 }

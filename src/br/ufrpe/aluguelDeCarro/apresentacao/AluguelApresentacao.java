@@ -1,33 +1,34 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
+import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * @author Fernando
  */
-public class ReservaApresentacao {
-    public Reserva cadastrarPeloTeclado() {
-        Reserva reserva = new Reserva();
-        try {
-            System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");
-            reserva.setRetiradaPrevista(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
-            System.out.println("Selecione um carro para fazer a reserva\n" + getCarros());
-            reserva.setCarro(new CarroRepositorio().buscarTodos().get(InputUtil.getScan().nextInt()));
-            System.out.println("Selecione o cliente\n"+ getClientes());
-            reserva.setCliente(new ClienteRepositorio().buscarTodos().get(InputUtil.getScan().nextInt()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return reserva;
+public class AluguelApresentacao {
+    public Aluguel lerDadosPeloTeclado(){
+        Aluguel aluguel = new Aluguel();
+        System.out.println("Informe a data de devolucao (siga o modelo dd-MM-yyyy HH:mm):");
+        InputUtil.getScan().nextLine();
+        aluguel.setDevolucaoEstimada(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
+        System.out.println("Informe o carro\n"+getCarros());
+        aluguel.setCarro(Singleton.getInstance().getCarroNegocio().buscarPorId(InputUtil.getScan().nextInt()));
+        System.out.println("Informe o cliente\n"+getClientes());
+        aluguel.setCliente(Singleton.getInstance().getClienteNegocio().buscarPorId(InputUtil.getScan().nextInt()));
+        aluguel.setUsuario(Singleton.getInstance().getUsuarioLogado());
+        aluguel.setRetirada(LocalDateTime.now().plusHours(1));
+        aluguel.calcularValorEstimado();
+        aluguel.setCustoAdicional(new BigDecimal(1));
+        return aluguel;
     }
 
     private String getCarros() {
@@ -50,5 +51,9 @@ public class ReservaApresentacao {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         return stringBuilder.toString();
+    }
+
+    public void visualizarAlugueis(){
+        Singleton.getInstance().getAluguelNegocio().buscarTodos().forEach(System.out::println);
     }
 }

@@ -5,6 +5,14 @@
  */
 package br.ufrpe.aluguelDeCarro;
 
+import br.ufrpe.aluguelDeCarro.apresentacao.PrincipalApresentacao;
+import br.ufrpe.aluguelDeCarro.dados.entidades.*;
+import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
+import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 /**
  *
  * @author JonasJr
@@ -15,7 +23,28 @@ public class AluguelDeCarro {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+
+            PrincipalApresentacao apresentacao = new PrincipalApresentacao();
+
+//            Gerente gerente = new Gerente("02362263045", "kol", LocalDate.now().minusYears(20), Criptografia.criptografarSenha("oi"));
+//            Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
+//            Singleton.getInstance().setUsuarioLogado(gerente);
+//
+//            Carro carro = new Carro("pop3444","mod", "mar", Categoria.PERUA, new BigDecimal(34));
+//            carro.setDirecao(Direcao.MECANICA);
+//            carro.setCambio(Cambio.AUTOMATICO);
+//            carro.setPortas(4);
+//            carro.setOcupantes(4);
+//            Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) Singleton.getInstance().getUsuarioLogado());
+//
+//            Cliente cliente = new Cliente("02362263045", "geh", LocalDate.now().minusYears(20), "30870472789");
+//            Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
+
+            apresentacao.menus();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
 }

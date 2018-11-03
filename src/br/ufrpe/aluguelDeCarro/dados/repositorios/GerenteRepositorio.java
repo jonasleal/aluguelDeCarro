@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- *
+ *A classe armazena uma lista de instancias de gerentes
  * @author Fernando
  */
 public class GerenteRepositorio implements GerenteRepositorioInterface{
 
-    private ArrayList<Gerente> gerentes;
+    private final ArrayList<Gerente> gerentes;
 
     public GerenteRepositorio() {
         this.gerentes = new ArrayList<>();
     }
 
+    /**
+     * busca o gerente pelo id, nos já cadastrados
+     * @param id identificador do {@code Gerente}
+     * @return um clone do {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
+     */
     @Override
     public Gerente buscarPorId(int id) {
         return this.gerentes
@@ -29,6 +34,11 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
                 .orElse(null);
     }
 
+    /**
+     * busca o gerente pelo id, nos já cadastrados
+     * @param id identificador do {@code Gerente}
+     * @return o {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
+     */
     private Gerente buscarReferenciaPorId(int id) {
         return this.gerentes
                 .stream()
@@ -38,6 +48,11 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
                 .orElse(null);
     }
 
+    /**
+     * busca o gerente pelo cpf, nos já cadastrados
+     * @param cpf identificador do {@code Gerente}
+     * @return um clone do {@code Gerente} ativo que contém o cpf, {@code null} caso nao encontre
+     */
     @Override
     public Gerente buscarPorCpf(String cpf) {
         return this.gerentes
@@ -49,12 +64,20 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
                 .orElse(null);
     }
 
+    /**
+     * @param gerente instancia a ser cadastrada
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean cadastrar(Gerente gerente) {
         this.setarId(gerente);
         return this.gerentes.add(gerente.clone());
     }
 
+    /**
+     * @param gerenteEditado instancia a ser editada
+     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean alterar(Gerente gerenteEditado) {
         int indexOf = this.gerentes.indexOf(gerenteEditado);
@@ -65,8 +88,13 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
         return false;
     }
 
+    /**
+     * altera o atributo {@code ativo} do gerente para false
+     * @param id identificador do {@code Gerente}
+     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     */
     @Override
-    public boolean deletar(int id) {
+    public boolean desativar(int id) {
         Gerente gerente = this.buscarReferenciaPorId(id);
         if (gerente != null){
             gerente.setAtivo(false);
@@ -75,6 +103,9 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
         return false;
     }
 
+    /**
+     * @return clones dos alugueis ativos e cadastrados
+     */
     @Override
     public ArrayList<Gerente> buscarTodos() {
         return (ArrayList<Gerente>) this.gerentes
@@ -84,6 +115,10 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
                 .collect(Collectors.toList());
     }
 
+    /**
+     * altera o id do gerente, o id que ele recebe é o maior até então acrescido de 1
+     * @param gerente instancia a ter o id alterado
+     */
     private void setarId(Gerente gerente) {
         if (this.gerentes.isEmpty())
             gerente.setId(1);

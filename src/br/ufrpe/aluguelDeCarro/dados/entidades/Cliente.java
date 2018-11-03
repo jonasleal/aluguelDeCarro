@@ -57,4 +57,14 @@ public class Cliente extends Pessoa implements Cloneable{
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "cpf='" + this.getCpf() + '\'' +
+                ", nome='" + this.getNome() + '\'' +
+                ", nascimento=" + this.getNascimento() +
+                ", habilitacao='" + this.getHabilitacao() + '\'' +
+                '}';
+    }
 }

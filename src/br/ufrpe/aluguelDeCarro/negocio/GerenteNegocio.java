@@ -30,6 +30,7 @@ public class GerenteNegocio {
 
     public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         if (validar(gerente)) {
+            gerente.setAtivo(true);
             return repositorio.cadastrar(gerente);
         }
         return false;
@@ -49,16 +50,16 @@ public class GerenteNegocio {
         return null;
     }
 
-    public Gerente buscarPorCpr(String cpf) {
+    public Gerente buscarPorCpf(String cpf) {
         if (cpf != null && !cpf.isEmpty()) {
-            return buscarPorCpr(cpf);
+            return this.repositorio.buscarPorCpf(cpf);
         }
         return null;
     }
 
     public boolean desativar(int id) {
         if (id > 0) {
-            return repositorio.deletar(id);
+            return repositorio.desativar(id);
         }
         return false;
     }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Atendente extends Pessoa implements Cloneable{
+public class Atendente extends Pessoa implements Cloneable, Usuario {
     private String senha;
 
     public Atendente() {
@@ -20,6 +20,7 @@ public class Atendente extends Pessoa implements Cloneable{
         this.senha = senha;
     }
 
+    @Override
     public Atendente clone() {
         try {
             return (Atendente) super.clone();
@@ -27,5 +28,14 @@ public class Atendente extends Pessoa implements Cloneable{
             System.out.println("Clone não efetuado");
         }
         return this;
+    }
+
+    /**
+     * @param senha senha para login do usuário
+     * @return {@code true} se a senha for igual a senha da instancia, {@code false} caso contrário
+     */
+    @Override
+    public boolean validarSenha(String senha) {
+        return this.senha.equals(senha);
     }
 }

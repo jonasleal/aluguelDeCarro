@@ -22,7 +22,7 @@ public interface CarroRepositorioInterface {
 
     boolean alterar(Carro carroEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Carro> buscarTodos();
 }

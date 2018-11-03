@@ -16,5 +16,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
  */
 public interface Usuario {
 
-    public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException;
+    boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException;
+    boolean validarSenha(String senha);
 }

@@ -64,6 +64,7 @@ public class Manutencao extends Entidade implements Cloneable{
         this.orcamento = orcamento;
     }
 
+    @Override
     public Manutencao clone() {
         try {
             return (Manutencao) super.clone();

@@ -12,7 +12,7 @@ public interface ManutencaoRepositorioInterface {
 
     boolean alterar(Manutencao manutencaoEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Manutencao> buscarTodos();
 }

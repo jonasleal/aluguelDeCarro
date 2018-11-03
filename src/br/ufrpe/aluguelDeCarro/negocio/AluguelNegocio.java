@@ -17,14 +17,12 @@ import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
-import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 /**
  * @author JonasJr
@@ -101,8 +99,8 @@ public class AluguelNegocio {
         return false;
     }
 
-    public Aluguel recuperarPorId(int id) {
-        if (id > 0) {
+    public Aluguel buscarPorId(int id) {
+        if (id > 0){
             return this.repositorio.buscarPorId(id);
         }
         return null;
@@ -165,6 +163,10 @@ public class AluguelNegocio {
         }
 
         return false;
+    }
+
+    public ArrayList<Aluguel> buscarTodos(){
+        return this.repositorio.buscarTodos();
     }
 
 }

@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Fernando
@@ -9,12 +9,12 @@ public class Reserva extends Entidade implements Cloneable{
     private Usuario usuario;
     private Cliente cliente;
     private Carro carro;
-    private LocalDate retiradaPrevista;
+    private LocalDateTime retiradaPrevista;
 
     public Reserva() {
     }
 
-    public Reserva(Usuario usuario, Cliente cliente, Carro carro, LocalDate retiradaPrevista) {
+    public Reserva(Usuario usuario, Cliente cliente, Carro carro, LocalDateTime retiradaPrevista) {
         this.usuario = usuario;
         this.cliente = cliente;
         this.carro = carro;
@@ -45,14 +45,15 @@ public class Reserva extends Entidade implements Cloneable{
         this.carro = carro;
     }
 
-    public LocalDate getRetiradaPrevista() {
+    public LocalDateTime getRetiradaPrevista() {
         return retiradaPrevista;
     }
 
-    public void setRetiradaPrevista(LocalDate retiradaPrevista) {
+    public void setRetiradaPrevista(LocalDateTime retiradaPrevista) {
         this.retiradaPrevista = retiradaPrevista;
     }
 
+    @Override
     public Reserva clone() {
         try {
             return (Reserva) super.clone();
