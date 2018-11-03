@@ -4,6 +4,7 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 
@@ -14,8 +15,8 @@ public class ClienteNegocio {
 
     private final ClienteRepositorioInterface repositorio;
     
-    public ClienteNegocio(){
-        this.repositorio = new ClienteRepositorio();
+    public ClienteNegocio(ClienteRepositorioInterface repositorio){
+        this.repositorio = repositorio;
     }
 
     public static boolean verificarStringData(String data) {
@@ -25,11 +26,11 @@ public class ClienteNegocio {
         return false;
     }
 
-    private boolean validar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
-        return cliente != null && cliente.valirdar();
+    private boolean validar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+        return cliente != null && cliente.validar();
     }
 
-    public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
+    public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         boolean saida = false;
         if (validar(cliente)) {
             repositorio.cadastrar(cliente);
@@ -39,7 +40,7 @@ public class ClienteNegocio {
         return saida;
     }
 
-    public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException {
+    public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         boolean saida = false;
         if (validar(cliente)) {
             repositorio.alterar(cliente);

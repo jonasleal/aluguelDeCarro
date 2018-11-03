@@ -9,6 +9,7 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.GerenteRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.GerenteRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 
@@ -20,15 +21,15 @@ public class GerenteNegocio {
 
     private final GerenteRepositorioInterface repositorio;
     
-    public GerenteNegocio(){
-        this.repositorio = new GerenteRepositorio();
+    public GerenteNegocio(GerenteRepositorioInterface repositorio){
+        this.repositorio = repositorio;
     }
     
-    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException{
+    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException{
         return gerente != null && gerente.validar();
     }
 
-    public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException {
+    public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         boolean saida = false;
         if(validar(gerente)){
             repositorio.cadastrar(gerente);
@@ -37,7 +38,7 @@ public class GerenteNegocio {
         return saida;
     }
     
-    public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException{
+    public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException{
         boolean saida = false;
         if(validar(gerente)){
             this.repositorio.alterar(gerente);
