@@ -14,13 +14,13 @@ import java.util.ArrayList;
  */
 public interface AluguelRepositorioInterface {
 
-    public Aluguel buscarPorId(int id);
+    Aluguel buscarPorId(int id);
 
-    public boolean cadastrar(Aluguel aluguel);
+    boolean cadastrar(Aluguel aluguel);
 
-    public boolean alterar(Aluguel aluguelEditado);
+    boolean alterar(Aluguel aluguelEditado);
 
-    public boolean deletar(int id);
+    boolean deletar(int id);
 
-    public ArrayList<Aluguel> buscarTodos();
+    ArrayList<Aluguel> buscarTodos();
 }

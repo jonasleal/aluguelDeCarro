@@ -13,14 +13,16 @@ import java.util.ArrayList;
  * @author JonasJr
  */
 public interface CarroRepositorioInterface {
-    public Carro buscarPorId(int id);
-    public Carro buscarPorPlaca(String placa);
 
-    public boolean cadastrar(Carro carro);
+    Carro buscarPorId(int id);
 
-    public boolean alterar(Carro carroEditado);
+    Carro buscarPorPlaca(String placa);
 
-    public boolean deletar(int id);
+    boolean cadastrar(Carro carro);
 
-    public ArrayList<Carro> buscarTodos();
+    boolean alterar(Carro carroEditado);
+
+    boolean deletar(int id);
+
+    ArrayList<Carro> buscarTodos();
 }

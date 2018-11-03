@@ -14,15 +14,16 @@ import java.util.ArrayList;
  */
 public interface ClienteRepositorioInterface {
 
-    public Cliente buscarPorId(int id);
-    public Cliente buscarPorCpf(String cpf);
+    Cliente buscarPorId(int id);
 
-    public boolean cadastrar(Cliente cliente);
+    Cliente buscarPorCpf(String cpf);
 
-    public boolean alterar(Cliente clienteEditado);
+    boolean cadastrar(Cliente cliente);
 
-    public boolean deletar(int id);
+    boolean alterar(Cliente clienteEditado);
 
-    public ArrayList<Cliente> buscarTodos();
+    boolean deletar(int id);
+
+    ArrayList<Cliente> buscarTodos();
 
 }
