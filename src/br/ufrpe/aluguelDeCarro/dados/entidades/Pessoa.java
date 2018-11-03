@@ -6,6 +6,7 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
@@ -59,7 +60,7 @@ public abstract class Pessoa extends Entidade {
         return Period.between(nascimento, LocalDate.now()).getYears();
     }
 
-    public boolean valirdar() throws CpfException, IdadeExcetion, NomeException {
+    public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         CpfUtil.validarCPF(this.cpf);
         if (getIdade() >= 18) {
             throw new IdadeExcetion(IdadeExcetion.MENOR);

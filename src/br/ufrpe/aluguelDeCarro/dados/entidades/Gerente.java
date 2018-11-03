@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import java.time.LocalDate;
@@ -25,11 +26,7 @@ public class Gerente extends Pessoa implements Usuario {
     }
 
     @Override
-    public boolean login(String senha) {
-        return this.senha.equals(senha);
-    }
-
-    public boolean validar() throws CpfException, IdadeExcetion, NomeException {
-        return super.valirdar();
+    public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+        return super.validar();
     }
 }

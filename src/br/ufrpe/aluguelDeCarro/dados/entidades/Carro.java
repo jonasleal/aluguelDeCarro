@@ -5,7 +5,11 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
+import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
+import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import java.math.BigDecimal;
 
 /**
  *
@@ -15,7 +19,8 @@ public class Carro extends Entidade {
 
     private String placa;
     private String modelo;
-    private String moarca;
+    private String marca;
+    private BigDecimal preco;
     private int portas;
     private int ocupantes;
     private Categoria categoria;
@@ -31,23 +36,22 @@ public class Carro extends Entidade {
     public Carro() {
     }
 
-    public Carro(String placa, String modelo, String moarca, int portas, int ocupantes, Categoria categoria,
-            Cambio cambio, Direcao direcao, boolean arCondicionado, boolean airBag, boolean travaEletrica,
-            boolean freioAbs, boolean vidroEletrico, boolean disponivel) {
+    public Carro(String placa, String modelo, String moarca, Categoria categoria, BigDecimal preco) {
         this.placa = placa;
         this.modelo = modelo;
-        this.moarca = moarca;
-        this.portas = portas;
-        this.ocupantes = ocupantes;
+        this.marca = moarca;
+        this.portas = 0;
+        this.ocupantes = 0;
         this.categoria = categoria;
-        this.cambio = cambio;
-        this.direcao = direcao;
-        this.arCondicionado = arCondicionado;
-        this.airBag = airBag;
-        this.travaEletrica = travaEletrica;
-        this.freioAbs = freioAbs;
-        this.vidroEletrico = vidroEletrico;
-        this.disponivel = disponivel;
+        this.cambio = Cambio.MANUAL;
+        this.direcao = Direcao.MECANICA;
+        this.arCondicionado = false;
+        this.airBag = false;
+        this.travaEletrica = false;
+        this.freioAbs = false;
+        this.vidroEletrico = false;
+        this.disponivel = false;
+        this.preco = preco;
     }
 
     public String getPlaca() {
@@ -67,11 +71,11 @@ public class Carro extends Entidade {
     }
 
     public String getMoarca() {
-        return moarca;
+        return marca;
     }
 
     public void setMoarca(String moarca) {
-        this.moarca = moarca;
+        this.marca = moarca;
     }
 
     public int getPortas() {
@@ -162,32 +166,62 @@ public class Carro extends Entidade {
         this.disponivel = disponivel;
     }
 
-    public boolean validar() throws PlacaException {
-        boolean saida = true;
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public boolean validar() throws PlacaException, MarcaException, ModeloException, CarroException {
+
         if (placa == null || placa.isEmpty()) {
             throw new PlacaException(PlacaException.NULL);
         }
-        if(!placa.matches("[a-zA-Z]{3}\\d{4}")){
+        if (!placa.matches("[a-zA-Z]{3}\\d{4}")) {
             throw new PlacaException(PlacaException.INVALIDA);
         }
-
-            /*
-        private String placa;
-        private String modelo;
-        private String moarca;
-        private int portas;
-        private int ocupantes;
-        private Categoria categoria;
-        private Cambio cambio;
-        private Direcao direcao;
-        private boolean arCondicionado;
-        private boolean airBag;
-        private boolean travaEletrica;
-        private boolean freioAbs;
-        private boolean vidroEletrico;
-        private boolean disponivel;
-             */
-            return saida;
+        if (marca == null || marca.isEmpty()) {
+            throw new MarcaException(MarcaException.NULL);
+        }
+        if (marca.matches("[a-zA-Z]{2,}")) {
+            throw new MarcaException(MarcaException.INVALIDA);
+        }
+        if (modelo == null || modelo.isEmpty()) {
+            throw new ModeloException(ModeloException.NULL);
+        }
+        if (modelo.matches("[a-zA-Z]{2,}")) {
+            throw new ModeloException(ModeloException.INVALIDA);
+        }
+        if (portas < 1) {
+            throw new CarroException(CarroException.NUMPORTAS);
+        }
+        if (ocupantes < 1) {
+            throw new CarroException(CarroException.NUMOCUPANTES);
+        }
+        if (cambio == null || (cambio.getValor() < 1 && cambio.getValor() > 3)) {
+            throw new CarroException(CarroException.CAMBIOINVALIDO);
+        }
+        if (direcao == null || (direcao.getValor() < 1 && direcao.getValor() > 3)) {
+            throw new CarroException(CarroException.DIRECAOINVALIDO);
+        }
+        if (categoria == null || (categoria.getValor() < 1 && categoria.getValor() > 5)) {
+            throw new CarroException(CarroException.CATEGORIAINVALIDO);
+        }
+        if(preco.compareTo(new BigDecimal(0))<1){
+            throw new CarroException(CarroException.PRECOINVALIDO);
         }
 
+        return true;
     }
+
+}

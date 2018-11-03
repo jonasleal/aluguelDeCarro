@@ -35,6 +35,7 @@ public class Cliente extends Pessoa {
         this.habilitacao = habilitacao;
     }
 
+    @Override
     public boolean validar() throws CpfException, IdadeExcetion, HabilitacaoException, NomeException {
 
         if (this.habilitacao == null) {
@@ -44,6 +45,6 @@ public class Cliente extends Pessoa {
             throw new HabilitacaoException(HabilitacaoException.TAMANHO);
         }
 
-        return super.valirdar();
+        return super.validar();
     }
 }

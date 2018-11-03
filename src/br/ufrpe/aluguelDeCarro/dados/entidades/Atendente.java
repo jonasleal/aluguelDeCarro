@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Atendente extends Pessoa implements Usuario{
+public class Atendente extends Pessoa {
     private String senha;
 
     public Atendente() {
@@ -19,9 +19,6 @@ public class Atendente extends Pessoa implements Usuario{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
 
-    @Override
-    public boolean login(String senha) {
-        return this.senha.equals(senha);
-    }
 }

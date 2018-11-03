@@ -1,16 +1,28 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import java.time.LocalDate;
+import br.ufrpe.aluguelDeCarro.excecoes.AluguelException;
+import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
+import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
+import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
+import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
+import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author Fernando
  */
 public class Aluguel extends Entidade {
-    private LocalDate retirada;
-    private LocalDate devolucaoEstimada;
-    private LocalDate devolucaoReal;
-    private double valorEstimado;
-    private double valorFinal;
+
+    private LocalDateTime retirada;
+    private LocalDateTime devolucaoEstimada;
+    private LocalDateTime devolucaoReal;
+    private BigDecimal valorEstimado;
+    private BigDecimal custoAdicional;
+    private BigDecimal desconto;
     private Cliente cliente;
     private Carro carro;
     private Usuario usuario;
@@ -18,56 +30,63 @@ public class Aluguel extends Entidade {
     public Aluguel() {
     }
 
-    public Aluguel(LocalDate retirada, LocalDate devolucaoEstimada, LocalDate devolucaoReal, double valorEstimado,
-                   double valorFinal, Cliente cliente, Carro carro, Usuario usuario) {
-        this.retirada = retirada;
-        this.devolucaoEstimada = devolucaoEstimada;
-        this.devolucaoReal = devolucaoReal;
-        this.valorEstimado = valorEstimado;
-        this.valorFinal = valorFinal;
+    public Aluguel(Cliente cliente, Carro carro, Usuario usuario) {
+        this.retirada = LocalDateTime.now();
+        this.devolucaoEstimada = this.retirada.plusDays(1);
+        this.devolucaoReal = null;
+        this.valorEstimado = new BigDecimal(0);
+        this.custoAdicional = new BigDecimal(0);
         this.cliente = cliente;
         this.carro = carro;
         this.usuario = usuario;
     }
 
-    public LocalDate getRetirada() {
+    public LocalDateTime getRetirada() {
         return retirada;
     }
 
-    public void setRetirada(LocalDate retirada) {
+    public void setRetirada(LocalDateTime retirada) {
         this.retirada = retirada;
     }
 
-    public LocalDate getDevolucaoEstimada() {
+    public LocalDateTime getDevolucaoEstimada() {
         return devolucaoEstimada;
     }
 
-    public void setDevolucaoEstimada(LocalDate devolucaoEstimada) {
+    public void setDevolucaoEstimada(LocalDateTime devolucaoEstimada) {
         this.devolucaoEstimada = devolucaoEstimada;
     }
 
-    public LocalDate getDevolucaoReal() {
+    public LocalDateTime getDevolucaoReal() {
         return devolucaoReal;
     }
 
-    public void setDevolucaoReal(LocalDate devolucaoReal) {
+    public void setDevolucaoReal(LocalDateTime devolucaoReal) {
         this.devolucaoReal = devolucaoReal;
     }
 
-    public double getValorEstimado() {
+    public BigDecimal getValorEstimado() {
         return valorEstimado;
     }
 
-    public void setValorEstimado(double valorEstimado) {
+    public void setValorEstimado(BigDecimal valorEstimado) {
         this.valorEstimado = valorEstimado;
     }
 
-    public double getValorFinal() {
-        return valorFinal;
+    public BigDecimal getCustoAdicional() {
+        return custoAdicional;
     }
 
-    public void setValorFinal(double valorFinal) {
-        this.valorFinal = valorFinal;
+    public void setCustoAdicional(BigDecimal custoAdicional) {
+        this.custoAdicional = custoAdicional;
+    }
+
+    public BigDecimal getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(BigDecimal desconto) {
+        this.desconto = desconto;
     }
 
     public Cliente getCliente() {
@@ -92,5 +111,20 @@ public class Aluguel extends Entidade {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public boolean validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
+        this.cliente.validar();
+        this.carro.validar();
+        this.usuario.validar();
+      
+        if (this.valorEstimado.compareTo(BigDecimal.ZERO) < 0) {
+            throw new AluguelException(AluguelException.VALORINVALIDO);
+        }
+        if (this.custoAdicional.compareTo(BigDecimal.ZERO) < 0) {
+            throw new AluguelException(AluguelException.VALORINVALIDO);
+        }
+        return true;
+
     }
 }
