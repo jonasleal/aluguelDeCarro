@@ -5,22 +5,22 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import java.util.ArrayList;
 
 /**
  *
  * @author JonasJr
  */
-public interface CarroRepositorioInterface {
-    public Carro buscarPorId(int id);
-    public Carro buscarPorPlaca(String placa);
+public interface AluguelRepositorioInterface {
 
-    public void cadastrar(Carro carro);
+    public Aluguel buscarPorId(int id);
 
-    public void alterar(Carro carroEditado);
+    public void cadastrar(Aluguel aluguel);
+
+    public void alterar(Aluguel aluguelEditado);
 
     public void deletar(int id);
 
-    public ArrayList<Carro> buscarTodos();
+    public ArrayList<Aluguel> buscarTodos();
 }
