@@ -52,4 +52,13 @@ public class Reserva extends Entidade implements Cloneable{
     public void setRetiradaPrevista(LocalDate retiradaPrevista) {
         this.retiradaPrevista = retiradaPrevista;
     }
+
+    public Reserva clone() {
+        try {
+            return (Reserva) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
+    }
 }
