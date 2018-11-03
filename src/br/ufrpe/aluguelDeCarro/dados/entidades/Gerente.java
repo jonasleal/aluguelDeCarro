@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * @author Fernando
  */
 
-public class Gerente extends Pessoa implements Usuario {
+public class Gerente extends Pessoa implements Usuario, Cloneable {
     private String senha;
 
     public Gerente() {
@@ -28,5 +28,14 @@ public class Gerente extends Pessoa implements Usuario {
     @Override
     public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         return super.validar();
+    }
+
+    public Gerente clone() {
+        try {
+            return (Gerente) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
     }
 }

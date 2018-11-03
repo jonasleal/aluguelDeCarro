@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Fernando
  */
-public class Manutencao extends Entidade {
+public class Manutencao extends Entidade implements Cloneable{
     private Gerente gerente;
     private Carro carro;
     private List<String> afazeres;
@@ -62,5 +62,14 @@ public class Manutencao extends Entidade {
 
     public void setOrcamento(double orcamento) {
         this.orcamento = orcamento;
+    }
+
+    public Manutencao clone() {
+        try {
+            return (Manutencao) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
     }
 }

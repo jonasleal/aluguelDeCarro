@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Atendente extends Pessoa {
+public class Atendente extends Pessoa implements Cloneable{
     private String senha;
 
     public Atendente() {
@@ -19,6 +19,13 @@ public class Atendente extends Pessoa {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
 
+    public Atendente clone() {
+        try {
+            return (Atendente) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
+    }
 }

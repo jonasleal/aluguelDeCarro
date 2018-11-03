@@ -15,7 +15,7 @@ import java.time.LocalDate;
  *
  * @author JonasJr
  */
-public class Cliente extends Pessoa {
+public class Cliente extends Pessoa implements Cloneable{
 
     private String habilitacao;
 
@@ -46,5 +46,14 @@ public class Cliente extends Pessoa {
         }
 
         return super.validar();
+    }
+
+    public Cliente clone() {
+        try {
+            return (Cliente) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
     }
 }

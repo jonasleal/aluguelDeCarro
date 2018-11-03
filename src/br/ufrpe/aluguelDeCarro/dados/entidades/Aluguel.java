@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 /**
  * @author Fernando
  */
-public class Aluguel extends Entidade {
+public class Aluguel extends Entidade implements Cloneable{
 
     private LocalDateTime retirada;
     private LocalDateTime devolucaoEstimada;
@@ -125,6 +125,14 @@ public class Aluguel extends Entidade {
             throw new AluguelException(AluguelException.VALORINVALIDO);
         }
         return true;
+    }
 
+    public Aluguel clone() {
+        try {
+            return (Aluguel) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
     }
 }

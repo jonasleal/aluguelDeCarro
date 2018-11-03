@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  *
  * @author JonasJr
  */
-public class Carro extends Entidade {
+public class Carro extends Entidade implements Cloneable{
 
     private String placa;
     private String modelo;
@@ -208,13 +208,13 @@ public class Carro extends Entidade {
         if (ocupantes < 1) {
             throw new CarroException(CarroException.NUMOCUPANTES);
         }
-        if (cambio == null || (cambio.getValor() < 1 && cambio.getValor() > 3)) {
+        if (cambio == null || (cambio.getValor() < 1 || cambio.getValor() > 3)) {
             throw new CarroException(CarroException.CAMBIOINVALIDO);
         }
-        if (direcao == null || (direcao.getValor() < 1 && direcao.getValor() > 3)) {
+        if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
             throw new CarroException(CarroException.DIRECAOINVALIDO);
         }
-        if (categoria == null || (categoria.getValor() < 1 && categoria.getValor() > 5)) {
+        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > 5)) {
             throw new CarroException(CarroException.CATEGORIAINVALIDO);
         }
         if(preco.compareTo(new BigDecimal(0))<1){
@@ -224,4 +224,12 @@ public class Carro extends Entidade {
         return true;
     }
 
+    public Carro clone() {
+        try {
+            return (Carro) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+        }
+        return this;
+    }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Reserva extends Entidade {
+public class Reserva extends Entidade implements Cloneable{
     private Usuario usuario;
     private Cliente cliente;
     private Carro carro;
@@ -14,8 +14,8 @@ public class Reserva extends Entidade {
     public Reserva() {
     }
 
-    public Reserva(Atendente atendente, Cliente cliente, Carro carro, LocalDate retiradaPrevista) {
-        this.usuario = atendente;
+    public Reserva(Usuario usuario, Cliente cliente, Carro carro, LocalDate retiradaPrevista) {
+        this.usuario = usuario;
         this.cliente = cliente;
         this.carro = carro;
         this.retiradaPrevista = retiradaPrevista;
@@ -25,7 +25,7 @@ public class Reserva extends Entidade {
         return usuario;
     }
 
-    public void setUsuario(Atendente usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
