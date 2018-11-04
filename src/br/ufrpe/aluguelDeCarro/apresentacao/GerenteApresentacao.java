@@ -1,10 +1,9 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
+import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
-
-import java.time.LocalDate;
 
 /**
  * @author Fernando
@@ -20,7 +19,7 @@ public class GerenteApresentacao {
             System.out.println("Informe a data de nascimento do gerente(siga o modelo dd-MM-yyyy):");
             gerente.setNascimento(DataUtil.transformarStringEmData(InputUtil.getScan().next()));
             System.out.println("Informe a senha de acesso do gerente:");
-            gerente.setSenha(InputUtil.getScan().next());
+            gerente.setSenha(Criptografia.criptografarSenha(InputUtil.getScan().next()));
         } catch (Exception e) {
             e.printStackTrace();
         }
