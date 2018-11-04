@@ -12,7 +12,7 @@ public interface ReservaRepositorioInterface {
 
     boolean alterar(Reserva reservaEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Reserva> buscarTodos();
 }

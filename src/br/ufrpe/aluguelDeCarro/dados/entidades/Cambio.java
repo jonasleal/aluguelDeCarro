@@ -26,15 +26,8 @@ public enum Cambio {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
 }

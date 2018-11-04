@@ -20,7 +20,7 @@ public interface AluguelRepositorioInterface {
 
     boolean alterar(Aluguel aluguelEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Aluguel> buscarTodos();
 }

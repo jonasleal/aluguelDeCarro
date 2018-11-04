@@ -10,11 +10,15 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
  * @author JonasJr
  */
 public enum Categoria {
-    PICKUP("Pickup", 1),
-    HATCH("Hatch", 2),
-    SEDA("Seda", 3),
-    PERUA("Perua", 4),
-    SUV("SUV", 5);
+
+    ECONOMICO("Enconomico", 1),
+    COMPACTO("Compacto", 2),
+    STANDARD("Standard", 3),
+    SUV("SUV", 4),
+    UTILITARIO("Utilirário", 5),
+    MINIVAN("Minivan", 6),
+    LUXO("Luxo", 7),
+    ESPECIAL("Especial", 8);
 
     private String nome;
     private int valor;
@@ -28,15 +32,8 @@ public enum Categoria {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
 }

@@ -22,7 +22,7 @@ public interface ClienteRepositorioInterface {
 
     boolean alterar(Cliente clienteEditado);
 
-    boolean deletar(int id);
+    boolean desativar(int id);
 
     ArrayList<Cliente> buscarTodos();
 

@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A classe armazena uma lista de instancias de clientes
  * @author Fernando
  */
 public class ClienteRepositorio implements ClienteRepositorioInterface {
 
-    private ArrayList<Cliente> clientes;
+    private final ArrayList<Cliente> clientes;
 
     public ClienteRepositorio() {
         this.clientes = new ArrayList<>();
     }
 
+    /**
+     * busca o cliente pelo id, nos já cadastrados
+     * @param id identificador do {@code Cliente}
+     * @return um clone do {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
+     */
     @Override
     public Cliente buscarPorId(int id) {
         return this.clientes
@@ -29,6 +34,11 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * busca o cliente pelo id, nos já cadastrados
+     * @param id identificador do {@code Cliente}
+     * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
+     */
     private Cliente buscarReferenciaPorId(int id) {
         return this.clientes
                 .stream()
@@ -38,6 +48,11 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * busca o cliente pelo cpf, nos já cadastrados
+     * @param cpf identificador do {@code Cliente}
+     * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null} caso nao encontre
+     */
     @Override
     public Cliente buscarPorCpf(String cpf) {
         return this.clientes
@@ -48,12 +63,20 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * @param cliente instancia a ser cadastrada
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean cadastrar(Cliente cliente) {
         this.setarId(cliente);
         return this.clientes.add(cliente.clone());
     }
 
+    /**
+     * @param clienteEditado instancia a ser editada
+     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean alterar(Cliente clienteEditado) {
         int indexOf = this.clientes.indexOf(clienteEditado);
@@ -64,8 +87,13 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
         return false;
     }
 
+    /**
+     * altera o atributo {@code ativo} do cliente para false
+     * @param id identificador do {@code Cliente}
+     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     */
     @Override
-    public boolean deletar(int id) {
+    public boolean desativar(int id) {
         Cliente cliente = this.buscarReferenciaPorId(id);
         if (cliente != null){
             cliente.setAtivo(false);
@@ -74,6 +102,9 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
         return false;
     }
 
+    /**
+     * @return clones dos alugueis ativos e cadastrados
+     */
     @Override
     public ArrayList<Cliente> buscarTodos() {
         return (ArrayList<Cliente>) this.clientes
@@ -83,6 +114,10 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * altera o id do cliente, o id que ele recebe é o maior até então acrescido de 1
+     * @param cliente instancia a ter o id alterado
+     */
     private void setarId(Cliente cliente) {
         if (this.clientes.isEmpty())
             cliente.setId(1);

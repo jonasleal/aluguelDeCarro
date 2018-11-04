@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A classe armazena uma lista de instancias de carros
  * @author Fernando
  */
 public class CarroRepositorio implements CarroRepositorioInterface{
@@ -18,6 +18,11 @@ public class CarroRepositorio implements CarroRepositorioInterface{
         this.carros = new ArrayList<>();
     }
 
+    /**
+     * busca o carro pelo id, nos já cadastrados
+     * @param id identificador do {@code Carro}
+     * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
+     */
     @Override
     public Carro buscarPorId(int id) {
         return this.carros
@@ -30,6 +35,26 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .orElse(null);
     }
 
+    /**
+     * busca o carro pelo id, nos já cadastrados
+     * @param id identificador do {@code Carro}
+     * @return o {@code Carro} ativo que contém o id, {@code null} caso nao encontre
+     */
+    private Carro buscarReferenciaPorId(int id) {
+        return this.carros
+                .stream()
+                .filter(Carro::isAtivo)
+                .filter(Carro::isDisponivel)
+                .filter(carro -> carro.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * busca o carro pela placa, nos já cadastrados
+     * @param placa identificador do {@code Carro}
+     * @return um clone do {@code Carro} ativo que contém a placa, {@code null} caso nao encontre
+     */
     @Override
     public Carro buscarPorPlaca(String placa) {
         return this.carros
@@ -42,12 +67,20 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .orElse(null);
     }
 
+    /**
+     * @param carro instancia a ser cadastrada
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean cadastrar(Carro carro) {
         this.setarId(carro);
         return this.carros.add(carro.clone());
     }
 
+    /**
+     * @param carroEditado instancia a ser editada
+     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean alterar(Carro carroEditado) {
         int indexOf = this.carros.indexOf(carroEditado);
@@ -58,8 +91,13 @@ public class CarroRepositorio implements CarroRepositorioInterface{
         return false;
     }
 
+    /**
+     * altera o atributo {@code ativo} do carro para false
+     * @param id identificador do {@code Carro}
+     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     */
     @Override
-    public boolean deletar(int id) {
+    public boolean desativar(int id) {
         Carro carro = this.buscarReferenciaPorId(id);
         if (carro != null) {
             carro.setAtivo(false);
@@ -68,6 +106,9 @@ public class CarroRepositorio implements CarroRepositorioInterface{
         return false;
     }
 
+    /**
+     * @return clones dos alugueis ativos e cadastrados
+     */
     @Override
     public ArrayList<Carro> buscarTodos() {
         return (ArrayList<Carro>) this.carros
@@ -78,16 +119,10 @@ public class CarroRepositorio implements CarroRepositorioInterface{
                 .collect(Collectors.toList());
     }
 
-    private Carro buscarReferenciaPorId(int id) {
-        return this.carros
-                .stream()
-                .filter(Carro::isAtivo)
-                .filter(Carro::isDisponivel)
-                .filter(carro -> carro.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
+    /**
+     * altera o id do carro, o id que ele recebe é o maior até então acrescido de 1
+     * @param carro instancia a ter o id alterado
+     */
     private void setarId(Carro carro) {
         if (this.carros.isEmpty())
             carro.setId(1);

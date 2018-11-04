@@ -7,17 +7,22 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- *
+ * A classe armazena uma lista de instancias de reservas
  * @author Fernando
  */
 public class ReservaRepositorio implements ReservaRepositorioInterface {
 
-    private ArrayList<Reserva> reservas;
+    private final ArrayList<Reserva> reservas;
 
     public ReservaRepositorio() {
         this.reservas = new ArrayList<>();
     }
 
+    /**
+     * busca o reserva pelo id, nos já cadastrados
+     * @param id identificador do {@code Reserva}
+     * @return um clone do {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
+     */
     @Override
     public Reserva buscarPorId(int id) {
         return this.reservas
@@ -29,6 +34,11 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * busca o reserva pelo id, nos já cadastrados
+     * @param id identificador do {@code Reserva}
+     * @return o {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
+     */
     private Reserva buscarReferenciaPorId(int id) {
         return this.reservas
                 .stream()
@@ -38,12 +48,20 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * @param reserva instancia a ser cadastrada
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean cadastrar(Reserva reserva) {
         this.setarId(reserva);
         return this.reservas.add(reserva.clone());
     }
 
+    /**
+     * @param reservaEditada instancia a ser editada
+     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean alterar(Reserva reservaEditada) {
         int indexOf = this.reservas.indexOf(reservaEditada);
@@ -54,7 +72,13 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
         return false;
     }
 
-    public boolean deletar(int id) {
+    /**
+     * altera o atributo {@code ativo} do reserva para false
+     * @param id identificador do {@code Reserva}
+     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     */
+    @Override
+    public boolean desativar(int id) {
         Reserva reserva = this.buscarReferenciaPorId(id);
         if (reserva != null) {
             reserva.setAtivo(false);
@@ -63,6 +87,9 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
         return false;
     }
 
+    /**
+     * @return clones dos alugueis ativos e cadastrados
+     */
     @Override
     public ArrayList<Reserva> buscarTodos() {
         return (ArrayList<Reserva>) this.reservas
@@ -71,6 +98,10 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * altera o id do reserva, o id que ele recebe é o maior até então acrescido de 1
+     * @param reserva instancia a ter o id alterado
+     */
     private void setarId(Reserva reserva) {
         if (this.reservas.isEmpty())
             reserva.setId(1);

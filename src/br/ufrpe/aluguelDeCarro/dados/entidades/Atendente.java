@@ -20,6 +20,7 @@ public class Atendente extends Pessoa implements Cloneable, Usuario {
         this.senha = senha;
     }
 
+    @Override
     public Atendente clone() {
         try {
             return (Atendente) super.clone();
@@ -29,6 +30,10 @@ public class Atendente extends Pessoa implements Cloneable, Usuario {
         return this;
     }
 
+    /**
+     * @param senha senha para login do usuário
+     * @return {@code true} se a senha for igual a senha da instancia, {@code false} caso contrário
+     */
     @Override
     public boolean validarSenha(String senha) {
         return this.senha.equals(senha);

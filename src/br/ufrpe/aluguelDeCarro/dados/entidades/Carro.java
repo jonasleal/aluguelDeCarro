@@ -225,4 +225,25 @@ public class Carro extends Entidade implements Cloneable {
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Carro{" +
+                "placa='" + placa + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", marca='" + marca + '\'' +
+                ", preco=" + preco +
+                ", portas=" + portas +
+                ", ocupantes=" + ocupantes +
+                ", categoria=" + categoria +
+                ", cambio=" + cambio +
+                ", direcao=" + direcao +
+                ", arCondicionado=" + arCondicionado +
+                ", airBag=" + airBag +
+                ", travaEletrica=" + travaEletrica +
+                ", freioAbs=" + freioAbs +
+                ", vidroEletrico=" + vidroEletrico +
+                ", disponivel=" + disponivel +
+                '}';
+    }
 }

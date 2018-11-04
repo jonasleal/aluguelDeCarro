@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 
 /**
+ * A classe armazena uma lista de instancias de alugueis
  * @author Fernando
  */
 public class AluguelRepositorio implements AluguelRepositorioInterface {
@@ -18,6 +19,11 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
         this.alugueis = new ArrayList<>();
     }
 
+    /**
+     * busca o aluguel pelo id, nos já cadastrados
+     * @param id identificador do {@code Aluguel}
+     * @return um clone do {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
+     */
     @Override
     public Aluguel buscarPorId(int id) {
         return this.alugueis
@@ -29,6 +35,11 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * busca o aluguel pelo id, nos já cadastrados
+     * @param id identificador do {@code Aluguel}
+     * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
+     */
     private Aluguel buscarReferenciaPorId(int id) {
         return this.alugueis
                 .stream()
@@ -38,12 +49,20 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * @param aluguel instancia a ser cadastrada
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean cadastrar(Aluguel aluguel) {
         this.setarId(aluguel);
         return this.alugueis.add(aluguel.clone());
     }
 
+    /**
+     * @param aluguelEditado instancia a ser editada
+     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     */
     @Override
     public boolean alterar(Aluguel aluguelEditado) {
         int indexOf = this.alugueis.indexOf(aluguelEditado);
@@ -54,8 +73,13 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
         return false;
     }
 
+    /**
+     * altera o atributo {@code ativo} do aluguel para false
+     * @param id identificador do {@code Aluguel}
+     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     */
     @Override
-    public boolean deletar(int id) {
+    public boolean desativar(int id) {
         Aluguel aluguel = this.buscarReferenciaPorId(id);
         if (aluguel != null) {
             aluguel.setAtivo(false);
@@ -64,6 +88,9 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
         return false;
     }
 
+    /**
+     * @return clones dos alugueis ativos e cadastrados
+     */
     @Override
     public ArrayList<Aluguel> buscarTodos() {
         return (ArrayList<Aluguel>) this.alugueis
@@ -73,6 +100,10 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * altera o id do aluguel, o id que ele recebe é o maior até então acrescido de 1
+     * @param aluguel instancia a ter o id alterado
+     */
     private void setarId(Aluguel aluguel) {
         if (this.alugueis.isEmpty()) {
             aluguel.setId(1);

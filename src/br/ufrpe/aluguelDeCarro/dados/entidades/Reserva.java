@@ -53,6 +53,7 @@ public class Reserva extends Entidade implements Cloneable{
         this.retiradaPrevista = retiradaPrevista;
     }
 
+    @Override
     public Reserva clone() {
         try {
             return (Reserva) super.clone();
