@@ -25,9 +25,18 @@ public class Gerente extends Pessoa implements Usuario, Cloneable {
         this.senha = senha;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
     @Override
     public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
         return super.validar();
+    }
+
+    @Override
+    public boolean validarSenha(String senha) {
+        return this.senha.equals(senha);
     }
 
     @Override

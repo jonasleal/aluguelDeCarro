@@ -9,13 +9,13 @@ import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
 import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+
 import java.math.BigDecimal;
 
 /**
- *
  * @author JonasJr
  */
-public class Carro extends Entidade implements Cloneable{
+public class Carro extends Entidade implements Cloneable {
 
     private String placa;
     private String modelo;
@@ -68,14 +68,6 @@ public class Carro extends Entidade implements Cloneable{
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public String getMoarca() {
-        return marca;
-    }
-
-    public void setMoarca(String moarca) {
-        this.marca = moarca;
     }
 
     public int getPortas() {
@@ -193,13 +185,13 @@ public class Carro extends Entidade implements Cloneable{
         if (marca == null || marca.isEmpty()) {
             throw new MarcaException(MarcaException.NULL);
         }
-        if (marca.matches("[a-zA-Z]{2,}")) {
+        if (!marca.matches("[a-zA-Z]{2,}")) {
             throw new MarcaException(MarcaException.INVALIDA);
         }
         if (modelo == null || modelo.isEmpty()) {
             throw new ModeloException(ModeloException.NULL);
         }
-        if (modelo.matches("[a-zA-Z]{2,}")) {
+        if (!modelo.matches("[a-zA-Z]{2,}")) {
             throw new ModeloException(ModeloException.INVALIDA);
         }
         if (portas < 1) {
@@ -217,7 +209,7 @@ public class Carro extends Entidade implements Cloneable{
         if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > 5)) {
             throw new CarroException(CarroException.CATEGORIAINVALIDO);
         }
-        if(preco.compareTo(new BigDecimal(0))<1){
+        if (preco.compareTo(new BigDecimal(0)) < 1) {
             throw new CarroException(CarroException.PRECOINVALIDO);
         }
 
