@@ -60,7 +60,7 @@ public class PrincipalApresentacao {
     /**
      * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo escolha uma para executar
      */
-    private void opcoes() {
+    private void opcoes() throws CpfException {
         int opcao;
         do {
             System.out.println("1 - Cadastrar carro\n2 - Cadastrar cliente\n3 - Cadastrar Aluguel\n4 - Visualizar carros\n5 - Visualizar clientes\n6 - Visualizar alugueis\n0 - Sair");
@@ -90,7 +90,7 @@ public class PrincipalApresentacao {
         } while (opcao != 0);
     }
 
-    private void cadastrarAluguel() {
+    private void cadastrarAluguel() throws CpfException {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);

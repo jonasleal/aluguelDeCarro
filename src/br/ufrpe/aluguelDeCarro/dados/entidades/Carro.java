@@ -174,6 +174,20 @@ public class Carro extends Entidade implements Cloneable {
         this.preco = preco;
     }
 
+    /**
+     * Valida os dados obrigatórios para um carro
+     *
+     * @return Se toda a validação tiver sucesso.
+     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+     * letras e 4 dígitos.
+     * @throws MarcaException - Se não for passado uma marca.
+     * @throws ModeloException - Se não for passado um modelo.
+     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+     * categoria ou valor da diária não for passado ou for passado um valor
+     * diferente dos valores validos.
+     *
+     */
+
     public boolean validar() throws PlacaException, MarcaException, ModeloException, CarroException {
 
         if (placa == null || placa.isEmpty()) {
@@ -228,22 +242,22 @@ public class Carro extends Entidade implements Cloneable {
 
     @Override
     public String toString() {
-        return "Carro{" +
-                "placa='" + placa + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", marca='" + marca + '\'' +
-                ", preco=" + preco +
-                ", portas=" + portas +
-                ", ocupantes=" + ocupantes +
-                ", categoria=" + categoria +
-                ", cambio=" + cambio +
-                ", direcao=" + direcao +
-                ", arCondicionado=" + arCondicionado +
-                ", airBag=" + airBag +
-                ", travaEletrica=" + travaEletrica +
-                ", freioAbs=" + freioAbs +
-                ", vidroEletrico=" + vidroEletrico +
-                ", disponivel=" + disponivel +
-                '}';
+        return "Carro{"
+                + "placa='" + placa + '\''
+                + ", modelo='" + modelo + '\''
+                + ", marca='" + marca + '\''
+                + ", preco=" + preco
+                + ", portas=" + portas
+                + ", ocupantes=" + ocupantes
+                + ", categoria=" + categoria
+                + ", cambio=" + cambio
+                + ", direcao=" + direcao
+                + ", arCondicionado=" + arCondicionado
+                + ", airBag=" + airBag
+                + ", travaEletrica=" + travaEletrica
+                + ", freioAbs=" + freioAbs
+                + ", vidroEletrico=" + vidroEletrico
+                + ", disponivel=" + disponivel
+                + '}';
     }
 }

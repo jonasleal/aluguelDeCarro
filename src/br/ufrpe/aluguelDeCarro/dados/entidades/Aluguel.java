@@ -30,14 +30,23 @@ public class Aluguel extends Entidade implements Cloneable {
     private Usuario usuario;
 
     public Aluguel() {
+        this.retirada = LocalDateTime.now();
+        this.devolucaoEstimada = this.retirada.plusDays(1);
+        this.devolucaoReal = null;
+        this.valorEstimado = BigDecimal.ZERO;
+        this.custoAdicional = BigDecimal.ZERO;
+        this.cliente = null;
+        this.carro = null;
+        this.usuario = null;
+
     }
 
     public Aluguel(Cliente cliente, Carro carro, Usuario usuario) {
         this.retirada = LocalDateTime.now();
         this.devolucaoEstimada = this.retirada.plusDays(1);
         this.devolucaoReal = null;
-        this.valorEstimado = new BigDecimal(0);
-        this.custoAdicional = new BigDecimal(0);
+        this.valorEstimado = BigDecimal.ZERO;
+        this.custoAdicional = BigDecimal.ZERO;
         this.cliente = cliente;
         this.carro = carro;
         this.usuario = usuario;
@@ -90,7 +99,6 @@ public class Aluguel extends Entidade implements Cloneable {
 //    public void setDesconto(BigDecimal desconto) {
 //        this.desconto = desconto;
 //    }
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -115,6 +123,25 @@ public class Aluguel extends Entidade implements Cloneable {
         this.usuario = usuario;
     }
 
+    /**
+     * Valida os dados obrigatórios para o aluguel.
+     *
+     * @return True - Se toda a validação tiver sucesso.
+     * @throws AluguelException - Se o valor estimado ou custo adicional for
+     * negativo.
+     * @throws CpfException - Se o CPF do cliente ou atendente não for valido.
+     * @throws IdadeExcetion - Se for menor de idade.
+     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
+     * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
+     * mais que 11 dígitos.
+     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+     * letras e 4 dígitos.
+     * @throws MarcaException - Se não for passado uma marca.
+     * @throws ModeloException - Se não for passado um modelo.
+     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+     * categoria ou valor da diária não for passado ou for passado um valor
+     * diferente dos valores validos.
+     */
     public boolean validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
         this.cliente.validar();
         this.carro.validar();
@@ -140,8 +167,9 @@ public class Aluguel extends Entidade implements Cloneable {
     }
 
     /**
-     * calcula o valor estimado do aluguel, multiplicando o valor do preço do carro (diária) pela quantidade de dias do
-     * aluguel, e coloca o valor no atributo valorEstimado
+     * calcula o valor estimado do aluguel, multiplicando o valor do preço do
+     * carro (diária) pela quantidade de dias do aluguel, e coloca o valor no
+     * atributo valorEstimado
      */
     public void calcularValorEstimado() {
         if (this.retirada != null && this.devolucaoEstimada != null && this.carro != null) {
@@ -153,16 +181,16 @@ public class Aluguel extends Entidade implements Cloneable {
 
     @Override
     public String toString() {
-        return "Aluguel{" +
-                "retirada=" + retirada +
-                ", devolucaoEstimada=" + devolucaoEstimada +
-                ", devolucaoReal=" + devolucaoReal +
-                ", valorEstimado=" + valorEstimado +
-                ", custoAdicional=" + custoAdicional +
-//                ", desconto=" + desconto +
-                ", cliente=" + cliente +
-                ", carro=" + carro +
-                ", usuario=" + usuario +
-                '}';
+        return "Aluguel{"
+                + "retirada=" + retirada
+                + ", devolucaoEstimada=" + devolucaoEstimada
+                + ", devolucaoReal=" + devolucaoReal
+                + ", valorEstimado=" + valorEstimado
+                + ", custoAdicional=" + custoAdicional
+                + //                ", desconto=" + desconto +
+                ", cliente=" + cliente
+                + ", carro=" + carro
+                + ", usuario=" + usuario
+                + '}';
     }
 }

@@ -69,7 +69,7 @@ public class AluguelNegocio {
 
     private boolean validarParaAlugar(Aluguel aluguel) throws AluguelException, CpfException {
         validacaoBasica(aluguel);
-        if(buscarAbertoPorCpf(aluguel.getCliente().getCpf())!= null){
+        if (buscarAbertoPorCpf(aluguel.getCliente().getCpf()) != null) {
             throw new AluguelException(AluguelException.CPFCONTEPENDENCIA);
         }
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
@@ -88,9 +88,20 @@ public class AluguelNegocio {
         return true;
     }
 
+    /**
+     * Verifica os dados da solicitação de aluguel, caso todos os dados
+     * obrigatórios tenha sido passado, retorna True, caso contrário levanta uma
+     * exceção referente a causa da falha.
+     *
+     * @param aluguel
+     * @return True - Se concluído com sucesso.
+     * @throws AluguelException - Contem a causa e a mensagem de erro.
+     * @throws CpfException - Se o CPF não for passado ou valido.
+     */
     public boolean cadastrar(Aluguel aluguel) throws AluguelException, CpfException {
         if (this.validarParaAlugar(aluguel)) {
             aluguel.setAtivo(true);
+            aluguel.getCarro().setDisponivel(false);
             return repositorio.cadastrar(aluguel);
         }
         return false;
@@ -111,11 +122,11 @@ public class AluguelNegocio {
     }
 
     /**
-     * Calcula o debito de um aluguel em aberto entrega um aluguel finalizado no
-     * moemnto da chamada.
+     * Calcula o debito de um aluguel em aberto e entrega um aluguel finalizado
+     * no moemnto da chamada.
      *
      * @param aluguel - Objeto com os dados do aluguel em aberto
-     * @param conseiderarHorario - Considerar a hora da entrega com tolerancia
+     * @param conseiderarHorario - Considerar a hora da entrega com tolerância
      * de 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
@@ -139,23 +150,30 @@ public class AluguelNegocio {
 
     /**
      * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
-     * entrega um aluguel finalizado no moemnto da chamada.
+     * entrega um aluguel finalizado no momento da chamada.
      *
      * @param cpf - CPF registrado no aluguel em aberto
-     * @param conseiderarHorario - Considerar a hora da entrega com tolerancia
-     * de 30 minutos.
+     * @param considerarHorario - Considerar a hora da entrega com tolerância de
+     * 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
-     * @throws br.ufrpe.aluguelDeCarro.excecoes.CpfException
+     * @throws CpfException - Se o CPF não for passado ou valido.
      */
-    public Aluguel consultarDebitoPorCpf(String cpf, boolean conseiderarHorario) throws CpfException {
+    public Aluguel consultarDebitoPorCpf(String cpf, boolean considerarHorario) throws CpfException {
         Aluguel aluguel = buscarAbertoPorCpf(cpf);
 
         if (aluguel != null) {
-            aluguel = calcularDebito(aluguel, conseiderarHorario);
+            aluguel = calcularDebito(aluguel, considerarHorario);
         }
         return aluguel;
     }
 
+    /**
+     * Busca debito de um aluguel em aberto para um determinado cpf.
+     *
+     * @param cpf - CPF registrado no aluguel em aberto
+     * @return Intancia do aluguel aberto para este CPF.
+     * @throws CpfException - Se o CPF não for passado ou valido.
+     */
     public Aluguel buscarAbertoPorCpf(String cpf) throws CpfException {
         if (CpfUtil.validarCPF(cpf)) {
             return this.repositorio.buscarPorCpf(cpf);
@@ -163,10 +181,25 @@ public class AluguelNegocio {
         return null;
     }
 
+    /**
+     * Busca debito de um aluguel em aberto para uma determinada placa.
+     *
+     * @param placa - CPF registrado no aluguel em aberto
+     * @return Intancia do aluguel aberto para esta placa.
+     */
     public Aluguel buscarAbertoPorPlaca(String placa) {
         return repositorio.buscarPorPlaca(placa);
     }
 
+    /**
+     * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
+     * entrega um aluguel finalizado no momento da chamada.
+     *
+     * @param placa - CPF registrado no aluguel em aberto
+     * @param considerarHorario - Considerar a hora da entrega com tolerância de
+     * 30 minutos.
+     * @return Objeto Aluguel no estado finalizado.
+     */
     public Aluguel consultarDebitoPorPlaca(String placa, boolean considerarHorario) {
         Aluguel aluguel = buscarAbertoPorPlaca(placa);
         if (aluguel != null) {
@@ -175,6 +208,14 @@ public class AluguelNegocio {
         return aluguel;
     }
 
+    /**
+     * Verifica a consistência datas passados com as já cadastradas, se forem
+     * iguais registra a devolução, caso contrário levanta exceção com a causa.
+     *
+     * @param aluguel - Aluguel no estado finalizado.
+     * @return True - Se registrado com sucesso.
+     * @throws AluguelException - Contem a mensagem e causa do erro.
+     */
     public boolean devolucao(Aluguel aluguel) throws AluguelException {
         if (validarDevolucao(aluguel)) {
             return this.alterar(aluguel);
