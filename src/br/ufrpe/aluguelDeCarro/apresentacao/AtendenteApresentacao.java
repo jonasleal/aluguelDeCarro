@@ -17,7 +17,7 @@ public class AtendenteApresentacao {
             atendente.setNome(InputUtil.getScan().next());
             System.out.println("Informe o cpf do atendente:");
             atendente.setCpf(InputUtil.getScan().next());
-            System.out.println("Informe a data de nascimento do atendente(siga o modelo YYYY-MM-DD):");
+            System.out.println("Informe a data de nascimento do atendente(siga o modelo dd-MM-yyyy):");
             atendente.setNascimento(LocalDate.parse(InputUtil.getScan().next()));
             System.out.println("Informe a senha de acesso do atendente:");
             atendente.setSenha(InputUtil.getScan().next());

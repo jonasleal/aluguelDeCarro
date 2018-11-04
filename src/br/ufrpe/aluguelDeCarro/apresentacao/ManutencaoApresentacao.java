@@ -16,7 +16,7 @@ public class ManutencaoApresentacao {
         Manutencao manutencao = new Manutencao();
         try {
             manutencao.setAfazeres(lerAfazeresDoTeclado());
-            System.out.println("Informe a data da manutencao (siga o modelo YYYY-MM-DD):");
+            System.out.println("Informe a data da manutencao (siga o modelo dd-MM-yyyy):");
             manutencao.setData(DataUtil.transformarStringEmData(InputUtil.getScan().next()));
             System.out.println("Informe o orcamento da manutencao");
             manutencao.setOrcamento(InputUtil.getScan().nextDouble());
