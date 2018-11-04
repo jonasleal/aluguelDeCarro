@@ -62,7 +62,7 @@ public class ClienteNegocio {
 
     public boolean desativar(int id) {
         if (id > 0) {
-            return repositorio.deletar(id);
+            return repositorio.desativar(id);
         }
         return false;
     }

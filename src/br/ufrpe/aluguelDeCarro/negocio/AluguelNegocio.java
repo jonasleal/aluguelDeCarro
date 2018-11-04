@@ -7,7 +7,6 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.AluguelException;
 import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
@@ -19,7 +18,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -76,7 +74,7 @@ public class AluguelNegocio {
         return false;
     }
 
-    public Aluguel recuperarPorId(int id) {
+    public Aluguel buscarPorId(int id) {
         if (id > 0)
             return this.repositorio.buscarPorId(id);
         return null;
@@ -94,6 +92,10 @@ public class AluguelNegocio {
         validar(aluguel);
         aluguel.setDevolucaoReal(LocalDateTime.now());
         return false;
+    }
+
+    public ArrayList<Aluguel> buscarTodos(){
+        return this.repositorio.buscarTodos();
     }
 
 }

@@ -72,7 +72,7 @@ public class CarroNegocio {
 
     public boolean desativar(int id) {
         if (id > 0) {
-            return this.repositorio.deletar(id);
+            return this.repositorio.desativar(id);
         }
         return false;
     }

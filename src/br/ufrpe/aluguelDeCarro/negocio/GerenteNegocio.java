@@ -59,7 +59,7 @@ public class GerenteNegocio {
 
     public boolean desativar(int id) {
         if (id > 0) {
-            return repositorio.deletar(id);
+            return repositorio.desativar(id);
         }
         return false;
     }
