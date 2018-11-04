@@ -7,11 +7,11 @@ package br.ufrpe.aluguelDeCarro;
 
 import br.ufrpe.aluguelDeCarro.apresentacao.PrincipalApresentacao;
 import br.ufrpe.aluguelDeCarro.dados.entidades.*;
+import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  *
@@ -27,7 +27,7 @@ public class AluguelDeCarro {
 
             PrincipalApresentacao apresentacao = new PrincipalApresentacao();
 
-//            Gerente gerente = new Gerente("02362263045", "kol", LocalDate.now().minusYears(20), "oi");
+//            Gerente gerente = new Gerente("02362263045", "kol", LocalDate.now().minusYears(20), Criptografia.criptografarSenha("oi"));
 //            Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
 //            Singleton.getInstance().setUsuarioLogado(gerente);
 //
