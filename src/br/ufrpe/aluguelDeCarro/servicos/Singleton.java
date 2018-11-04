@@ -17,10 +17,10 @@ public class Singleton {
 
     private static Singleton myself = null;
 
-    private CarroNegocio carroNegocio;
-    private ClienteNegocio clienteNegocio;
-    private GerenteNegocio gerenteNegocio;
-    private AluguelNegocio aluguelNegocio;
+    private final CarroNegocio carroNegocio;
+    private final ClienteNegocio clienteNegocio;
+    private final GerenteNegocio gerenteNegocio;
+    private final AluguelNegocio aluguelNegocio;
 
     private Usuario usuarioLogado;
 
