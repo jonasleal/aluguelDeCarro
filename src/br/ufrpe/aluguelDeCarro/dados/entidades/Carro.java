@@ -206,7 +206,7 @@ public class Carro extends Entidade implements Cloneable {
         if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
             throw new CarroException(CarroException.DIRECAOINVALIDO);
         }
-        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > 5)) {
+        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
             throw new CarroException(CarroException.CATEGORIAINVALIDO);
         }
         if (preco.compareTo(new BigDecimal(0)) < 1) {
