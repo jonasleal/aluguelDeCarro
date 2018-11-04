@@ -10,12 +10,19 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 import java.math.BigDecimal;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o carro
  * @author Fernando
  */
 public class CarroApresentacao {
+
+    /**
+     * solicita ao usuário os dados do carro
+     * @return uma instância de {@code Carro} com os dados preenchidos pelo usuário
+     */
     public Carro lerDadosPeloTeclado() {
-        Carro carro = new Carro();
+        Carro carro = null;
         try {
+            carro = new Carro();
             System.out.println("Informe a placa do carro");
             carro.setPlaca(InputUtil.getScan().next());
             System.out.println("Informe a marca do carro");
@@ -23,19 +30,20 @@ public class CarroApresentacao {
             System.out.println("Informe o modelo do carro");
             carro.setModelo(InputUtil.getScan().next());
             System.out.println("Informe a quantidade de portas do carro");
-            carro.setPortas(InputUtil.getScan().nextInt());
+            carro.setPortas(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe a capacidade de passageiros do carro");
-            carro.setOcupantes(InputUtil.getScan().nextInt());
+            carro.setOcupantes(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe o valor da diaria do carro");
-            carro.setPreco(new BigDecimal(InputUtil.getScan().nextDouble()));
+            carro.setPreco(new BigDecimal(InputUtil.solicitarNumeroFlutuante()));
             System.out.println("Informe a categoria do carro\n" + getCategorias());
-            carro.setCategoria(Categoria.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setCategoria(Categoria.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo do cambio carro\n" + getCambios());
-            carro.setCambio(Cambio.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setCambio(Cambio.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo de direcao do carro\n" + getDirecoes());
-            carro.setDirecao(Direcao.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setDirecao(Direcao.values()[InputUtil.solicitarNumeroInteiro() - 1]);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return carro;
     }

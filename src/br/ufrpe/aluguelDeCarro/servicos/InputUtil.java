@@ -1,5 +1,6 @@
 package br.ufrpe.aluguelDeCarro.servicos;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -16,12 +17,28 @@ public class InputUtil {
      * uma nova
      */
     public static Scanner getScan() {
-        if(scan == null)
-            scan = new Scanner(System.in);
-        return scan;
+        return new Scanner(System.in);
     }
 
     public static void close(){
         scan.close();
+    }
+
+    public static int solicitarNumeroInteiro(){
+        try{
+            return getScan().nextInt();
+        } catch (InputMismatchException e){
+            System.out.println("Inválido, digite novamente");
+            return solicitarNumeroInteiro();
+        }
+    }
+
+    public static double solicitarNumeroFlutuante(){
+        try{
+            return getScan().nextDouble();
+        } catch (InputMismatchException e){
+            System.out.println("Inválido, digite novamentse");
+            return solicitarNumeroInteiro();
+        }
     }
 }

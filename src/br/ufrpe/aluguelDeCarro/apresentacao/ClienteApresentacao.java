@@ -6,16 +6,19 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o carro
  * @author Fernando
  */
 public class ClienteApresentacao {
 
-    public ClienteApresentacao() {
-    }
-
+    /**
+     * solicita ao usuário os dados do cliente
+     * @return uma instância de {@code Cliente} com os dados preenchidos pelo usuário
+     */
     public Cliente lerDadosPeloTeclado() {
-        Cliente cliente = new Cliente();
+        Cliente cliente = null;
         try {
+            cliente = new Cliente();
             System.out.println("Informe o nome do cliente:");
             cliente.setNome(InputUtil.getScan().next());
             System.out.println("Informe o cpf do cliente:");
@@ -26,6 +29,7 @@ public class ClienteApresentacao {
             cliente.setHabilitacao(InputUtil.getScan().next());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return cliente;
     }
