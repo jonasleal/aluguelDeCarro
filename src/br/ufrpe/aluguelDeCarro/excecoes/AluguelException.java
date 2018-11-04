@@ -17,6 +17,7 @@ public class AluguelException extends Exception {
     public static final String ALUGUELFINALIZADO = "Aluguel ja finalizado";
     public static final String DATAESTIMADAINCONSISTENTE = "Data de entrega não consistente";
     public static final String DATARETIRADAINCONSISTENTE = "Data de retirada não consistente";
+    public static final String CPFCONTEPENDENCIA = "CPF contem aluguem em aberto";
 
     public AluguelException(String message) {
         super(message);
