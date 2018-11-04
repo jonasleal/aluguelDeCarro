@@ -7,6 +7,8 @@ import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 
+import java.util.ArrayList;
+
 /**
  * @author Fernando
  */
@@ -65,4 +67,7 @@ public class ClienteNegocio {
         return false;
     }
 
+    public ArrayList<Cliente> buscarTodos(){
+        return this.repositorio.buscarTodos();
+    }
 }

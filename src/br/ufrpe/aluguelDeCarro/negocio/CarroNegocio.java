@@ -17,6 +17,8 @@ import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
+import java.util.ArrayList;
+
 /**
  * @author JonasJr
  */
@@ -73,6 +75,10 @@ public class CarroNegocio {
             return this.repositorio.deletar(id);
         }
         return false;
+    }
+
+    public ArrayList<Carro> buscarTodos(){
+        return this.repositorio.buscarTodos();
     }
 
 }
