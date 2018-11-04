@@ -8,7 +8,6 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 /**
  * @author Fernando

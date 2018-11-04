@@ -4,17 +4,16 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.*;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 
 /**
  * @author Fernando
  */
 public class PrincipalApresentacao {
-    private CarroApresentacao carroApresentacao;
-    private ClienteApresentacao clienteApresentacao;
-    private GerenteApresentacao gerenteApresentacao;
-    private AluguelApresentacao aluguelApresentacao;
-    private LoginApresentacao loginApresentacao;
+    private final CarroApresentacao carroApresentacao;
+    private final ClienteApresentacao clienteApresentacao;
+    private final GerenteApresentacao gerenteApresentacao;
+    private final AluguelApresentacao aluguelApresentacao;
+    private final LoginApresentacao loginApresentacao;
 
     public PrincipalApresentacao() {
         this.carroApresentacao = new CarroApresentacao();

@@ -5,8 +5,6 @@ import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
-import java.time.LocalDate;
-
 /**
  * @author Fernando
  */

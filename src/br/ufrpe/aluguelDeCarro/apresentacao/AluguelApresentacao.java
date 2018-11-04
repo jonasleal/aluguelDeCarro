@@ -7,9 +7,9 @@ import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * @author Fernando
@@ -25,8 +25,9 @@ public class AluguelApresentacao {
         System.out.println("Informe o cliente\n"+getClientes());
         aluguel.setCliente(Singleton.getInstance().getClienteNegocio().buscarPorId(InputUtil.getScan().nextInt()));
         aluguel.setUsuario(Singleton.getInstance().getUsuarioLogado());
-        aluguel.setRetirada(LocalDateTime.now());
+        aluguel.setRetirada(LocalDateTime.now().plusHours(1));
         aluguel.calcularValorEstimado();
+        aluguel.setCustoAdicional(new BigDecimal(1));
         return aluguel;
     }
 
