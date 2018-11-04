@@ -12,7 +12,12 @@ import java.util.ArrayList;
  * @author Fernando
  */
 public class ManutencaoApresentacao {
-    public Manutencao cadastrarPeloTeclado() {
+
+    /**
+     * solicita ao usuário os dados da manutencao
+     * @return uma instância de {@code Manutencao} com os dados preenchidos pelo usuário
+     */
+    public Manutencao lerDadosPeloTeclado() {
         Manutencao manutencao = new Manutencao();
         try {
             manutencao.setAfazeres(lerAfazeresDoTeclado());

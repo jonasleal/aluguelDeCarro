@@ -10,9 +10,15 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 import java.math.BigDecimal;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o carro
  * @author Fernando
  */
 public class CarroApresentacao {
+
+    /**
+     * solicita ao usuário os dados do carro
+     * @return uma instância de {@code Carro} com os dados preenchidos pelo usuário
+     */
     public Carro lerDadosPeloTeclado() {
         Carro carro = new Carro();
         try {

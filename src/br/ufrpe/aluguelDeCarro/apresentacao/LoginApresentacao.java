@@ -6,9 +6,15 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar efetuar o login
  * @author Fernando
  */
 public class LoginApresentacao {
+
+    /**
+     * solicita ao usuário os dados de login
+     * @return uma instância de {@code Usuario} com os dados preenchidos pelo usuário
+     */
     public Usuario lerDadosPeloTeclado() {
         System.out.println("Informe o numero do cpf");
         String cpf = InputUtil.getScan().next();

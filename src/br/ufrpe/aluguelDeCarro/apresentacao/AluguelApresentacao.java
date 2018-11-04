@@ -12,9 +12,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o aluguel
  * @author Fernando
  */
 public class AluguelApresentacao {
+
+    /**
+     * solicita ao usuário os dados do aluguel
+     * @return uma instância de {@code Aluguel} com os dados preenchidos pelo usuário
+     */
     public Aluguel lerDadosPeloTeclado(){
         Aluguel aluguel = new Aluguel();
         System.out.println("Informe a data de devolucao (siga o modelo dd-MM-yyyy HH:mm):");
@@ -31,6 +37,9 @@ public class AluguelApresentacao {
         return aluguel;
     }
 
+    /**
+     * @return todos os carros cadastrados no sistema
+     */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().buscarTodos();
@@ -42,6 +51,9 @@ public class AluguelApresentacao {
         return stringBuilder.toString();
     }
 
+    /**
+     * @return todos os clientes cadastrados no sistema
+     */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().buscarTodos();
@@ -53,6 +65,9 @@ public class AluguelApresentacao {
         return stringBuilder.toString();
     }
 
+    /**
+     * mostra ao usuário os alugueis cadastrados
+     */
     public void visualizarAlugueis(){
         Singleton.getInstance().getAluguelNegocio().buscarTodos().forEach(System.out::println);
     }

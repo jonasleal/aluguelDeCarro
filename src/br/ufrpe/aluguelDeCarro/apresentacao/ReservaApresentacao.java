@@ -15,7 +15,12 @@ import java.util.ArrayList;
  * @author Fernando
  */
 public class ReservaApresentacao {
-    public Reserva cadastrarPeloTeclado() {
+
+    /**
+     * solicita ao usuário os dados da reserva
+     * @return uma instância de {@code Reserva} com os dados preenchidos pelo usuário
+     */
+    public Reserva lerDadosPeloTeclado() {
         Reserva reserva = new Reserva();
         try {
             System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");
@@ -30,6 +35,9 @@ public class ReservaApresentacao {
         return reserva;
     }
 
+    /**
+     * @return todos os carros cadastrados no sistema
+     */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().buscarTodos();
@@ -41,6 +49,9 @@ public class ReservaApresentacao {
         return stringBuilder.toString();
     }
 
+    /**
+     * @return todos os clientes cadastrados no sistema
+     */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
         ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().buscarTodos();

@@ -6,10 +6,15 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import java.time.LocalDate;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o atendente
  * @author Fernando
  */
 public class AtendenteApresentacao {
 
+    /**
+     * solicita ao usuário os dados do atendente
+     * @return uma instância de {@code Atendente} com os dados preenchidos pelo usuário
+     */
     public Atendente cadastrarPeloTeclado() {
         Atendente atendente = new Atendente();
         try {

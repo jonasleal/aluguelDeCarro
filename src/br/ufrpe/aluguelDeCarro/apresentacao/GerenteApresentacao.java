@@ -6,9 +6,15 @@ import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 
 /**
+ * Classe de interação com o usuário, para que o mesmo possar gerenciar o gerente
  * @author Fernando
  */
 public class GerenteApresentacao {
+
+    /**
+     * solicita ao usuário os dados do gerente
+     * @return uma instância de {@code Gerente} com os dados preenchidos pelo usuário
+     */
     public Gerente lerDadosPeloTeclado() {
         Gerente gerente = new Gerente();
         try {

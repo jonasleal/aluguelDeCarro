@@ -6,6 +6,7 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 /**
+ * Classe central das interações com o usuário
  * @author Fernando
  */
 public class PrincipalApresentacao {
@@ -24,19 +25,49 @@ public class PrincipalApresentacao {
     }
 
     public void menus() throws IdadeExcetion, NomeException, CpfException, PlacaException, HabilitacaoException, MarcaException, ModeloException, AluguelException, CarroException {
-        System.out.println("Cadastre o gerente");
-        Gerente gerente = null;
-        while (gerente == null)
-            gerente = this.gerenteApresentacao.lerDadosPeloTeclado();
-        Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
+        cadastroGerente();
+        login();
+        this.opcoes();
+    }
+
+    /**
+     * efetua o login do usuário no sistema
+     */
+    private void login() {
         System.out.println("Efetue o login");
         Usuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
         Singleton.getInstance().setUsuarioLogado(usuario);
-        this.opcoes();
     }
 
+    /**
+     * efetua o cadastro do gerente no sistema
+     * @throws CpfException
+     * @throws IdadeExcetion
+     * @throws NomeException
+     * @throws HabilitacaoException
+     */
+    private void cadastroGerente() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+        System.out.println("Cadastre o gerente");
+        Gerente gerente = null;
+        while (gerente == null)
+            gerente = this.gerenteApresentacao.lerDadosPeloTeclado();
+        Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
+    }
+
+    /**
+     * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo escolha uma para executar
+     * @throws PlacaException
+     * @throws IdadeExcetion
+     * @throws NomeException
+     * @throws CpfException
+     * @throws HabilitacaoException
+     * @throws ModeloException
+     * @throws MarcaException
+     * @throws CarroException
+     * @throws AluguelException
+     */
     private void opcoes() throws PlacaException, IdadeExcetion, NomeException, CpfException, HabilitacaoException, ModeloException, MarcaException, CarroException, AluguelException {
         int opcao;
         do {
