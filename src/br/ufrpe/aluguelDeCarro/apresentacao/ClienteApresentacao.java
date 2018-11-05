@@ -16,8 +16,9 @@ public class ClienteApresentacao {
      * @return uma instância de {@code Cliente} com os dados preenchidos pelo usuário
      */
     public Cliente lerDadosPeloTeclado() {
-        Cliente cliente = new Cliente();
+        Cliente cliente = null;
         try {
+            cliente = new Cliente();
             System.out.println("Informe o nome do cliente:");
             cliente.setNome(InputUtil.getScan().next());
             System.out.println("Informe o cpf do cliente:");
@@ -28,6 +29,7 @@ public class ClienteApresentacao {
             cliente.setHabilitacao(InputUtil.getScan().next());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return cliente;
     }

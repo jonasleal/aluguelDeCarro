@@ -16,9 +16,7 @@ public class InputUtil {
      * uma nova
      */
     public static Scanner getScan() {
-        if(scan == null)
-            scan = new Scanner(System.in);
-        return scan;
+        return new Scanner(System.in);
     }
 
     public static void close(){

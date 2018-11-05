@@ -20,8 +20,9 @@ public class CarroApresentacao {
      * @return uma instância de {@code Carro} com os dados preenchidos pelo usuário
      */
     public Carro lerDadosPeloTeclado() {
-        Carro carro = new Carro();
+        Carro carro = null;
         try {
+            carro = new Carro();
             System.out.println("Informe a placa do carro");
             carro.setPlaca(InputUtil.getScan().next());
             System.out.println("Informe a marca do carro");
@@ -41,7 +42,8 @@ public class CarroApresentacao {
             System.out.println("Informe o tipo de direcao do carro\n" + getDirecoes());
             carro.setDirecao(Direcao.values()[InputUtil.getScan().nextInt() - 1]);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return carro;
     }

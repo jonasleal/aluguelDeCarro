@@ -18,15 +18,17 @@ public class ManutencaoApresentacao {
      * @return uma instância de {@code Manutencao} com os dados preenchidos pelo usuário
      */
     public Manutencao lerDadosPeloTeclado() {
-        Manutencao manutencao = new Manutencao();
+        Manutencao manutencao = null;
         try {
+            manutencao = new Manutencao();
             manutencao.setAfazeres(lerAfazeresDoTeclado());
             System.out.println("Informe a data da manutencao (siga o modelo dd-MM-yyyy):");
             manutencao.setData(DataUtil.transformarStringEmData(InputUtil.getScan().next()));
             System.out.println("Informe o orcamento da manutencao");
             manutencao.setOrcamento(InputUtil.getScan().nextDouble());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerAfazeresDoTeclado();
         }
         return manutencao;
     }
@@ -46,7 +48,8 @@ public class ManutencaoApresentacao {
                 }
             } while (opcao != 0);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerAfazeresDoTeclado();
         }
         return afazeres;
     }

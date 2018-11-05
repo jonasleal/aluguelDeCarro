@@ -30,7 +30,8 @@ public class ReservaApresentacao {
             System.out.println("Selecione o cliente\n"+ getClientes());
             reserva.setCliente(new ClienteRepositorio().buscarTodos().get(InputUtil.getScan().nextInt()));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return reserva;
     }

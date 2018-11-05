@@ -15,9 +15,10 @@ public class AtendenteApresentacao {
      * solicita ao usuário os dados do atendente
      * @return uma instância de {@code Atendente} com os dados preenchidos pelo usuário
      */
-    public Atendente cadastrarPeloTeclado() {
-        Atendente atendente = new Atendente();
+    public Atendente lerDadosPeloTeclado() {
+        Atendente atendente = null;
         try {
+            atendente = new Atendente();
             System.out.println("Informe o nome do atendente:");
             atendente.setNome(InputUtil.getScan().next());
             System.out.println("Informe o cpf do atendente:");
@@ -27,7 +28,8 @@ public class AtendenteApresentacao {
             System.out.println("Informe a senha de acesso do atendente:");
             atendente.setSenha(InputUtil.getScan().next());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return atendente;
     }

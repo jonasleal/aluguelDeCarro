@@ -16,8 +16,9 @@ public class GerenteApresentacao {
      * @return uma instância de {@code Gerente} com os dados preenchidos pelo usuário
      */
     public Gerente lerDadosPeloTeclado() {
-        Gerente gerente = new Gerente();
+        Gerente gerente = null;
         try {
+            gerente = new Gerente();
             System.out.println("Informe o nome do gerente:");
             gerente.setNome(InputUtil.getScan().next());
             System.out.println("Informe o cpf do gerente:");
@@ -27,7 +28,8 @@ public class GerenteApresentacao {
             System.out.println("Informe a senha de acesso do gerente:");
             gerente.setSenha(Criptografia.criptografarSenha(InputUtil.getScan().next()));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            lerDadosPeloTeclado();
         }
         return gerente;
     }
