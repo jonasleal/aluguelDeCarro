@@ -30,17 +30,17 @@ public class CarroApresentacao {
             System.out.println("Informe o modelo do carro");
             carro.setModelo(InputUtil.getScan().next());
             System.out.println("Informe a quantidade de portas do carro");
-            carro.setPortas(InputUtil.getScan().nextInt());
+            carro.setPortas(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe a capacidade de passageiros do carro");
-            carro.setOcupantes(InputUtil.getScan().nextInt());
+            carro.setOcupantes(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe o valor da diaria do carro");
-            carro.setPreco(new BigDecimal(InputUtil.getScan().nextDouble()));
+            carro.setPreco(new BigDecimal(InputUtil.solicitarNumeroFlutuante()));
             System.out.println("Informe a categoria do carro\n" + getCategorias());
-            carro.setCategoria(Categoria.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setCategoria(Categoria.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo do cambio carro\n" + getCambios());
-            carro.setCambio(Cambio.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setCambio(Cambio.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo de direcao do carro\n" + getDirecoes());
-            carro.setDirecao(Direcao.values()[InputUtil.getScan().nextInt() - 1]);
+            carro.setDirecao(Direcao.values()[InputUtil.solicitarNumeroInteiro() - 1]);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             lerDadosPeloTeclado();

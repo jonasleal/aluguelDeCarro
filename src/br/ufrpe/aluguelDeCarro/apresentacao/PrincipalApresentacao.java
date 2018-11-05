@@ -64,7 +64,7 @@ public class PrincipalApresentacao {
         int opcao;
         do {
             System.out.println("1 - Cadastrar carro\n2 - Cadastrar cliente\n3 - Cadastrar Aluguel\n4 - Visualizar carros\n5 - Visualizar clientes\n6 - Visualizar alugueis\n0 - Sair");
-            opcao = InputUtil.getScan().nextInt();
+            opcao = InputUtil.solicitarNumeroInteiro();
             switch (opcao) {
                 case 1:
                     cadastrarCarro();
