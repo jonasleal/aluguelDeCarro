@@ -13,7 +13,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 
 /**
- *
  * @author JonasJr
  */
 public class GerenteNegocio {

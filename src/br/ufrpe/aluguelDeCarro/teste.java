@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro;
 
 /**
- *
  * @author JonasJr
  */
 public class teste {

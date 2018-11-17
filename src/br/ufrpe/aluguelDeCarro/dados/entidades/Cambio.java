@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 /**
- *
  * @author JonasJr
  */
 public enum Cambio {

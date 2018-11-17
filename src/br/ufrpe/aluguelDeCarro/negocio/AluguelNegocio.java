@@ -8,16 +8,9 @@ package br.ufrpe.aluguelDeCarro.negocio;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
-import br.ufrpe.aluguelDeCarro.excecoes.AluguelException;
-import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
-import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
-import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,7 +89,7 @@ public class AluguelNegocio {
      * @param aluguel
      * @return True - Se concluído com sucesso.
      * @throws AluguelException - Contem a causa e a mensagem de erro.
-     * @throws CpfException - Se o CPF não for passado ou valido.
+     * @throws CpfException     - Se o CPF não for passado ou valido.
      */
     public boolean cadastrar(Aluguel aluguel) throws AluguelException, CpfException {
         if (this.validarParaAlugar(aluguel)) {
@@ -125,9 +118,9 @@ public class AluguelNegocio {
      * Calcula o debito de um aluguel em aberto e entrega um aluguel finalizado
      * no moemnto da chamada.
      *
-     * @param aluguel - Objeto com os dados do aluguel em aberto
+     * @param aluguel            - Objeto com os dados do aluguel em aberto
      * @param conseiderarHorario - Considerar a hora da entrega com tolerância
-     * de 30 minutos.
+     *                           de 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel calcularDebito(Aluguel aluguel, boolean conseiderarHorario) {
@@ -152,9 +145,9 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
      * entrega um aluguel finalizado no momento da chamada.
      *
-     * @param cpf - CPF registrado no aluguel em aberto
+     * @param cpf               - CPF registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     * 30 minutos.
+     *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      * @throws CpfException - Se o CPF não for passado ou valido.
      */
@@ -195,9 +188,9 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
      * entrega um aluguel finalizado no momento da chamada.
      *
-     * @param placa - CPF registrado no aluguel em aberto
+     * @param placa             - CPF registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     * 30 minutos.
+     *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel consultarDebitoPorPlaca(String placa, boolean considerarHorario) {

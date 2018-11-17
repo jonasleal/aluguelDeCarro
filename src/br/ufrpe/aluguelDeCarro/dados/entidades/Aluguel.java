@@ -1,14 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.AluguelException;
-import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
-import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
-import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

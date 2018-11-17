@@ -8,14 +8,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
-import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
-import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
-import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 import java.util.ArrayList;
 
@@ -77,7 +70,7 @@ public class CarroNegocio {
         return false;
     }
 
-    public ArrayList<Carro> buscarTodos(){
+    public ArrayList<Carro> buscarTodos() {
         return this.repositorio.buscarTodos();
     }
 

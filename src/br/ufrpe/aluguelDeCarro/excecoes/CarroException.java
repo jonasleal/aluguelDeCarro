@@ -6,16 +6,16 @@
 package br.ufrpe.aluguelDeCarro.excecoes;
 
 /**
- *
  * @author JonasJr
  */
-public class CarroException extends Exception{
+public class CarroException extends Exception {
     public static final String NUMPORTAS = "Número de portas é invalido";
     public static final String NUMOCUPANTES = "Número de ocupantes é invalido";
     public static final String CAMBIOINVALIDO = "Cambio invalido";
     public static final String DIRECAOINVALIDO = "Cambio invalido";
     public static final String CATEGORIAINVALIDO = "Categoria invalido";
     public static final String PRECOINVALIDO = "Preço invalido";
+
     public CarroException(String message) {
         super(message);
     }
@@ -23,5 +23,5 @@ public class CarroException extends Exception{
     public CarroException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }

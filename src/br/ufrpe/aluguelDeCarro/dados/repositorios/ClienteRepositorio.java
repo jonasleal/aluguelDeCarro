@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * A classe armazena uma lista de instancias de clientes
+ *
  * @author Fernando
  */
 public class ClienteRepositorio implements ClienteRepositorioInterface {
@@ -20,6 +21,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
 
     /**
      * busca o cliente pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Cliente}
      * @return um clone do {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -36,6 +38,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
 
     /**
      * busca o cliente pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Cliente}
      * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -50,6 +53,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
 
     /**
      * busca o cliente pelo cpf, nos já cadastrados
+     *
      * @param cpf identificador do {@code Cliente}
      * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null} caso nao encontre
      */
@@ -89,13 +93,14 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
 
     /**
      * altera o atributo {@code ativo} do cliente para false
+     *
      * @param id identificador do {@code Cliente}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
     public boolean desativar(int id) {
         Cliente cliente = this.buscarReferenciaPorId(id);
-        if (cliente != null){
+        if (cliente != null) {
             cliente.setAtivo(false);
             return true;
         }
@@ -116,6 +121,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
 
     /**
      * altera o id do cliente, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param cliente instancia a ter o id alterado
      */
     private void setarId(Cliente cliente) {

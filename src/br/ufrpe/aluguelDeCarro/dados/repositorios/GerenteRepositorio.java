@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- *A classe armazena uma lista de instancias de gerentes
+ * A classe armazena uma lista de instancias de gerentes
+ *
  * @author Fernando
  */
-public class GerenteRepositorio implements GerenteRepositorioInterface{
+public class GerenteRepositorio implements GerenteRepositorioInterface {
 
     private final ArrayList<Gerente> gerentes;
 
@@ -20,6 +21,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
 
     /**
      * busca o gerente pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Gerente}
      * @return um clone do {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -36,6 +38,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
 
     /**
      * busca o gerente pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Gerente}
      * @return o {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -50,6 +53,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
 
     /**
      * busca o gerente pelo cpf, nos já cadastrados
+     *
      * @param cpf identificador do {@code Gerente}
      * @return um clone do {@code Gerente} ativo que contém o cpf, {@code null} caso nao encontre
      */
@@ -90,13 +94,14 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
 
     /**
      * altera o atributo {@code ativo} do gerente para false
+     *
      * @param id identificador do {@code Gerente}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
     public boolean desativar(int id) {
         Gerente gerente = this.buscarReferenciaPorId(id);
-        if (gerente != null){
+        if (gerente != null) {
             gerente.setAtivo(false);
             return true;
         }
@@ -117,6 +122,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
 
     /**
      * altera o id do gerente, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param gerente instancia a ter o id alterado
      */
     private void setarId(Gerente gerente) {
@@ -130,5 +136,5 @@ public class GerenteRepositorio implements GerenteRepositorioInterface{
                     .getAsInt() + 1);
     }
 
-    
+
 }

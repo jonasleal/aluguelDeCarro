@@ -12,6 +12,7 @@ import br.ufrpe.aluguelDeCarro.negocio.GerenteNegocio;
 
 /**
  * Esta classe serve para centralizar todas classes de negócio
+ *
  * @author Fernando
  */
 public class Singleton {
@@ -25,7 +26,7 @@ public class Singleton {
 
     private Usuario usuarioLogado;
 
-    private Singleton(){
+    private Singleton() {
         this.carroNegocio = new CarroNegocio(new CarroRepositorio());
         this.clienteNegocio = new ClienteNegocio(new ClienteRepositorio());
         this.gerenteNegocio = new GerenteNegocio(new GerenteRepositorio());
@@ -36,8 +37,8 @@ public class Singleton {
      * @return uma instancia da classe, caso já tenha sido inicializada simplementes a retorna, caso contrário cria uma
      * nova
      */
-    public static Singleton getInstance(){
-        if(myself == null)
+    public static Singleton getInstance() {
+        if (myself == null)
             myself = new Singleton();
         return myself;
     }

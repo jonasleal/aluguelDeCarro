@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 
 /**
  * A classe armazena uma lista de instancias de carros
+ *
  * @author Fernando
  */
-public class CarroRepositorio implements CarroRepositorioInterface{
+public class CarroRepositorio implements CarroRepositorioInterface {
 
     private final ArrayList<Carro> carros;
 
@@ -20,6 +21,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
 
     /**
      * busca o carro pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Carro}
      * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -37,6 +39,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
 
     /**
      * busca o carro pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Carro}
      * @return o {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -52,6 +55,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
 
     /**
      * busca o carro pela placa, nos já cadastrados
+     *
      * @param placa identificador do {@code Carro}
      * @return um clone do {@code Carro} ativo que contém a placa, {@code null} caso nao encontre
      */
@@ -93,6 +97,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
 
     /**
      * altera o atributo {@code ativo} do carro para false
+     *
      * @param id identificador do {@code Carro}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
@@ -121,6 +126,7 @@ public class CarroRepositorio implements CarroRepositorioInterface{
 
     /**
      * altera o id do carro, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param carro instancia a ter o id alterado
      */
     private void setarId(Carro carro) {

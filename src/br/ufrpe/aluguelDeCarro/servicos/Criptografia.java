@@ -10,27 +10,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
  * @author JonasJr
  */
 public class Criptografia {
     private static MessageDigest instancia;
-    static{
-        try{
+
+    static {
+        try {
             instancia = MessageDigest.getInstance("MD5");
-            
-        }catch(NoSuchAlgorithmException e){
+
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
-    
-    public static String criptografarSenha(String senha){
+
+    public static String criptografarSenha(String senha) {
         String saida = null;
-        if(senha != null && !senha.isEmpty()){
+        if (senha != null && !senha.isEmpty()) {
             instancia.update(senha.getBytes(), 0, senha.length());
-            saida = new BigInteger(1,instancia.digest()).toString(16);
+            saida = new BigInteger(1, instancia.digest()).toString(16);
         }
         return saida;
     }
-    
+
 }

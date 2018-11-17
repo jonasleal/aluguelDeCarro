@@ -1,14 +1,14 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * A classe armazena uma lista de instancias de alugueis
+ *
  * @author Fernando
  */
 public class AluguelRepositorio implements AluguelRepositorioInterface {
@@ -21,6 +21,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
 
     /**
      * busca o aluguel pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Aluguel}
      * @return um clone do {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -61,6 +62,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
 
     /**
      * busca o aluguel pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Aluguel}
      * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -99,6 +101,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
 
     /**
      * altera o atributo {@code ativo} do aluguel para false
+     *
      * @param id identificador do {@code Aluguel}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
@@ -126,6 +129,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
 
     /**
      * altera o id do aluguel, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param aluguel instancia a ter o id alterado
      */
     private void setarId(Aluguel aluguel) {

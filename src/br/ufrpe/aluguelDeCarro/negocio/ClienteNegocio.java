@@ -67,7 +67,7 @@ public class ClienteNegocio {
         return false;
     }
 
-    public ArrayList<Cliente> buscarTodos(){
+    public ArrayList<Cliente> buscarTodos() {
         return this.repositorio.buscarTodos();
     }
 }

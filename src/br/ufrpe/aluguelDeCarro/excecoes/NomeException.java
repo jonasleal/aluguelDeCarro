@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes;
 
 /**
- *
  * @author JonasJr
  */
 public class NomeException extends Exception {

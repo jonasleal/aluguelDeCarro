@@ -6,15 +6,8 @@
 package br.ufrpe.aluguelDeCarro;
 
 import br.ufrpe.aluguelDeCarro.apresentacao.PrincipalApresentacao;
-import br.ufrpe.aluguelDeCarro.dados.entidades.*;
-import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 /**
- *
  * @author JonasJr
  */
 public class AluguelDeCarro {
@@ -42,9 +35,9 @@ public class AluguelDeCarro {
 //            Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
 
             apresentacao.menus();
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
 }

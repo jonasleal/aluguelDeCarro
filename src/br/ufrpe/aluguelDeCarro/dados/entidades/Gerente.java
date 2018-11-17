@@ -4,6 +4,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+
 import java.time.LocalDate;
 
 /**
@@ -21,12 +22,12 @@ public class Gerente extends Pessoa implements Usuario, Cloneable {
         this.senha = senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     @Override

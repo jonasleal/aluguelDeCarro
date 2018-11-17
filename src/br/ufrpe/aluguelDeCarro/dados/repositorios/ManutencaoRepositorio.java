@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * A classe armazena uma lista de instancias de manutencoes
+ *
  * @author Fernando
  */
 public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
@@ -20,6 +21,7 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
 
     /**
      * busca o manutencao pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Manutencao}
      * @return um clone do {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -36,6 +38,7 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
 
     /**
      * busca o manutencao pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Manutencao}
      * @return o {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -74,6 +77,7 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
 
     /**
      * altera o atributo {@code ativo} do manutencao para false
+     *
      * @param id identificador do {@code Manutencao}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
@@ -98,9 +102,10 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
                 .map(Manutencao::clone)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * altera o id do manutencao, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param manutencao instancia a ter o id alterado
      */
     private void setarId(Manutencao manutencao) {

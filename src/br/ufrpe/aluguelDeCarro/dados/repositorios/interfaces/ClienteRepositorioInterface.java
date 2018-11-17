@@ -6,10 +6,10 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+
 import java.util.ArrayList;
 
 /**
- *
  * @author JonasJr
  */
 public interface ClienteRepositorioInterface {

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * A classe armazena uma lista de instancias de reservas
+ *
  * @author Fernando
  */
 public class ReservaRepositorio implements ReservaRepositorioInterface {
@@ -20,6 +21,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
 
     /**
      * busca o reserva pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Reserva}
      * @return um clone do {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -36,6 +38,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
 
     /**
      * busca o reserva pelo id, nos já cadastrados
+     *
      * @param id identificador do {@code Reserva}
      * @return o {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
      */
@@ -74,6 +77,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
 
     /**
      * altera o atributo {@code ativo} do reserva para false
+     *
      * @param id identificador do {@code Reserva}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
@@ -100,6 +104,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
 
     /**
      * altera o id do reserva, o id que ele recebe é o maior até então acrescido de 1
+     *
      * @param reserva instancia a ter o id alterado
      */
     private void setarId(Reserva reserva) {
