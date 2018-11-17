@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 /**
  * @author Fernando
  */
-public class Reserva extends Entidade implements Cloneable{
+public class Reserva implements Cloneable {
+
+    private int id;
+    private boolean ativo;
     private Usuario usuario;
     private Cliente cliente;
     private Carro carro;
@@ -19,6 +22,22 @@ public class Reserva extends Entidade implements Cloneable{
         this.cliente = cliente;
         this.carro = carro;
         this.retiradaPrevista = retiradaPrevista;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Usuario getUsuario() {

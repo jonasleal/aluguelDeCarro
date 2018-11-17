@@ -10,15 +10,17 @@ import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
 import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
+
 import java.time.LocalDate;
 import java.time.Period;
 
 /**
- *
  * @author JonasJr
  */
-public abstract class Pessoa extends Entidade {
+public abstract class Pessoa implements Cloneable {
 
+    private int id;
+    private boolean ativo;
     private String cpf;
     private String nome;
     private LocalDate nascimento;
@@ -30,6 +32,22 @@ public abstract class Pessoa extends Entidade {
         this.cpf = cpf;
         this.nome = nome;
         this.nascimento = nascimento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getCpf() {
@@ -65,7 +83,7 @@ public abstract class Pessoa extends Entidade {
         if (getIdade() <= 18) {
             throw new IdadeExcetion(IdadeExcetion.MENOR);
         }
-        if(!this.nome.matches("[a-zA-Z]{2,}")){
+        if (!this.nome.matches("[a-zA-Z]{2,}")) {
             throw new NomeException(NomeException.INVALIDO);
         }
         return true;

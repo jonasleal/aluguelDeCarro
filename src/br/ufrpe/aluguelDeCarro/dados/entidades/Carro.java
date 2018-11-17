@@ -15,8 +15,10 @@ import java.math.BigDecimal;
 /**
  * @author JonasJr
  */
-public class Carro extends Entidade implements Cloneable {
+public class Carro implements Cloneable {
 
+    private int id;
+    private boolean ativo;
     private String placa;
     private String modelo;
     private String marca;
@@ -52,6 +54,22 @@ public class Carro extends Entidade implements Cloneable {
         this.vidroEletrico = false;
         this.disponivel = false;
         this.preco = preco;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getPlaca() {
@@ -178,14 +196,13 @@ public class Carro extends Entidade implements Cloneable {
      * Valida os dados obrigatórios para um carro
      *
      * @return Se toda a validação tiver sucesso.
-     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * letras e 4 dígitos.
-     * @throws MarcaException - Se não for passado uma marca.
+     * @throws PlacaException  - Se a placa passada estiver fora do padrão de 3
+     *                         letras e 4 dígitos.
+     * @throws MarcaException  - Se não for passado uma marca.
      * @throws ModeloException - Se não for passado um modelo.
-     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
-     * categoria ou valor da diária não for passado ou for passado um valor
-     * diferente dos valores validos.
-     *
+     * @throws CarroException  - Se número de portas, ocupantes, cambio, direção
+     *                         categoria ou valor da diária não for passado ou for passado um valor
+     *                         diferente dos valores validos.
      */
 
     public boolean validar() throws PlacaException, MarcaException, ModeloException, CarroException {

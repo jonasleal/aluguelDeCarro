@@ -6,7 +6,10 @@ import java.util.List;
 /**
  * @author Fernando
  */
-public class Manutencao extends Entidade implements Cloneable{
+public class Manutencao implements Cloneable {
+
+    private int id;
+    private boolean ativo;
     private Gerente gerente;
     private Carro carro;
     private List<String> afazeres;
@@ -22,6 +25,22 @@ public class Manutencao extends Entidade implements Cloneable{
         this.afazeres = afazeres;
         this.data = data;
         this.orcamento = orcamento;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Gerente getGerente() {

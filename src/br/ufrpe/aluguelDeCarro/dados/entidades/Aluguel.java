@@ -17,14 +17,16 @@ import java.time.temporal.ChronoUnit;
 /**
  * @author Fernando
  */
-public class Aluguel extends Entidade implements Cloneable {
+public class Aluguel implements Cloneable {
 
+    private int id;
+    private boolean ativo;
     private LocalDateTime retirada;
     private LocalDateTime devolucaoEstimada;
     private LocalDateTime devolucaoReal;
     private BigDecimal valorEstimado;
     private BigDecimal custoAdicional;
-//    private BigDecimal desconto;
+    //    private BigDecimal desconto;
     private Cliente cliente;
     private Carro carro;
     private Usuario usuario;
@@ -50,6 +52,22 @@ public class Aluguel extends Entidade implements Cloneable {
         this.cliente = cliente;
         this.carro = carro;
         this.usuario = usuario;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public LocalDateTime getRetirada() {
@@ -92,7 +110,7 @@ public class Aluguel extends Entidade implements Cloneable {
         this.custoAdicional = custoAdicional;
     }
 
-//    public BigDecimal getDesconto() {
+    //    public BigDecimal getDesconto() {
 //        return desconto;
 //    }
 //
@@ -127,20 +145,20 @@ public class Aluguel extends Entidade implements Cloneable {
      * Valida os dados obrigatórios para o aluguel.
      *
      * @return True - Se toda a validação tiver sucesso.
-     * @throws AluguelException - Se o valor estimado ou custo adicional for
-     * negativo.
-     * @throws CpfException - Se o CPF do cliente ou atendente não for valido.
-     * @throws IdadeExcetion - Se for menor de idade.
-     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
+     * @throws AluguelException     - Se o valor estimado ou custo adicional for
+     *                              negativo.
+     * @throws CpfException         - Se o CPF do cliente ou atendente não for valido.
+     * @throws IdadeExcetion        - Se for menor de idade.
+     * @throws NomeException        - Se o nome do cliente ou atendente não for valido.
      * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
-     * mais que 11 dígitos.
-     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * letras e 4 dígitos.
-     * @throws MarcaException - Se não for passado uma marca.
-     * @throws ModeloException - Se não for passado um modelo.
-     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
-     * categoria ou valor da diária não for passado ou for passado um valor
-     * diferente dos valores validos.
+     *                              mais que 11 dígitos.
+     * @throws PlacaException       - Se a placa passada estiver fora do padrão de 3
+     *                              letras e 4 dígitos.
+     * @throws MarcaException       - Se não for passado uma marca.
+     * @throws ModeloException      - Se não for passado um modelo.
+     * @throws CarroException       - Se número de portas, ocupantes, cambio, direção
+     *                              categoria ou valor da diária não for passado ou for passado um valor
+     *                              diferente dos valores validos.
      */
     public boolean validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
         this.cliente.validar();
