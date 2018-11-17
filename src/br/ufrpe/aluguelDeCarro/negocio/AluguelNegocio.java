@@ -132,7 +132,7 @@ public class AluguelNegocio {
         if (conseiderarHorario) {
             int minutosTolerancia = 30;
             if (dataDevolucao.compareTo(dataEstimada.plusMinutes(minutosTolerancia)) > 0) {
-                periodoTotal.plusDays(1);
+                periodoTotal = periodoTotal.plusDays(1);
             }
         }
         long dias = periodoTotal.get(ChronoUnit.DAYS);
