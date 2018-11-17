@@ -25,7 +25,7 @@ public class PrincipalApresentacao {
         this.loginApresentacao = new LoginApresentacao();
     }
 
-    public void menus() throws IdadeExcetion, NomeException, CpfException, PlacaException, HabilitacaoException, MarcaException, ModeloException, AluguelException, CarroException {
+    public void menus() throws CpfException {
         cadastrarGerente();
         login();
         this.opcoes();

@@ -11,14 +11,14 @@ import java.util.ArrayList;
 /**
  * @author Fernando
  */
-public class ManutencaoApresentacao {
+class ManutencaoApresentacao {
 
     /**
      * solicita ao usuário os dados da manutencao
      *
      * @return uma instância de {@code Manutencao} com os dados preenchidos pelo usuário
      */
-    public Manutencao lerDadosPeloTeclado() {
+    Manutencao lerDadosPeloTeclado() {
         Manutencao manutencao = null;
         try {
             manutencao = new Manutencao();

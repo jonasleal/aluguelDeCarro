@@ -43,7 +43,7 @@ public class CpfUtil {
             peso = 10;
 
             for (int i = 0; i < 9; i++) {
-                num = (int) (cpf.charAt(i) - 48);
+                num = cpf.charAt(i) - 48;
                 soma += (num * peso);
                 peso--;
             }
@@ -59,7 +59,7 @@ public class CpfUtil {
             peso = 11;
 
             for (int i = 0; i < 10; i++) {
-                num = (int) (cpf.charAt(i) - 48);
+                num = cpf.charAt(i) - 48;
                 soma += (num * peso);
                 peso--;
             }

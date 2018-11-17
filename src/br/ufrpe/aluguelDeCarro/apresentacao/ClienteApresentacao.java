@@ -10,14 +10,14 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
  *
  * @author Fernando
  */
-public class ClienteApresentacao {
+class ClienteApresentacao {
 
     /**
      * solicita ao usuário os dados do cliente
      *
      * @return uma instância de {@code Cliente} com os dados preenchidos pelo usuário
      */
-    public Cliente lerDadosPeloTeclado() {
+    Cliente lerDadosPeloTeclado() {
         Cliente cliente = null;
         try {
             cliente = new Cliente();
@@ -36,7 +36,7 @@ public class ClienteApresentacao {
         return cliente;
     }
 
-    public void visualizarClientes() {
+    void visualizarClientes() {
         Singleton.getInstance().getClienteNegocio().buscarTodos().forEach(System.out::println);
     }
 }

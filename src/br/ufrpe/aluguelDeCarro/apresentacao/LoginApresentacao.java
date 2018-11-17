@@ -10,15 +10,15 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
  *
  * @author Fernando
  */
-public class LoginApresentacao {
+class LoginApresentacao {
 
     /**
      * solicita ao usuário os dados de login
      *
      * @return uma instância de {@code Usuario} com os dados preenchidos pelo usuário
      */
-    public Usuario lerDadosPeloTeclado() {
-        Usuario usuario = null;
+    Usuario lerDadosPeloTeclado() {
+        Usuario usuario;
         try {
             System.out.println("Informe o numero do cpf");
             String cpf = InputUtil.getScan().nextLine();

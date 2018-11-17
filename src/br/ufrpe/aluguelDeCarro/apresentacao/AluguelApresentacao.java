@@ -15,14 +15,14 @@ import java.util.ArrayList;
  *
  * @author Fernando
  */
-public class AluguelApresentacao {
+class AluguelApresentacao {
 
     /**
      * solicita ao usuário os dados do aluguel
      *
      * @return uma instância de {@code Aluguel} com os dados preenchidos pelo usuário
      */
-    public Aluguel lerDadosPeloTeclado() {
+    Aluguel lerDadosPeloTeclado() {
         Aluguel aluguel = null;
         try {
             aluguel = new Aluguel();
@@ -73,7 +73,7 @@ public class AluguelApresentacao {
     /**
      * mostra ao usuário os alugueis cadastrados
      */
-    public void visualizarAlugueis() {
+    void visualizarAlugueis() {
         Singleton.getInstance().getAluguelNegocio().buscarTodos().forEach(System.out::println);
     }
 }

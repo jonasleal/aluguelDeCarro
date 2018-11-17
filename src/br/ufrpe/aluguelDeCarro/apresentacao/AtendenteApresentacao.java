@@ -10,14 +10,14 @@ import java.time.LocalDate;
  *
  * @author Fernando
  */
-public class AtendenteApresentacao {
+class AtendenteApresentacao {
 
     /**
      * solicita ao usuário os dados do atendente
      *
      * @return uma instância de {@code Atendente} com os dados preenchidos pelo usuário
      */
-    public Atendente lerDadosPeloTeclado() {
+    private Atendente lerDadosPeloTeclado() {
         Atendente atendente = null;
         try {
             atendente = new Atendente();

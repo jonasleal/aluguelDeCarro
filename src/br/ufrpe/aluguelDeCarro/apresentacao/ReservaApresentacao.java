@@ -14,14 +14,14 @@ import java.util.ArrayList;
 /**
  * @author Fernando
  */
-public class ReservaApresentacao {
+class ReservaApresentacao {
 
     /**
      * solicita ao usuário os dados da reserva
      *
      * @return uma instância de {@code Reserva} com os dados preenchidos pelo usuário
      */
-    public Reserva lerDadosPeloTeclado() {
+    Reserva lerDadosPeloTeclado() {
         Reserva reserva = new Reserva();
         try {
             System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");

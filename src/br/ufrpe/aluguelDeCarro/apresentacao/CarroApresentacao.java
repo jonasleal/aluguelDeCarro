@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  *
  * @author Fernando
  */
-public class CarroApresentacao {
+class CarroApresentacao {
 
     /**
      * solicita ao usuário os dados do carro
@@ -80,7 +80,7 @@ public class CarroApresentacao {
         return stringBuilder.toString();
     }
 
-    public void visualizarCarros() {
+    void visualizarCarros() {
         Singleton.getInstance().getCarroNegocio().buscarTodos().forEach(System.out::println);
 
     }

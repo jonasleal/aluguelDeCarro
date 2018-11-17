@@ -10,14 +10,14 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
  *
  * @author Fernando
  */
-public class GerenteApresentacao {
+class GerenteApresentacao {
 
     /**
      * solicita ao usuário os dados do gerente
      *
      * @return uma instância de {@code Gerente} com os dados preenchidos pelo usuário
      */
-    public Gerente lerDadosPeloTeclado() {
+    Gerente lerDadosPeloTeclado() {
         Gerente gerente = null;
         try {
             gerente = new Gerente();
