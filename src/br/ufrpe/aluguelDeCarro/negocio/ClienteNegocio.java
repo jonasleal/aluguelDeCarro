@@ -20,19 +20,9 @@ public class ClienteNegocio {
         this.repositorio = repositorio;
     }
 
-    public static boolean verificarStringData(String data) {
-        if (data != null) {
-            return data.matches("\\d{4}-\\d{2}-\\d{2}");
-        }
-        return false;
-    }
-
-    private boolean validar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        return cliente != null && cliente.validar();
-    }
-
     public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(cliente)) {
+        if (cliente != null) {
+            cliente.validar();
             cliente.setAtivo(true);
             return repositorio.cadastrar(cliente);
         }
@@ -40,31 +30,23 @@ public class ClienteNegocio {
     }
 
     public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(cliente)) {
+        if (cliente != null) {
+            cliente.validar();
             return repositorio.alterar(cliente);
         }
         return false;
     }
 
     public Cliente buscarPorId(int id) {
-        if (id > 0) {
-            return this.repositorio.buscarPorId(id);
-        }
-        return null;
+        return this.repositorio.buscarPorId(id);
     }
 
     public Cliente buscarPorCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            return this.repositorio.buscarPorCpf(cpf);
-        }
-        return null;
+        return this.repositorio.buscarPorCpf(cpf);
     }
 
     public boolean desativar(int id) {
-        if (id > 0) {
-            return repositorio.desativar(id);
-        }
-        return false;
+        return repositorio.desativar(id);
     }
 
     public ArrayList<Cliente> buscarTodos() {

@@ -23,17 +23,11 @@ public class CarroNegocio {
         this.repositorio = repositorio;
     }
 
-    private boolean validar(Carro carro) throws PlacaException, MarcaException, ModeloException, CarroException {
-        return carro != null && carro.validar();
-    }
-
-    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        return gerente != null && gerente.validar();
-    }
-
     public boolean cadastrar(Carro carro, Gerente gerente) throws PlacaException, CpfException,
             IdadeExcetion, NomeException, MarcaException, ModeloException, CarroException, HabilitacaoException {
-        if (this.validar(carro) && this.validar(gerente)) {
+        if (carro != null && gerente != null) {
+            carro.validar();
+            gerente.validar();
             carro.setAtivo(true);
             carro.setDisponivel(true);
             return this.repositorio.cadastrar(carro);
@@ -43,31 +37,24 @@ public class CarroNegocio {
 
     public boolean alterar(Carro carro, Gerente gerente) throws PlacaException, MarcaException,
             ModeloException, CarroException, CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (this.validar(carro) && this.validar(gerente)) {
+        if (carro != null && gerente != null) {
+            carro.validar();
+            gerente.validar();
             return this.repositorio.alterar(carro);
         }
         return false;
     }
 
     public Carro buscarPorId(int id) {
-        if (id > 0) {
-            return this.repositorio.buscarPorId(id);
-        }
-        return null;
+        return this.repositorio.buscarPorId(id);
     }
 
     public Carro buscarPorPlaca(String placa) {
-        if (placa != null && placa.length() != 7) {
-            return this.repositorio.buscarPorPlaca(placa);
-        }
-        return null;
+        return this.repositorio.buscarPorPlaca(placa);
     }
 
     public boolean desativar(int id) {
-        if (id > 0) {
-            return this.repositorio.desativar(id);
-        }
-        return false;
+        return this.repositorio.desativar(id);
     }
 
     public ArrayList<Carro> buscarTodos() {

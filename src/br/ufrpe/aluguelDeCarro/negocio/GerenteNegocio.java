@@ -23,12 +23,9 @@ public class GerenteNegocio {
         this.repositorio = repositorio;
     }
 
-    private boolean validar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        return gerente != null && gerente.validar();
-    }
-
     public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(gerente)) {
+        if (gerente != null) {
+            gerente.validar();
             gerente.setAtivo(true);
             return repositorio.cadastrar(gerente);
         }
@@ -36,31 +33,23 @@ public class GerenteNegocio {
     }
 
     public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (validar(gerente)) {
+        if (gerente != null) {
+            gerente.validar();
             return this.repositorio.alterar(gerente);
         }
         return false;
     }
 
     public Gerente buscarPorId(int id) {
-        if (id > 0) {
-            return repositorio.buscarPorId(id);
-        }
-        return null;
+        return repositorio.buscarPorId(id);
     }
 
     public Gerente buscarPorCpf(String cpf) {
-        if (cpf != null && !cpf.isEmpty()) {
-            return this.repositorio.buscarPorCpf(cpf);
-        }
-        return null;
+        return this.repositorio.buscarPorCpf(cpf);
     }
 
     public boolean desativar(int id) {
-        if (id > 0) {
-            return repositorio.desativar(id);
-        }
-        return false;
+        return repositorio.desativar(id);
     }
 
 }

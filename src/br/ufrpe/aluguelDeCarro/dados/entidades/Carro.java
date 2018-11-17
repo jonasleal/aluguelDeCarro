@@ -195,7 +195,6 @@ public class Carro implements Cloneable {
     /**
      * Valida os dados obrigatórios para um carro
      *
-     * @return Se toda a validação tiver sucesso.
      * @throws PlacaException  - Se a placa passada estiver fora do padrão de 3
      *                         letras e 4 dígitos.
      * @throws MarcaException  - Se não for passado uma marca.
@@ -205,7 +204,7 @@ public class Carro implements Cloneable {
      *                         diferente dos valores validos.
      */
 
-    public boolean validar() throws PlacaException, MarcaException, ModeloException, CarroException {
+    public void validar() throws PlacaException, MarcaException, ModeloException, CarroException {
 
         if (placa == null || placa.isEmpty()) {
             throw new PlacaException(PlacaException.NULL);
@@ -243,8 +242,6 @@ public class Carro implements Cloneable {
         if (preco.compareTo(new BigDecimal(0)) < 1) {
             throw new CarroException(CarroException.PRECOINVALIDO);
         }
-
-        return true;
     }
 
     @Override

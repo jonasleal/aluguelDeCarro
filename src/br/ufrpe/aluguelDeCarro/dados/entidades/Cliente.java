@@ -36,16 +36,14 @@ public class Cliente extends Pessoa implements Cloneable {
     }
 
     @Override
-    public boolean validar() throws CpfException, IdadeExcetion, HabilitacaoException, NomeException {
-
+    public void validar() throws HabilitacaoException, IdadeExcetion, NomeException, CpfException {
         if (this.habilitacao == null) {
             throw new HabilitacaoException(HabilitacaoException.NULL);
         }
         if (this.habilitacao.isEmpty() || this.habilitacao.length() != 11) {
             throw new HabilitacaoException(HabilitacaoException.TAMANHO);
         }
-
-        return super.validar();
+        super.validar();
     }
 
     @Override

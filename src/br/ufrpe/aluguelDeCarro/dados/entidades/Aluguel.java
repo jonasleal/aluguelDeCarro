@@ -136,7 +136,6 @@ public class Aluguel implements Cloneable {
     /**
      * Valida os dados obrigatórios para o aluguel.
      *
-     * @return True - Se toda a validação tiver sucesso.
      * @throws AluguelException     - Se o valor estimado ou custo adicional for
      *                              negativo.
      * @throws CpfException         - Se o CPF do cliente ou atendente não for valido.
@@ -152,7 +151,7 @@ public class Aluguel implements Cloneable {
      *                              categoria ou valor da diária não for passado ou for passado um valor
      *                              diferente dos valores validos.
      */
-    public boolean validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
+    public void validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
         this.cliente.validar();
         this.carro.validar();
         this.usuario.validar();
@@ -163,7 +162,6 @@ public class Aluguel implements Cloneable {
         if (this.custoAdicional.compareTo(BigDecimal.ZERO) < 0) {
             throw new AluguelException(AluguelException.VALORINVALIDO);
         }
-        return true;
     }
 
     @Override

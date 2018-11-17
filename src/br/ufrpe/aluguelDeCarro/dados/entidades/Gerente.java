@@ -31,8 +31,8 @@ public class Gerente extends Pessoa implements Usuario, Cloneable {
     }
 
     @Override
-    public boolean validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        return super.validar();
+    public void validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+        super.validar();
     }
 
     /**

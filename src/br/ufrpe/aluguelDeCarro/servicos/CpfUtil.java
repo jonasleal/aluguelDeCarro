@@ -23,7 +23,7 @@ public class CpfUtil {
         return cpfFormatado;
     }
 
-    public static boolean validarCPF(String cpf) throws CpfException {
+    public static void validarCPF(String cpf) throws CpfException {
         if (cpf == null || cpf.isEmpty()) {
             throw new CpfException(CpfException.NULL);
         }
@@ -71,10 +71,7 @@ public class CpfUtil {
                 dig11 = (char) (resul + 48);
             }
 
-            if ((cpf.charAt(9) == dig10)
-                    && (cpf.charAt(10) == dig11)) {
-                return true;
-            } else {
+            if ((cpf.charAt(9) != dig10) || (cpf.charAt(10) != dig11)) {
                 throw new CpfException(CpfException.NAOVALIDO);
             }
         } catch (Exception e) {

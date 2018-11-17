@@ -30,4 +30,11 @@ public class DataUtil {
             return LocalDate.parse(string, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         return null;
     }
+
+    public static boolean verificarStringData(String data) {
+        if (data != null) {
+            return data.matches("\\d{4}-\\d{2}-\\d{2}");
+        }
+        return false;
+    }
 }

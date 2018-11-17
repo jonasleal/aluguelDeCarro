@@ -29,7 +29,7 @@ public class AluguelNegocio {
         this.repositorio = repositorio;
     }
 
-    private boolean validacaoBasica(Aluguel aluguel) throws AluguelException {
+    private void validacaoBasica(Aluguel aluguel) throws AluguelException {
         try {
             aluguel.validar();
         } catch (CarroException | CpfException | HabilitacaoException
@@ -37,30 +37,23 @@ public class AluguelNegocio {
                 | NomeException | PlacaException e) {
             throw new AluguelException(e.getMessage(), e.fillInStackTrace());
         }
-
-        return true;
     }
 
-    private boolean validarDevolucao(Aluguel aluguel) throws AluguelException {
+    private void validarDevolucao(Aluguel aluguel) throws AluguelException {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.buscarPorId(aluguel.getId());
-
         if (aluguelOriginal.getDevolucaoReal() != null) {
             throw new AluguelException(AluguelException.ALUGUELFINALIZADO);
         }
-
         if (!aluguel.getDevolucaoEstimada().equals(aluguelOriginal.getDevolucaoEstimada())) {
             throw new AluguelException(AluguelException.DATAESTIMADAINCONSISTENTE);
         }
-
         if (!aluguel.getRetirada().equals(aluguelOriginal.getRetirada())) {
             throw new AluguelException(AluguelException.DATARETIRADAINCONSISTENTE);
         }
-
-        return true;
     }
 
-    private boolean validarParaAlugar(Aluguel aluguel) throws AluguelException, CpfException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelException, CpfException {
         validacaoBasica(aluguel);
         if (buscarAbertoPorCpf(aluguel.getCliente().getCpf()) != null) {
             throw new AluguelException(AluguelException.CPFCONTEPENDENCIA);
@@ -68,17 +61,13 @@ public class AluguelNegocio {
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
             throw new AluguelException(AluguelException.DATAINVALIDA);
         }
-
         if (aluguel.getDevolucaoEstimada().toLocalDate().compareTo(LocalDate.now()) < 1) {
             throw new AluguelException(AluguelException.DATAINVALIDA);
         }
-
         Carro carro = aluguel.getCarro();
         if (carro == null || !carro.isAtivo() || !carro.isDisponivel()) {
             throw new AluguelException(AluguelException.INDISPONIVEL);
         }
-
-        return true;
     }
 
     /**
@@ -86,13 +75,14 @@ public class AluguelNegocio {
      * obrigatórios tenha sido passado, retorna True, caso contrário levanta uma
      * exceção referente a causa da falha.
      *
-     * @param aluguel
+     * @param aluguel Instancia a ser cadastrada
      * @return True - Se concluído com sucesso.
      * @throws AluguelException - Contem a causa e a mensagem de erro.
      * @throws CpfException     - Se o CPF não for passado ou valido.
      */
     public boolean cadastrar(Aluguel aluguel) throws AluguelException, CpfException {
-        if (this.validarParaAlugar(aluguel)) {
+        if (aluguel != null) {
+            this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
             aluguel.getCarro().setDisponivel(false);
             return repositorio.cadastrar(aluguel);
@@ -101,17 +91,15 @@ public class AluguelNegocio {
     }
 
     public boolean alterar(Aluguel aluguel) throws AluguelException {
-        if (this.validacaoBasica(aluguel)) {
+        if (aluguel != null) {
+            this.validacaoBasica(aluguel);
             return this.repositorio.alterar(aluguel);
         }
         return false;
     }
 
     public Aluguel buscarPorId(int id) {
-        if (id > 0) {
-            return this.repositorio.buscarPorId(id);
-        }
-        return null;
+        return this.repositorio.buscarPorId(id);
     }
 
     /**
@@ -168,10 +156,8 @@ public class AluguelNegocio {
      * @throws CpfException - Se o CPF não for passado ou valido.
      */
     public Aluguel buscarAbertoPorCpf(String cpf) throws CpfException {
-        if (CpfUtil.validarCPF(cpf)) {
-            return this.repositorio.buscarPorCpf(cpf);
-        }
-        return null;
+        CpfUtil.validarCPF(cpf);
+        return this.repositorio.buscarPorCpf(cpf);
     }
 
     /**
@@ -210,11 +196,8 @@ public class AluguelNegocio {
      * @throws AluguelException - Contem a mensagem e causa do erro.
      */
     public boolean devolucao(Aluguel aluguel) throws AluguelException {
-        if (validarDevolucao(aluguel)) {
-            return this.alterar(aluguel);
-        }
-
-        return false;
+        validarDevolucao(aluguel);
+        return this.alterar(aluguel);
     }
 
     public ArrayList<Aluguel> buscarTodos() {
