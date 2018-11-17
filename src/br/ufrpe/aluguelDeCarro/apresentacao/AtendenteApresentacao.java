@@ -7,12 +7,14 @@ import java.time.LocalDate;
 
 /**
  * Classe de interação com o usuário, para que o mesmo possar gerenciar o atendente
+ *
  * @author Fernando
  */
 public class AtendenteApresentacao {
 
     /**
      * solicita ao usuário os dados do atendente
+     *
      * @return uma instância de {@code Atendente} com os dados preenchidos pelo usuário
      */
     public Atendente lerDadosPeloTeclado() {
@@ -24,7 +26,7 @@ public class AtendenteApresentacao {
             System.out.println("Informe o cpf do atendente:");
             atendente.setCpf(InputUtil.getScan().next());
             System.out.println("Informe a data de nascimento do atendente(siga o modelo dd-MM-yyyy):");
-            atendente.setNascimento(LocalDate.parse(InputUtil.getScan().next()));
+            atendente.setNascimento(LocalDate.parse(InputUtil.getScan().nextLine()));
             System.out.println("Informe a senha de acesso do atendente:");
             atendente.setSenha(InputUtil.getScan().next());
         } catch (Exception e) {

@@ -7,7 +7,6 @@ import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -30,9 +29,9 @@ public class AluguelApresentacao {
             System.out.println("Informe a data de devolucao (siga o modelo dd-MM-yyyy HH:mm):");
             aluguel.setDevolucaoEstimada(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
             System.out.println("Informe o carro\n" + getCarros());
-            aluguel.setCarro(Singleton.getInstance().getCarroNegocio().buscarPorId(InputUtil.getScan().nextInt()));
+            aluguel.setCarro(Singleton.getInstance().getCarroNegocio().buscarPorId(InputUtil.solicitarNumeroInteiro()));
             System.out.println("Informe o cliente\n" + getClientes());
-            aluguel.setCliente(Singleton.getInstance().getClienteNegocio().buscarPorId(InputUtil.getScan().nextInt()));
+            aluguel.setCliente(Singleton.getInstance().getClienteNegocio().buscarPorId(InputUtil.solicitarNumeroInteiro()));
             aluguel.setUsuario(Singleton.getInstance().getUsuarioLogado());
             aluguel.setRetirada(LocalDateTime.now().plusHours(1));
             aluguel.calcularValorEstimado();

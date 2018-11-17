@@ -11,12 +11,14 @@ import java.math.BigDecimal;
 
 /**
  * Classe de interação com o usuário, para que o mesmo possar gerenciar o carro
+ *
  * @author Fernando
  */
 public class CarroApresentacao {
 
     /**
      * solicita ao usuário os dados do carro
+     *
      * @return uma instância de {@code Carro} com os dados preenchidos pelo usuário
      */
     public Carro lerDadosPeloTeclado() {
@@ -24,11 +26,11 @@ public class CarroApresentacao {
         try {
             carro = new Carro();
             System.out.println("Informe a placa do carro");
-            carro.setPlaca(InputUtil.getScan().next());
+            carro.setPlaca(InputUtil.getScan().nextLine());
             System.out.println("Informe a marca do carro");
-            carro.setMarca(InputUtil.getScan().next());
+            carro.setMarca(InputUtil.getScan().nextLine());
             System.out.println("Informe o modelo do carro");
-            carro.setModelo(InputUtil.getScan().next());
+            carro.setModelo(InputUtil.getScan().nextLine());
             System.out.println("Informe a quantidade de portas do carro");
             carro.setPortas(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe a capacidade de passageiros do carro");
@@ -58,20 +60,20 @@ public class CarroApresentacao {
         return stringBuilder.toString();
     }
 
-    private String getCambios(){
+    private String getCambios() {
         Cambio[] cambios = Cambio.values();
         StringBuilder stringBuilder = new StringBuilder();
-        for (Cambio cambio: cambios)
+        for (Cambio cambio : cambios)
             stringBuilder.append(cambio.getValor()).append(" - ").append(cambio.getNome()).append("\n");
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
 
-    private String getDirecoes(){
+    private String getDirecoes() {
         Direcao[] direcoes = Direcao.values();
         StringBuilder stringBuilder = new StringBuilder();
-        for (Direcao direcao: direcoes)
+        for (Direcao direcao : direcoes)
             stringBuilder.append(direcao.getValor()).append(" - ").append(direcao.getNome()).append("\n");
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);

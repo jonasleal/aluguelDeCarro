@@ -15,6 +15,7 @@ public class ManutencaoApresentacao {
 
     /**
      * solicita ao usuário os dados da manutencao
+     *
      * @return uma instância de {@code Manutencao} com os dados preenchidos pelo usuário
      */
     public Manutencao lerDadosPeloTeclado() {
@@ -23,9 +24,9 @@ public class ManutencaoApresentacao {
             manutencao = new Manutencao();
             manutencao.setAfazeres(lerAfazeresDoTeclado());
             System.out.println("Informe a data da manutencao (siga o modelo dd-MM-yyyy):");
-            manutencao.setData(DataUtil.transformarStringEmData(InputUtil.getScan().next()));
+            manutencao.setData(DataUtil.transformarStringEmData(InputUtil.getScan().nextLine()));
             System.out.println("Informe o orcamento da manutencao");
-            manutencao.setOrcamento(InputUtil.getScan().nextDouble());
+            manutencao.setOrcamento(InputUtil.solicitarNumeroFlutuante());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             lerAfazeresDoTeclado();
@@ -37,14 +38,14 @@ public class ManutencaoApresentacao {
         ArrayList<String> afazeres = new ArrayList<>();
         try {
             System.out.println("Informe uma tarefa");
-            afazeres.add(InputUtil.getScan().next());
+            afazeres.add(InputUtil.getScan().nextLine());
             int opcao;
             do {
                 System.out.println("0 - Continuar o cadastro da manutencao\n1 - Adicionar outra tarefa");
-                opcao = InputUtil.getScan().nextInt();
+                opcao = InputUtil.solicitarNumeroInteiro();
                 if (opcao == 1) {
                     System.out.println("Informe uma tarefa");
-                    afazeres.add(InputUtil.getScan().next());
+                    afazeres.add(InputUtil.getScan().nextLine());
                 }
             } while (opcao != 0);
         } catch (Exception e) {

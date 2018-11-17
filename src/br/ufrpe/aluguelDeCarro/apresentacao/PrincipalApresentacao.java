@@ -7,6 +7,7 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 /**
  * Classe central das interações com o usuário
+ *
  * @author Fernando
  */
 public class PrincipalApresentacao {
@@ -112,7 +113,7 @@ public class PrincipalApresentacao {
 
     private void cadastrarCarro() {
         Usuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
-        if(usuarioLogado instanceof Gerente) {
+        if (usuarioLogado instanceof Gerente) {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
                 Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) usuarioLogado);

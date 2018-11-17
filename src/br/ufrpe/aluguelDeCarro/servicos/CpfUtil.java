@@ -8,16 +8,13 @@ package br.ufrpe.aluguelDeCarro.servicos;
 import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 
 
-
-
 /**
- *
  * @author JonasJr
  */
 public class CpfUtil {
-    
+
     public static String cpfToString(String cpf) {
-        if(cpf == null || cpf.length() != 11){
+        if (cpf == null || cpf.length() != 11) {
             return "";
         }
         String cpfFormatado;
@@ -27,7 +24,7 @@ public class CpfUtil {
     }
 
     public static boolean validarCPF(String cpf) throws CpfException {
-        if(cpf == null || cpf.isEmpty()){
+        if (cpf == null || cpf.isEmpty()) {
             throw new CpfException(CpfException.NULL);
         }
         if (cpf.equals("00000000000") || cpf.equals("11111111111")
@@ -85,6 +82,6 @@ public class CpfUtil {
         }
 
     }
-    
-    
+
+
 }

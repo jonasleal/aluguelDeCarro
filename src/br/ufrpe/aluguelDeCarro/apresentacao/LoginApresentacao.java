@@ -21,11 +21,11 @@ public class LoginApresentacao {
         Usuario usuario = null;
         try {
             System.out.println("Informe o numero do cpf");
-            String cpf = InputUtil.getScan().next();
+            String cpf = InputUtil.getScan().nextLine();
             usuario = Singleton.getInstance().getGerenteNegocio().buscarPorCpf(cpf);
             if (usuario != null) {
                 System.out.println("Informe a senha");
-                if (usuario.validarSenha(Criptografia.criptografarSenha(InputUtil.getScan().next())))
+                if (usuario.validarSenha(Criptografia.criptografarSenha(InputUtil.getScan().nextLine())))
                     return usuario;
             }
             System.out.println("Nao encontrado");

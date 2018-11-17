@@ -18,6 +18,7 @@ public class ReservaApresentacao {
 
     /**
      * solicita ao usuário os dados da reserva
+     *
      * @return uma instância de {@code Reserva} com os dados preenchidos pelo usuário
      */
     public Reserva lerDadosPeloTeclado() {
@@ -26,9 +27,9 @@ public class ReservaApresentacao {
             System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");
             reserva.setRetiradaPrevista(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
             System.out.println("Selecione um carro para fazer a reserva\n" + getCarros());
-            reserva.setCarro(new CarroRepositorio().buscarTodos().get(InputUtil.getScan().nextInt()));
-            System.out.println("Selecione o cliente\n"+ getClientes());
-            reserva.setCliente(new ClienteRepositorio().buscarTodos().get(InputUtil.getScan().nextInt()));
+            reserva.setCarro(new CarroRepositorio().buscarTodos().get(InputUtil.solicitarNumeroInteiro()));
+            System.out.println("Selecione o cliente\n" + getClientes());
+            reserva.setCliente(new ClienteRepositorio().buscarTodos().get(InputUtil.solicitarNumeroInteiro()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             lerDadosPeloTeclado();
