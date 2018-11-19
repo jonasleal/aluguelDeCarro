@@ -2,6 +2,7 @@ package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Fernando
@@ -91,5 +92,18 @@ public class Manutencao implements Cloneable {
             System.out.println("Clone não efetuado");
         }
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Manutencao that = (Manutencao) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

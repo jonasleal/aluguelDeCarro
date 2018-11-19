@@ -5,6 +5,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * @author Fernando
@@ -200,5 +201,18 @@ public class Aluguel implements Cloneable {
                 + ", carro=" + carro
                 + ", usuario=" + usuario
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Aluguel aluguel = (Aluguel) o;
+        return id == aluguel.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

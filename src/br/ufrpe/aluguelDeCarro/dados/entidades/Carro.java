@@ -11,6 +11,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * @author JonasJr
@@ -273,5 +274,18 @@ public class Carro implements Cloneable {
                 + ", vidroEletrico=" + vidroEletrico
                 + ", disponivel=" + disponivel
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carro carro = (Carro) o;
+        return id == carro.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

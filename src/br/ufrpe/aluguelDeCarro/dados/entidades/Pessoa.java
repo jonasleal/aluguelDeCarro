@@ -13,6 +13,7 @@ import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 /**
  * @author JonasJr
@@ -86,5 +87,18 @@ public abstract class Pessoa implements Cloneable {
         if (!this.nome.matches("[a-zA-Z]{2,}")) {
             throw new NomeException(NomeException.INVALIDO);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return id == pessoa.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

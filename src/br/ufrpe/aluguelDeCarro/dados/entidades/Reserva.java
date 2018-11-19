@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Fernando
@@ -80,5 +81,18 @@ public class Reserva implements Cloneable {
             System.out.println("Clone não efetuado");
         }
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reserva reserva = (Reserva) o;
+        return id == reserva.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
