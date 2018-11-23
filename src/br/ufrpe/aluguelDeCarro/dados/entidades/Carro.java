@@ -226,22 +226,22 @@ public class Carro implements Cloneable {
             throw new ModeloException(ModeloException.INVALIDA);
         }
         if (portas < 1) {
-            throw new CarroException(CarroException.NUMPORTAS);
+            throw new CarroException(CarroException.NUMERO_PORTAS);
         }
         if (ocupantes < 1) {
-            throw new CarroException(CarroException.NUMOCUPANTES);
+            throw new CarroException(CarroException.NUMERO_OCUPANTES);
         }
         if (cambio == null || (cambio.getValor() < 1 || cambio.getValor() > 3)) {
-            throw new CarroException(CarroException.CAMBIOINVALIDO);
+            throw new CarroException(CarroException.CAMBIO_INVALIDO);
         }
         if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
-            throw new CarroException(CarroException.DIRECAOINVALIDO);
+            throw new CarroException(CarroException.DIRECAO_INVALIDA);
         }
         if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
-            throw new CarroException(CarroException.CATEGORIAINVALIDO);
+            throw new CarroException(CarroException.CATEGORIA_INVALIDA);
         }
         if (preco.compareTo(new BigDecimal(0)) < 1) {
-            throw new CarroException(CarroException.PRECOINVALIDO);
+            throw new CarroException(CarroException.PRECO_INVALIDO);
         }
     }
 

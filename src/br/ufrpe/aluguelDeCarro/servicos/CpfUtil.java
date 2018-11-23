@@ -32,7 +32,7 @@ public class CpfUtil {
                 || cpf.equals("44444444444") || cpf.equals("55555555555")
                 || cpf.equals("66666666666") || cpf.equals("77777777777")
                 || cpf.equals("88888888888") || cpf.equals("99999999999")) {
-            throw new CpfException(CpfException.NAOVALIDO);
+            throw new CpfException(CpfException.INVALIDO);
         }
 
         char dig10, dig11;
@@ -72,10 +72,10 @@ public class CpfUtil {
             }
 
             if ((cpf.charAt(9) != dig10) || (cpf.charAt(10) != dig11)) {
-                throw new CpfException(CpfException.NAOVALIDO);
+                throw new CpfException(CpfException.INVALIDO);
             }
         } catch (Exception e) {
-            throw new CpfException(CpfException.NAOVALIDO);
+            throw new CpfException(CpfException.INVALIDO);
         }
 
     }

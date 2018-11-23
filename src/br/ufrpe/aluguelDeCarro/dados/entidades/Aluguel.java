@@ -158,10 +158,10 @@ public class Aluguel implements Cloneable {
         this.usuario.validar();
 
         if (this.valorEstimado.compareTo(BigDecimal.ZERO) < 0) {
-            throw new AluguelException(AluguelException.VALORINVALIDO);
+            throw new AluguelException(AluguelException.VALOR_INVALIDO);
         }
         if (this.custoAdicional.compareTo(BigDecimal.ZERO) < 0) {
-            throw new AluguelException(AluguelException.VALORINVALIDO);
+            throw new AluguelException(AluguelException.VALOR_INVALIDO);
         }
     }
 

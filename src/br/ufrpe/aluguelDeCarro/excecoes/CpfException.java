@@ -11,8 +11,8 @@ package br.ufrpe.aluguelDeCarro.excecoes;
 public class CpfException extends Exception {
     public static String NULL = "CPF é obrigatorio";
     public static String TAMANHO = "CPF deve conter 11 números";
-    public static String NAOENCONTRADA = "CPF não encontrada";
-    public static String NAOVALIDO = "CPF não é valido.";
+    public static String NAO_ENCONTRADA = "CPF não encontrada";
+    public static String INVALIDO = "CPF não é valido.";
 
 
     public CpfException(String msg) {

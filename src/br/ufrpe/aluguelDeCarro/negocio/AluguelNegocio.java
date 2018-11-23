@@ -43,26 +43,26 @@ public class AluguelNegocio {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.buscarPorId(aluguel.getId());
         if (aluguelOriginal.getDevolucaoReal() != null) {
-            throw new AluguelException(AluguelException.ALUGUELFINALIZADO);
+            throw new AluguelException(AluguelException.ALUGUEL_FINALIZADO);
         }
         if (!aluguel.getDevolucaoEstimada().equals(aluguelOriginal.getDevolucaoEstimada())) {
-            throw new AluguelException(AluguelException.DATAESTIMADAINCONSISTENTE);
+            throw new AluguelException(AluguelException.DATA_ESTIMADA_INCONSISTENTE);
         }
         if (!aluguel.getRetirada().equals(aluguelOriginal.getRetirada())) {
-            throw new AluguelException(AluguelException.DATARETIRADAINCONSISTENTE);
+            throw new AluguelException(AluguelException.DATA_RETIRADA_INCONSISTENTE);
         }
     }
 
     private void validarParaAlugar(Aluguel aluguel) throws AluguelException, CpfException {
         validacaoBasica(aluguel);
         if (buscarAbertoPorCpf(aluguel.getCliente().getCpf()) != null) {
-            throw new AluguelException(AluguelException.CPFCONTEPENDENCIA);
+            throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
         }
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
-            throw new AluguelException(AluguelException.DATAINVALIDA);
+            throw new AluguelException(AluguelException.DATA_INVALIDA);
         }
         if (aluguel.getDevolucaoEstimada().toLocalDate().compareTo(LocalDate.now()) < 1) {
-            throw new AluguelException(AluguelException.DATAINVALIDA);
+            throw new AluguelException(AluguelException.DATA_INVALIDA);
         }
         Carro carro = aluguel.getCarro();
         if (carro == null || !carro.isAtivo() || !carro.isDisponivel()) {
