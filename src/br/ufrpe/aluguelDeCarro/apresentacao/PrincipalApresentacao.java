@@ -91,11 +91,11 @@ public class PrincipalApresentacao {
         } while (opcao != 0);
     }
 
-    private void cadastrarAluguel() throws CpfException {
+    private void cadastrarAluguel() {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
-        } catch (AluguelException | AluguelNaoEncontradoException e) {
+        } catch (AluguelException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }

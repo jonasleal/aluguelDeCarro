@@ -53,9 +53,9 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelException {
         validacaoBasica(aluguel);
-        if (consultar(aluguel.getCliente()) != null) {
+        if (this.repositorio.existe(aluguel.getCliente())) {
             throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
         }
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
@@ -79,7 +79,7 @@ public class AluguelNegocio {
      * @return True - Se concluído com sucesso.
      * @throws AluguelException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
