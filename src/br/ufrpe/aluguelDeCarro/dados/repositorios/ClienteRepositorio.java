@@ -120,6 +120,26 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean existe(int id) {
+        try {
+            this.consultar(id);
+            return true;
+        } catch (ClienteNaoEncontradoException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existe(String cpf) {
+        try {
+            this.consultar(cpf);
+            return true;
+        } catch (ClienteNaoEncontradoException e) {
+            return false;
+        }
+    }
+
     /**
      * altera o id do cliente, o id que ele recebe é o maior até então acrescido de 1
      *

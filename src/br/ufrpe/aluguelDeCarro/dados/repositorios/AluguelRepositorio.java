@@ -141,6 +141,36 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean existe(int id) {
+        try {
+            this.consultar(id);
+            return true;
+        } catch (AluguelNaoEncontradoException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existe(Cliente cliente) {
+        try {
+            this.consultar(cliente);
+            return true;
+        } catch (AluguelNaoEncontradoException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existe(Carro carro) {
+        try {
+            this.consultar(carro);
+            return true;
+        } catch (AluguelNaoEncontradoException e) {
+            return false;
+        }
+    }
+
     /**
      * altera o id do aluguel, o id que ele recebe é o maior até então acrescido de 1
      *

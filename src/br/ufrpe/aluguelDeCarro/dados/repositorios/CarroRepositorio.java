@@ -125,6 +125,26 @@ public class CarroRepositorio implements CarroRepositorioInterface {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean existe(int id) {
+        try {
+            this.consultar(id);
+            return true;
+        } catch (CarroNaoEncontradoException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existe(String placa) {
+        try {
+            this.consultar(placa);
+            return true;
+        } catch (CarroNaoEncontradoException e) {
+            return false;
+        }
+    }
+
     /**
      * altera o id do carro, o id que ele recebe é o maior até então acrescido de 1
      *

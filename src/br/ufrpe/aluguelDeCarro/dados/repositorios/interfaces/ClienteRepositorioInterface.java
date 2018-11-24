@@ -27,4 +27,8 @@ public interface ClienteRepositorioInterface {
 
     ArrayList<Cliente> consultarTodos();
 
+    boolean existe(int id);
+
+    boolean existe(String cpf);
+
 }

@@ -26,4 +26,8 @@ public interface CarroRepositorioInterface {
     boolean desativar(int id) throws CarroNaoEncontradoException;
 
     ArrayList<Carro> consultarTodos();
+
+    boolean existe(int id);
+
+    boolean existe(String placa);
 }

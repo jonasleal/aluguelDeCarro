@@ -30,4 +30,10 @@ public interface AluguelRepositorioInterface {
     boolean desativar(int id) throws AluguelNaoEncontradoException;
 
     ArrayList<Aluguel> consultarTodos();
+
+    boolean existe(int id);
+
+    boolean existe(Cliente cliente);
+
+    boolean existe(Carro carro);
 }
