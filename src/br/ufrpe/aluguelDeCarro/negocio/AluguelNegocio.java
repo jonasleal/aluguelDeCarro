@@ -55,7 +55,7 @@ public class AluguelNegocio {
 
     private void validarParaAlugar(Aluguel aluguel) throws AluguelException {
         validacaoBasica(aluguel);
-        if (consultarAberto(aluguel.getCliente()) != null) {
+        if (consultar(aluguel.getCliente()) != null) {
             throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
         }
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
@@ -102,15 +102,13 @@ public class AluguelNegocio {
     }
 
     /**
-     * Calcula o debito de um aluguel em aberto e entrega um aluguel finalizado
-     * no moemnto da chamada.
+     * Calcula o debito do aluguel em aberto e o finaliza no momento da chamada.
      *
      * @param aluguel            - Objeto com os dados do aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância
      *                           de 30 minutos.
-     * @return Objeto Aluguel no estado finalizado.
      */
-    private Aluguel calcularDebito(Aluguel aluguel, boolean considerarHorario) {
+    private void calcularDebito(Aluguel aluguel, boolean considerarHorario) {
         aluguel.setDevolucaoReal(LocalDateTime.now());
         LocalDateTime dataEstimada = aluguel.getDevolucaoEstimada();
         LocalDateTime dataDevolucao = aluguel.getDevolucaoReal();
@@ -125,11 +123,10 @@ public class AluguelNegocio {
         long dias = periodoTotal.get(ChronoUnit.DAYS);
         BigDecimal adicional = aluguel.getCarro().getPreco().multiply(new BigDecimal(dias));
         aluguel.setCustoAdicional(adicional);
-        return aluguel;
     }
 
     /**
-     * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
+     * Busca e calcula o debito de um aluguel em aberto para um determinado cliente
      * entrega um aluguel finalizado no momento da chamada.
      *
      * @param cliente           - cliente registrado no aluguel em aberto
@@ -138,35 +135,15 @@ public class AluguelNegocio {
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) {
-        Aluguel aluguel = consultarAberto(cliente);
+        Aluguel aluguel = consultar(cliente);
         if (aluguel != null) {
-            aluguel = calcularDebito(aluguel, considerarHorario);
+            calcularDebito(aluguel, considerarHorario);
         }
         return aluguel;
     }
 
     /**
-     * Busca debito de um aluguel em aberto para um determinado cpf.
-     *
-     * @param cliente - cliente registrado no aluguel em aberto
-     * @return Intancia do aluguel aberto para este CPF.
-     */
-    public Aluguel consultarAberto(Cliente cliente) {
-        return this.repositorio.consultar(cliente);
-    }
-
-    /**
-     * Busca debito de um aluguel em aberto para um determinado carro.
-     *
-     * @param carro - carro registrado no aluguel em aberto
-     * @return Intancia do aluguel aberto para esta placa.
-     */
-    public Aluguel consultarAberto(Carro carro) {
-        return repositorio.consultar(carro);
-    }
-
-    /**
-     * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
+     * Busca e calcula o debito de um aluguel em aberto para um determinado carro
      * entrega um aluguel finalizado no momento da chamada.
      *
      * @param carro             - carro registrado no aluguel em aberto
@@ -175,11 +152,31 @@ public class AluguelNegocio {
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Carro carro, boolean considerarHorario) {
-        Aluguel aluguel = consultarAberto(carro);
+        Aluguel aluguel = consultar(carro);
         if (aluguel != null) {
-            aluguel = calcularDebito(aluguel, considerarHorario);
+            calcularDebito(aluguel, considerarHorario);
         }
         return aluguel;
+    }
+
+    /**
+     * Busca aluguel em aberto para um determinado cliente.
+     *
+     * @param cliente - cliente registrado no aluguel em aberto
+     * @return Intancia do aluguel aberto para este cliente.
+     */
+    public Aluguel consultar(Cliente cliente) {
+        return this.repositorio.consultar(cliente);
+    }
+
+    /**
+     * Busca aluguel em aberto para um determinado carro.
+     *
+     * @param carro - carro registrado no aluguel em aberto
+     * @return Intancia do aluguel aberto para este carro.
+     */
+    public Aluguel consultar(Carro carro) {
+        return repositorio.consultar(carro);
     }
 
     /**
