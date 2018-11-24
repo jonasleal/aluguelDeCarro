@@ -37,19 +37,19 @@ public class ClienteNegocio {
         return false;
     }
 
-    public Cliente buscarPorId(int id) {
-        return this.repositorio.buscarPorId(id);
+    public Cliente consultar(int id) {
+        return this.repositorio.consultar(id);
     }
 
-    public Cliente buscarPorCpf(String cpf) {
-        return this.repositorio.buscarPorCpf(cpf);
+    public Cliente consultar(String cpf) {
+        return this.repositorio.consultar(cpf);
     }
 
     public boolean desativar(int id) {
         return repositorio.desativar(id);
     }
 
-    public ArrayList<Cliente> buscarTodos() {
-        return this.repositorio.buscarTodos();
+    public ArrayList<Cliente> consultarTodos() {
+        return this.repositorio.consultarTodos();
     }
 }

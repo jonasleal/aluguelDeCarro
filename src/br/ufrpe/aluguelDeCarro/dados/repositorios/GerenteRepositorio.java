@@ -26,7 +26,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return um clone do {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Gerente buscarPorId(int id) {
+    public Gerente consultar(int id) {
         return this.gerentes
                 .stream()
                 .filter(Gerente::isAtivo)
@@ -58,7 +58,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return um clone do {@code Gerente} ativo que contém o cpf, {@code null} caso nao encontre
      */
     @Override
-    public Gerente buscarPorCpf(String cpf) {
+    public Gerente consultar(String cpf) {
         return this.gerentes
                 .stream()
                 .filter(gerente -> gerente.getCpf().equals(cpf))
@@ -112,7 +112,7 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Gerente> buscarTodos() {
+    public ArrayList<Gerente> consultarTodos() {
         return (ArrayList<Gerente>) this.gerentes
                 .stream()
                 .filter(Gerente::isAtivo)

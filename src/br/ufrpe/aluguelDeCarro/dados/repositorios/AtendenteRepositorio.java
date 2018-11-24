@@ -26,7 +26,7 @@ public class AtendenteRepositorio implements AtendenteRepositorioInterface {
      * @return um clone do {@code Atendente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Atendente buscarPorId(int id) {
+    public Atendente consultar(int id) {
         return this.atendentes
                 .stream()
                 .filter(Atendente::isAtivo)
@@ -95,7 +95,7 @@ public class AtendenteRepositorio implements AtendenteRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Atendente> buscarTodos() {
+    public ArrayList<Atendente> consultarTodos() {
         return (ArrayList<Atendente>) this.atendentes
                 .stream()
                 .filter(Atendente::isAtivo)

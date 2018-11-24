@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public interface CarroRepositorioInterface {
 
-    Carro buscarPorId(int id);
+    Carro consultar(int id);
 
-    Carro buscarPorPlaca(String placa);
+    Carro consultar(String placa);
 
     boolean cadastrar(Carro carro);
 
@@ -24,5 +24,5 @@ public interface CarroRepositorioInterface {
 
     boolean desativar(int id);
 
-    ArrayList<Carro> buscarTodos();
+    ArrayList<Carro> consultarTodos();
 }

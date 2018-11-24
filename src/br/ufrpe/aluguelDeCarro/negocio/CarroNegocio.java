@@ -45,20 +45,20 @@ public class CarroNegocio {
         return false;
     }
 
-    public Carro buscarPorId(int id) {
-        return this.repositorio.buscarPorId(id);
+    public Carro consultar(int id) {
+        return this.repositorio.consultar(id);
     }
 
-    public Carro buscarPorPlaca(String placa) {
-        return this.repositorio.buscarPorPlaca(placa);
+    public Carro consultar(String placa) {
+        return this.repositorio.consultar(placa);
     }
 
     public boolean desativar(int id) {
         return this.repositorio.desativar(id);
     }
 
-    public ArrayList<Carro> buscarTodos() {
-        return this.repositorio.buscarTodos();
+    public ArrayList<Carro> consultarTodos() {
+        return this.repositorio.consultarTodos();
     }
 
 }

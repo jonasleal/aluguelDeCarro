@@ -29,9 +29,9 @@ class AluguelApresentacao {
             System.out.println("Informe a data de devolucao (siga o modelo dd-MM-yyyy HH:mm):");
             aluguel.setDevolucaoEstimada(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
             System.out.println("Informe o carro\n" + getCarros());
-            aluguel.setCarro(Singleton.getInstance().getCarroNegocio().buscarPorId(InputUtil.solicitarNumeroInteiro()));
+            aluguel.setCarro(Singleton.getInstance().getCarroNegocio().consultar(InputUtil.solicitarNumeroInteiro()));
             System.out.println("Informe o cliente\n" + getClientes());
-            aluguel.setCliente(Singleton.getInstance().getClienteNegocio().buscarPorId(InputUtil.solicitarNumeroInteiro()));
+            aluguel.setCliente(Singleton.getInstance().getClienteNegocio().consultar(InputUtil.solicitarNumeroInteiro()));
             aluguel.setUsuario(Singleton.getInstance().getUsuarioLogado());
             aluguel.setRetirada(LocalDateTime.now().plusHours(1));
             aluguel.calcularValorEstimado();
@@ -47,7 +47,7 @@ class AluguelApresentacao {
      */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().buscarTodos();
+        ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().consultarTodos();
         if (carros != null && !carros.isEmpty()) {
             carros.forEach(carro -> stringBuilder.append(carro.getId()).append(" - ").append(carro));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -61,7 +61,7 @@ class AluguelApresentacao {
      */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().buscarTodos();
+        ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().consultarTodos();
         if (clientes != null && !clientes.isEmpty()) {
             clientes.forEach(cliente -> stringBuilder.append(cliente.getId()).append(" - ").append(cliente));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -74,6 +74,6 @@ class AluguelApresentacao {
      * mostra ao usuário os alugueis cadastrados
      */
     void visualizarAlugueis() {
-        Singleton.getInstance().getAluguelNegocio().buscarTodos().forEach(System.out::println);
+        Singleton.getInstance().getAluguelNegocio().consultarTodos().forEach(System.out::println);
     }
 }

@@ -40,12 +40,12 @@ public class GerenteNegocio {
         return false;
     }
 
-    public Gerente buscarPorId(int id) {
-        return repositorio.buscarPorId(id);
+    public Gerente consultar(int id) {
+        return repositorio.consultar(id);
     }
 
-    public Gerente buscarPorCpf(String cpf) {
-        return this.repositorio.buscarPorCpf(cpf);
+    public Gerente consultar(String cpf) {
+        return this.repositorio.consultar(cpf);
     }
 
     public boolean desativar(int id) {

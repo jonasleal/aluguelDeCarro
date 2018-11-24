@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface ManutencaoRepositorioInterface {
 
-    Manutencao buscarPorId(int id);
+    Manutencao consultar(int id);
 
     boolean cadastrar(Manutencao manutencao);
 
@@ -14,5 +14,5 @@ public interface ManutencaoRepositorioInterface {
 
     boolean desativar(int id);
 
-    ArrayList<Manutencao> buscarTodos();
+    ArrayList<Manutencao> consultarTodos();
 }

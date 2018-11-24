@@ -81,7 +81,7 @@ class CarroApresentacao {
     }
 
     void visualizarCarros() {
-        Singleton.getInstance().getCarroNegocio().buscarTodos().forEach(System.out::println);
+        Singleton.getInstance().getCarroNegocio().consultarTodos().forEach(System.out::println);
 
     }
 }

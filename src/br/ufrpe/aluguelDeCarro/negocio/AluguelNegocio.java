@@ -7,9 +7,9 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
-import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,7 +41,7 @@ public class AluguelNegocio {
 
     private void validarDevolucao(Aluguel aluguel) throws AluguelException {
         validacaoBasica(aluguel);
-        Aluguel aluguelOriginal = repositorio.buscarPorId(aluguel.getId());
+        Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
         if (aluguelOriginal.getDevolucaoReal() != null) {
             throw new AluguelException(AluguelException.ALUGUEL_FINALIZADO);
         }
@@ -53,9 +53,9 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelException, CpfException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelException {
         validacaoBasica(aluguel);
-        if (buscarAbertoPorCpf(aluguel.getCliente().getCpf()) != null) {
+        if (consultarAberto(aluguel.getCliente()) != null) {
             throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
         }
         if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
@@ -78,9 +78,8 @@ public class AluguelNegocio {
      * @param aluguel Instancia a ser cadastrada
      * @return True - Se concluído com sucesso.
      * @throws AluguelException - Contem a causa e a mensagem de erro.
-     * @throws CpfException     - Se o CPF não for passado ou valido.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelException, CpfException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
@@ -98,8 +97,8 @@ public class AluguelNegocio {
         return false;
     }
 
-    public Aluguel buscarPorId(int id) {
-        return this.repositorio.buscarPorId(id);
+    public Aluguel consultar(int id) {
+        return this.repositorio.consultar(id);
     }
 
     /**
@@ -107,17 +106,17 @@ public class AluguelNegocio {
      * no moemnto da chamada.
      *
      * @param aluguel            - Objeto com os dados do aluguel em aberto
-     * @param conseiderarHorario - Considerar a hora da entrega com tolerância
+     * @param considerarHorario - Considerar a hora da entrega com tolerância
      *                           de 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
-    public Aluguel calcularDebito(Aluguel aluguel, boolean conseiderarHorario) {
+    private Aluguel calcularDebito(Aluguel aluguel, boolean considerarHorario) {
         aluguel.setDevolucaoReal(LocalDateTime.now());
         LocalDateTime dataEstimada = aluguel.getDevolucaoEstimada();
         LocalDateTime dataDevolucao = aluguel.getDevolucaoReal();
         Period periodoTotal = Period.between(dataEstimada.toLocalDate(), dataDevolucao.toLocalDate());
 
-        if (conseiderarHorario) {
+        if (considerarHorario) {
             int minutosTolerancia = 30;
             if (dataDevolucao.compareTo(dataEstimada.plusMinutes(minutosTolerancia)) > 0) {
                 periodoTotal = periodoTotal.plusDays(1);
@@ -133,15 +132,13 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
      * entrega um aluguel finalizado no momento da chamada.
      *
-     * @param cpf               - CPF registrado no aluguel em aberto
+     * @param cliente           - cliente registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
      *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
-     * @throws CpfException - Se o CPF não for passado ou valido.
      */
-    public Aluguel consultarDebitoPorCpf(String cpf, boolean considerarHorario) throws CpfException {
-        Aluguel aluguel = buscarAbertoPorCpf(cpf);
-
+    public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) {
+        Aluguel aluguel = consultarAberto(cliente);
         if (aluguel != null) {
             aluguel = calcularDebito(aluguel, considerarHorario);
         }
@@ -151,36 +148,34 @@ public class AluguelNegocio {
     /**
      * Busca debito de um aluguel em aberto para um determinado cpf.
      *
-     * @param cpf - CPF registrado no aluguel em aberto
+     * @param cliente - cliente registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para este CPF.
-     * @throws CpfException - Se o CPF não for passado ou valido.
      */
-    public Aluguel buscarAbertoPorCpf(String cpf) throws CpfException {
-        CpfUtil.validarCPF(cpf);
-        return this.repositorio.buscarPorCpf(cpf);
+    public Aluguel consultarAberto(Cliente cliente) {
+        return this.repositorio.consultar(cliente);
     }
 
     /**
-     * Busca debito de um aluguel em aberto para uma determinada placa.
+     * Busca debito de um aluguel em aberto para um determinado carro.
      *
-     * @param placa - CPF registrado no aluguel em aberto
+     * @param carro - carro registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para esta placa.
      */
-    public Aluguel buscarAbertoPorPlaca(String placa) {
-        return repositorio.buscarPorPlaca(placa);
+    public Aluguel consultarAberto(Carro carro) {
+        return repositorio.consultar(carro);
     }
 
     /**
      * Busca e calcula o debito de um aluguel em aberto para um determinado cpf
      * entrega um aluguel finalizado no momento da chamada.
      *
-     * @param placa             - CPF registrado no aluguel em aberto
+     * @param carro             - carro registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
      *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
-    public Aluguel consultarDebitoPorPlaca(String placa, boolean considerarHorario) {
-        Aluguel aluguel = buscarAbertoPorPlaca(placa);
+    public Aluguel consultarDebito(Carro carro, boolean considerarHorario) {
+        Aluguel aluguel = consultarAberto(carro);
         if (aluguel != null) {
             aluguel = calcularDebito(aluguel, considerarHorario);
         }
@@ -200,8 +195,8 @@ public class AluguelNegocio {
         return this.alterar(aluguel);
     }
 
-    public ArrayList<Aluguel> buscarTodos() {
-        return this.repositorio.buscarTodos();
+    public ArrayList<Aluguel> consultarTodos() {
+        return this.repositorio.consultarTodos();
     }
 
 }

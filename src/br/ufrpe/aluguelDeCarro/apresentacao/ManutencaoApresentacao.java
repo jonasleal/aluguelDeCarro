@@ -57,7 +57,7 @@ class ManutencaoApresentacao {
 
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Carro> carros = new CarroRepositorio().buscarTodos();
+        ArrayList<Carro> carros = new CarroRepositorio().consultarTodos();
         if (carros != null && !carros.isEmpty()) {
             carros.forEach(carro -> stringBuilder.append(carro.getId()).append(" - ").append(carro));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);

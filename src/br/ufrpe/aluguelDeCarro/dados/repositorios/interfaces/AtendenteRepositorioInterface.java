@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface AtendenteRepositorioInterface {
 
-    Atendente buscarPorId(int id);
+    Atendente consultar(int id);
 
     boolean cadastrar(Atendente atendente);
 
@@ -14,5 +14,5 @@ public interface AtendenteRepositorioInterface {
 
     boolean desativar(int id);
 
-    ArrayList<Atendente> buscarTodos();
+    ArrayList<Atendente> consultarTodos();
 }

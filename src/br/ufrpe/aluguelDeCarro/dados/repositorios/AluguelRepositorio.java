@@ -1,6 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
 
 import java.util.ArrayList;
@@ -20,13 +22,13 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
     }
 
     /**
-     * busca o aluguel pelo id, nos já cadastrados
+     * consulta o aluguel pelo id
      *
      * @param id identificador do {@code Aluguel}
      * @return um clone do {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Aluguel buscarPorId(int id) {
+    public Aluguel consultar(int id) {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
@@ -36,32 +38,44 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .orElse(null);
     }
 
+    /**
+     * consulta o aluguel pelo cliente
+     *
+     * @param cliente cliente que realizou o aluguel
+     * @return {@code Aluguel} ativo e não finalizado que contém o cliente {@code null} caso nao encontre
+     */
     @Override
-    public Aluguel buscarPorCpf(String cpf) {
+    public Aluguel consultar(Cliente cliente) {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getDevolucaoReal() == null)
-                .filter(aluguel -> aluguel.getCliente().getCpf().equals(cpf))
-                .findFirst()
-                .map(Aluguel::clone)
-                .orElse(null);
-    }
-
-    @Override
-    public Aluguel buscarPorPlaca(String placa) {
-        return this.alugueis
-                .stream()
-                .filter(Aluguel::isAtivo)
-                .filter(aluguel -> aluguel.getDevolucaoReal() == null)
-                .filter(aluguel -> aluguel.getCarro().getPlaca().equals(placa))
+                .filter(aluguel -> aluguel.getCliente().getCpf().equals(cliente.getCpf()))
                 .findFirst()
                 .map(Aluguel::clone)
                 .orElse(null);
     }
 
     /**
-     * busca o aluguel pelo id, nos já cadastrados
+     * consulta o aluguel pelo carro
+     *
+     * @param carro carro contido no aluguel
+     * @return aluguel ativo e não finalizado que contém o carro, null caso não encontre
+     */
+    @Override
+    public Aluguel consultar(Carro carro) {
+        return this.alugueis
+                .stream()
+                .filter(Aluguel::isAtivo)
+                .filter(aluguel -> aluguel.getDevolucaoReal() == null)
+                .filter(aluguel -> aluguel.getCarro().getPlaca().equals(carro.getPlaca()))
+                .findFirst()
+                .map(Aluguel::clone)
+                .orElse(null);
+    }
+
+    /**
+     * consulta o aluguel pelo id
      *
      * @param id identificador do {@code Aluguel}
      * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
@@ -116,10 +130,10 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
     }
 
     /**
-     * @return clones dos alugueis ativos e cadastrados
+     * @return clones dos alugueis ativos
      */
     @Override
-    public ArrayList<Aluguel> buscarTodos() {
+    public ArrayList<Aluguel> consultarTodos() {
         return (ArrayList<Aluguel>) this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)

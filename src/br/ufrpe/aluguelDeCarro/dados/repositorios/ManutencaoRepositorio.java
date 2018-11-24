@@ -26,7 +26,7 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
      * @return um clone do {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Manutencao buscarPorId(int id) {
+    public Manutencao consultar(int id) {
         return this.manutencoes
                 .stream()
                 .filter(Manutencao::isAtivo)
@@ -95,7 +95,7 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Manutencao> buscarTodos() {
+    public ArrayList<Manutencao> consultarTodos() {
         return (ArrayList<Manutencao>) this.manutencoes
                 .stream()
                 .filter(Manutencao::isAtivo)

@@ -22,7 +22,7 @@ class LoginApresentacao {
         try {
             System.out.println("Informe o numero do cpf");
             String cpf = InputUtil.getScan().nextLine();
-            usuario = Singleton.getInstance().getGerenteNegocio().buscarPorCpf(cpf);
+            usuario = Singleton.getInstance().getGerenteNegocio().consultar(cpf);
             if (usuario != null) {
                 System.out.println("Informe a senha");
                 if (usuario.validarSenha(Criptografia.criptografarSenha(InputUtil.getScan().nextLine())))

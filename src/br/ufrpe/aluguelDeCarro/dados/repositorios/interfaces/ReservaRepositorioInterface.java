@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface ReservaRepositorioInterface {
 
-    Reserva buscarPorId(int id);
+    Reserva consultar(int id);
 
     boolean cadastrar(Reserva reserva);
 
@@ -14,5 +14,5 @@ public interface ReservaRepositorioInterface {
 
     boolean desativar(int id);
 
-    ArrayList<Reserva> buscarTodos();
+    ArrayList<Reserva> consultarTodos();
 }

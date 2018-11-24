@@ -37,6 +37,6 @@ class ClienteApresentacao {
     }
 
     void visualizarClientes() {
-        Singleton.getInstance().getClienteNegocio().buscarTodos().forEach(System.out::println);
+        Singleton.getInstance().getClienteNegocio().consultarTodos().forEach(System.out::println);
     }
 }

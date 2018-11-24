@@ -26,7 +26,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return um clone do {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Cliente buscarPorId(int id) {
+    public Cliente consultar(int id) {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
@@ -58,7 +58,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null} caso nao encontre
      */
     @Override
-    public Cliente buscarPorCpf(String cpf) {
+    public Cliente consultar(String cpf) {
         return this.clientes
                 .stream()
                 .filter(cliente -> cliente.getCpf().equals(cpf))
@@ -111,7 +111,7 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Cliente> buscarTodos() {
+    public ArrayList<Cliente> consultarTodos() {
         return (ArrayList<Cliente>) this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)

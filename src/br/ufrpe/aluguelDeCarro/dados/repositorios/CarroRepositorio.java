@@ -26,7 +26,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Carro buscarPorId(int id) {
+    public Carro consultar(int id) {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
@@ -60,7 +60,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return um clone do {@code Carro} ativo que contém a placa, {@code null} caso nao encontre
      */
     @Override
-    public Carro buscarPorPlaca(String placa) {
+    public Carro consultar(String placa) {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
@@ -115,7 +115,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Carro> buscarTodos() {
+    public ArrayList<Carro> consultarTodos() {
         return (ArrayList<Carro>) this.carros
                 .stream()
                 .filter(Carro::isAtivo)

@@ -27,9 +27,9 @@ class ReservaApresentacao {
             System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");
             reserva.setRetiradaPrevista(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
             System.out.println("Selecione um carro para fazer a reserva\n" + getCarros());
-            reserva.setCarro(new CarroRepositorio().buscarTodos().get(InputUtil.solicitarNumeroInteiro()));
+            reserva.setCarro(new CarroRepositorio().consultarTodos().get(InputUtil.solicitarNumeroInteiro()));
             System.out.println("Selecione o cliente\n" + getClientes());
-            reserva.setCliente(new ClienteRepositorio().buscarTodos().get(InputUtil.solicitarNumeroInteiro()));
+            reserva.setCliente(new ClienteRepositorio().consultarTodos().get(InputUtil.solicitarNumeroInteiro()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             lerDadosPeloTeclado();
@@ -42,7 +42,7 @@ class ReservaApresentacao {
      */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().buscarTodos();
+        ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().consultarTodos();
         if (carros != null && !carros.isEmpty()) {
             carros.forEach(carro -> stringBuilder.append(carro.getId()).append(" - ").append(carro));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -56,7 +56,7 @@ class ReservaApresentacao {
      */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().buscarTodos();
+        ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().consultarTodos();
         if (clientes != null && !clientes.isEmpty()) {
             clientes.forEach(cliente -> stringBuilder.append(cliente.getId()).append(" - ").append(cliente));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);

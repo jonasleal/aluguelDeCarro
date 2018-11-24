@@ -26,7 +26,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
      * @return um clone do {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Reserva buscarPorId(int id) {
+    public Reserva consultar(int id) {
         return this.reservas
                 .stream()
                 .filter(Reserva::isAtivo)
@@ -95,7 +95,7 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
      * @return clones dos alugueis ativos e cadastrados
      */
     @Override
-    public ArrayList<Reserva> buscarTodos() {
+    public ArrayList<Reserva> consultarTodos() {
         return (ArrayList<Reserva>) this.reservas
                 .stream()
                 .filter(Reserva::isAtivo)

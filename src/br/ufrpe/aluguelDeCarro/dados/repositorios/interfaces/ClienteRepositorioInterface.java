@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public interface ClienteRepositorioInterface {
 
-    Cliente buscarPorId(int id);
+    Cliente consultar(int id);
 
-    Cliente buscarPorCpf(String cpf);
+    Cliente consultar(String cpf);
 
     boolean cadastrar(Cliente cliente);
 
@@ -24,6 +24,6 @@ public interface ClienteRepositorioInterface {
 
     boolean desativar(int id);
 
-    ArrayList<Cliente> buscarTodos();
+    ArrayList<Cliente> consultarTodos();
 
 }
