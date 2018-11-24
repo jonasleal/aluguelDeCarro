@@ -2,10 +2,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 import java.util.ArrayList;
 
@@ -37,15 +34,15 @@ public class ClienteNegocio {
         return false;
     }
 
-    public Cliente consultar(int id) {
+    public Cliente consultar(int id) throws ClienteNaoEncontradoException {
         return this.repositorio.consultar(id);
     }
 
-    public Cliente consultar(String cpf) {
+    public Cliente consultar(String cpf) throws ClienteNaoEncontradoException {
         return this.repositorio.consultar(cpf);
     }
 
-    public boolean desativar(int id) {
+    public boolean desativar(int id) throws ClienteNaoEncontradoException {
         return repositorio.desativar(id);
     }
 

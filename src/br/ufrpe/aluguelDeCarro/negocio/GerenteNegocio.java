@@ -7,10 +7,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.GerenteRepositorioInterface;
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 /**
  * @author JonasJr
@@ -40,15 +37,15 @@ public class GerenteNegocio {
         return false;
     }
 
-    public Gerente consultar(int id) {
+    public Gerente consultar(int id) throws GerenteNaoEncontradoException {
         return repositorio.consultar(id);
     }
 
-    public Gerente consultar(String cpf) {
+    public Gerente consultar(String cpf) throws GerenteNaoEncontradoException {
         return this.repositorio.consultar(cpf);
     }
 
-    public boolean desativar(int id) {
+    public boolean desativar(int id) throws GerenteNaoEncontradoException {
         return repositorio.desativar(id);
     }
 

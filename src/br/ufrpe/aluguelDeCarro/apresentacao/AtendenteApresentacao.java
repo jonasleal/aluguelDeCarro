@@ -17,7 +17,7 @@ class AtendenteApresentacao {
      *
      * @return uma instância de {@code Atendente} com os dados preenchidos pelo usuário
      */
-    private Atendente lerDadosPeloTeclado() {
+    Atendente lerDadosPeloTeclado() {
         Atendente atendente = null;
         try {
             atendente = new Atendente();

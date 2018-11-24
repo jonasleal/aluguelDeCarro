@@ -21,7 +21,7 @@ class CarroApresentacao {
      *
      * @return uma instância de {@code Carro} com os dados preenchidos pelo usuário
      */
-    public Carro lerDadosPeloTeclado() {
+    Carro lerDadosPeloTeclado() {
         Carro carro = null;
         try {
             carro = new Carro();

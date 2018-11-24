@@ -95,7 +95,7 @@ public class PrincipalApresentacao {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
-        } catch (AluguelException e) {
+        } catch (AluguelException | AluguelNaoEncontradoException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }

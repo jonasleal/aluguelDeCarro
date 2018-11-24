@@ -39,7 +39,7 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarDevolucao(Aluguel aluguel) throws AluguelException {
+    private void validarDevolucao(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
         if (aluguelOriginal.getDevolucaoReal() != null) {
@@ -53,7 +53,7 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
         validacaoBasica(aluguel);
         if (consultar(aluguel.getCliente()) != null) {
             throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
@@ -79,7 +79,7 @@ public class AluguelNegocio {
      * @return True - Se concluído com sucesso.
      * @throws AluguelException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
@@ -97,7 +97,7 @@ public class AluguelNegocio {
         return false;
     }
 
-    public Aluguel consultar(int id) {
+    public Aluguel consultar(int id) throws AluguelNaoEncontradoException {
         return this.repositorio.consultar(id);
     }
 
@@ -134,7 +134,7 @@ public class AluguelNegocio {
      *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
-    public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) {
+    public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(cliente);
         if (aluguel != null) {
             calcularDebito(aluguel, considerarHorario);
@@ -151,7 +151,7 @@ public class AluguelNegocio {
      *                          30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
-    public Aluguel consultarDebito(Carro carro, boolean considerarHorario) {
+    public Aluguel consultarDebito(Carro carro, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(carro);
         if (aluguel != null) {
             calcularDebito(aluguel, considerarHorario);
@@ -165,7 +165,7 @@ public class AluguelNegocio {
      * @param cliente - cliente registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para este cliente.
      */
-    public Aluguel consultar(Cliente cliente) {
+    public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
         return this.repositorio.consultar(cliente);
     }
 
@@ -175,7 +175,7 @@ public class AluguelNegocio {
      * @param carro - carro registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para este carro.
      */
-    public Aluguel consultar(Carro carro) {
+    public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
         return repositorio.consultar(carro);
     }
 
@@ -187,7 +187,7 @@ public class AluguelNegocio {
      * @return True - Se registrado com sucesso.
      * @throws AluguelException - Contem a mensagem e causa do erro.
      */
-    public boolean devolucao(Aluguel aluguel) throws AluguelException {
+    public boolean devolucao(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
         validarDevolucao(aluguel);
         return this.alterar(aluguel);
     }

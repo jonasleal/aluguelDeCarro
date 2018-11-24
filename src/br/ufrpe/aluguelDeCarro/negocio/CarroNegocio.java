@@ -45,15 +45,15 @@ public class CarroNegocio {
         return false;
     }
 
-    public Carro consultar(int id) {
+    public Carro consultar(int id) throws CarroNaoEncontradoException {
         return this.repositorio.consultar(id);
     }
 
-    public Carro consultar(String placa) {
+    public Carro consultar(String placa) throws CarroNaoEncontradoException {
         return this.repositorio.consultar(placa);
     }
 
-    public boolean desativar(int id) {
+    public boolean desativar(int id) throws CarroNaoEncontradoException {
         return this.repositorio.desativar(id);
     }
 
