@@ -2,9 +2,12 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Manutencao;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ManutencaoRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException.ID;
 
 /**
  * A classe armazena uma lista de instancias de manutencoes
@@ -26,14 +29,14 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
      * @return um clone do {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Manutencao consultar(int id) {
+    public Manutencao consultar(int id) throws ManutencaoNaoEncontradaException {
         return this.manutencoes
                 .stream()
                 .filter(Manutencao::isAtivo)
                 .filter(manutencao -> manutencao.getId() == id)
                 .findFirst()
                 .map(Manutencao::clone)
-                .orElse(null);
+                .orElseThrow(() -> new ManutencaoNaoEncontradaException(ID));
     }
 
     /**
@@ -42,13 +45,13 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
      * @param id identificador do {@code Manutencao}
      * @return o {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Manutencao buscarReferenciaPorId(int id) {
+    private Manutencao consultarReferencia(int id) throws ManutencaoNaoEncontradaException {
         return this.manutencoes
                 .stream()
                 .filter(Manutencao::isAtivo)
                 .filter(manutencao -> manutencao.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ManutencaoNaoEncontradaException(ID));
     }
 
     /**
@@ -82,13 +85,10 @@ public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Manutencao manutencao = this.buscarReferenciaPorId(id);
-        if (manutencao != null) {
-            manutencao.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws ManutencaoNaoEncontradaException {
+        Manutencao manutencao = this.consultarReferencia(id);
+        manutencao.setAtivo(false);
+        return true;
     }
 
     /**

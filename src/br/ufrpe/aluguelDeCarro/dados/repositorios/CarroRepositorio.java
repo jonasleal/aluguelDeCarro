@@ -2,9 +2,13 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException.ID;
+import static br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException.PLACA;
 
 /**
  * A classe armazena uma lista de instancias de carros
@@ -26,7 +30,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Carro consultar(int id) {
+    public Carro consultar(int id) throws CarroNaoEncontradoException {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
@@ -34,7 +38,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
                 .filter(carro -> carro.getId() == id)
                 .findFirst()
                 .map(Carro::clone)
-                .orElse(null);
+                .orElseThrow(() -> new CarroNaoEncontradoException(ID));
     }
 
     /**
@@ -43,14 +47,14 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @param id identificador do {@code Carro}
      * @return o {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Carro buscarReferenciaPorId(int id) {
+    private Carro consultarReferencia(int id) throws CarroNaoEncontradoException {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
                 .filter(Carro::isDisponivel)
                 .filter(carro -> carro.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new CarroNaoEncontradoException(ID));
     }
 
     /**
@@ -60,7 +64,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return um clone do {@code Carro} ativo que contém a placa, {@code null} caso nao encontre
      */
     @Override
-    public Carro consultar(String placa) {
+    public Carro consultar(String placa) throws CarroNaoEncontradoException {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
@@ -68,7 +72,7 @@ public class CarroRepositorio implements CarroRepositorioInterface {
                 .filter(carro -> carro.getPlaca().equals(placa))
                 .findFirst()
                 .map(Carro::clone)
-                .orElse(null);
+                .orElseThrow(() -> new CarroNaoEncontradoException(PLACA));
     }
 
     /**
@@ -102,13 +106,10 @@ public class CarroRepositorio implements CarroRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Carro carro = this.buscarReferenciaPorId(id);
-        if (carro != null) {
-            carro.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws CarroNaoEncontradoException {
+        Carro carro = this.consultarReferencia(id);
+        carro.setAtivo(false);
+        return true;
     }
 
     /**

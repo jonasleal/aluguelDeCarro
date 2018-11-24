@@ -2,9 +2,13 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ClienteRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException.CPF;
+import static br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException.ID;
 
 /**
  * A classe armazena uma lista de instancias de clientes
@@ -26,14 +30,14 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return um clone do {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Cliente consultar(int id) {
+    public Cliente consultar(int id) throws ClienteNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
                 .map(Cliente::clone)
-                .orElse(null);
+                .orElseThrow(() -> new ClienteNaoEncontradoException(ID));
     }
 
     /**
@@ -42,13 +46,13 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @param id identificador do {@code Cliente}
      * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Cliente buscarReferenciaPorId(int id) {
+    private Cliente consultarReferencia(int id) throws ClienteNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ClienteNaoEncontradoException(ID));
     }
 
     /**
@@ -58,13 +62,13 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null} caso nao encontre
      */
     @Override
-    public Cliente consultar(String cpf) {
+    public Cliente consultar(String cpf) throws ClienteNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(cliente -> cliente.getCpf().equals(cpf))
                 .findFirst()
                 .map(Cliente::clone)
-                .orElse(null);
+                .orElseThrow(() -> new ClienteNaoEncontradoException(CPF));
     }
 
     /**
@@ -98,13 +102,10 @@ public class ClienteRepositorio implements ClienteRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Cliente cliente = this.buscarReferenciaPorId(id);
-        if (cliente != null) {
-            cliente.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws ClienteNaoEncontradoException {
+        Cliente cliente = this.consultarReferencia(id);
+        cliente.setAtivo(false);
+        return true;
     }
 
     /**

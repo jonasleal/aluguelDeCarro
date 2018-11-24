@@ -2,9 +2,12 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ReservaRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException.ID;
 
 /**
  * A classe armazena uma lista de instancias de reservas
@@ -26,14 +29,14 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
      * @return um clone do {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Reserva consultar(int id) {
+    public Reserva consultar(int id) throws ReservaNaoEncontradaException {
         return this.reservas
                 .stream()
                 .filter(Reserva::isAtivo)
                 .filter(reserva -> reserva.getId() == id)
                 .findFirst()
                 .map(Reserva::clone)
-                .orElse(null);
+                .orElseThrow(() -> new ReservaNaoEncontradaException(ID));
     }
 
     /**
@@ -42,13 +45,13 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
      * @param id identificador do {@code Reserva}
      * @return o {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Reserva buscarReferenciaPorId(int id) {
+    private Reserva consultarReferencia(int id) throws ReservaNaoEncontradaException {
         return this.reservas
                 .stream()
                 .filter(Reserva::isAtivo)
                 .filter(reserva -> reserva.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ReservaNaoEncontradaException(ID));
     }
 
     /**
@@ -82,13 +85,10 @@ public class ReservaRepositorio implements ReservaRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Reserva reserva = this.buscarReferenciaPorId(id);
-        if (reserva != null) {
-            reserva.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws ReservaNaoEncontradaException {
+        Reserva reserva = this.consultarReferencia(id);
+        reserva.setAtivo(false);
+        return true;
     }
 
     /**

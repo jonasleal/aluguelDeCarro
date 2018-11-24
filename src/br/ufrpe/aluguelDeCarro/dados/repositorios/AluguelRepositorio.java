@@ -4,9 +4,12 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AluguelRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.AluguelNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.AluguelNaoEncontradoException.*;
 
 /**
  * A classe armazena uma lista de instancias de alugueis
@@ -28,14 +31,14 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
      * @return um clone do {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Aluguel consultar(int id) {
+    public Aluguel consultar(int id) throws AluguelNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElse(null);
+                .orElseThrow(() -> new AluguelNaoEncontradoException(ID));
     }
 
     /**
@@ -45,7 +48,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
      * @return {@code Aluguel} ativo e não finalizado que contém o cliente {@code null} caso nao encontre
      */
     @Override
-    public Aluguel consultar(Cliente cliente) {
+    public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
@@ -53,7 +56,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .filter(aluguel -> aluguel.getCliente().getCpf().equals(cliente.getCpf()))
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElse(null);
+                .orElseThrow(() -> new AluguelNaoEncontradoException(CLIENTE));
     }
 
     /**
@@ -63,7 +66,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
      * @return aluguel ativo e não finalizado que contém o carro, null caso não encontre
      */
     @Override
-    public Aluguel consultar(Carro carro) {
+    public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
@@ -71,7 +74,7 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
                 .filter(aluguel -> aluguel.getCarro().getPlaca().equals(carro.getPlaca()))
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElse(null);
+                .orElseThrow(() -> new AluguelNaoEncontradoException(CARRO));
     }
 
     /**
@@ -80,13 +83,13 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
      * @param id identificador do {@code Aluguel}
      * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Aluguel buscarReferenciaPorId(int id) {
+    private Aluguel consultarReferencia(int id) throws AluguelNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new AluguelNaoEncontradoException(ID));
     }
 
     /**
@@ -120,13 +123,10 @@ public class AluguelRepositorio implements AluguelRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Aluguel aluguel = this.buscarReferenciaPorId(id);
-        if (aluguel != null) {
-            aluguel.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws AluguelNaoEncontradoException {
+        Aluguel aluguel = this.consultarReferencia(id);
+        aluguel.setAtivo(false);
+        return true;
     }
 
     /**

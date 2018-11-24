@@ -1,18 +1,19 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
+import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 
 import java.util.ArrayList;
 
 public interface ReservaRepositorioInterface {
 
-    Reserva consultar(int id);
+    Reserva consultar(int id) throws ReservaNaoEncontradaException;
 
     boolean cadastrar(Reserva reserva);
 
     boolean alterar(Reserva reservaEditado);
 
-    boolean desativar(int id);
+    boolean desativar(int id) throws ReservaNaoEncontradaException;
 
     ArrayList<Reserva> consultarTodos();
 }

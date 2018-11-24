@@ -2,9 +2,12 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Atendente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.AtendenteRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.AtendenteNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.AtendenteNaoEncontradoException.ID;
 
 /**
  * A classe armazena uma lista de instancias de atendentes
@@ -26,14 +29,14 @@ public class AtendenteRepositorio implements AtendenteRepositorioInterface {
      * @return um clone do {@code Atendente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Atendente consultar(int id) {
+    public Atendente consultar(int id) throws AtendenteNaoEncontradoException {
         return this.atendentes
                 .stream()
                 .filter(Atendente::isAtivo)
                 .filter(atendente -> atendente.getId() == id)
                 .findFirst()
                 .map(Atendente::clone)
-                .orElse(null);
+                .orElseThrow(() -> new AtendenteNaoEncontradoException(ID));
     }
 
     /**
@@ -42,13 +45,13 @@ public class AtendenteRepositorio implements AtendenteRepositorioInterface {
      * @param id identificador do {@code Atendente}
      * @return o {@code Atendente} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Atendente buscarReferenciaPorId(int id) {
+    private Atendente consultarReferencia(int id) throws AtendenteNaoEncontradoException {
         return this.atendentes
                 .stream()
                 .filter(Atendente::isAtivo)
                 .filter(atendente -> atendente.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new AtendenteNaoEncontradoException(ID));
     }
 
     /**
@@ -82,13 +85,10 @@ public class AtendenteRepositorio implements AtendenteRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Atendente atendente = this.buscarReferenciaPorId(id);
-        if (atendente != null) {
-            atendente.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws AtendenteNaoEncontradoException {
+        Atendente atendente = this.consultarReferencia(id);
+        atendente.setAtivo(false);
+        return true;
     }
 
     /**

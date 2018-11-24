@@ -2,9 +2,13 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.GerenteRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.excecoes.GerenteNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import static br.ufrpe.aluguelDeCarro.excecoes.GerenteNaoEncontradoException.CPF;
+import static br.ufrpe.aluguelDeCarro.excecoes.GerenteNaoEncontradoException.ID;
 
 /**
  * A classe armazena uma lista de instancias de gerentes
@@ -26,14 +30,14 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return um clone do {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Gerente consultar(int id) {
+    public Gerente consultar(int id) throws GerenteNaoEncontradoException {
         return this.gerentes
                 .stream()
                 .filter(Gerente::isAtivo)
                 .filter(gerente -> gerente.getId() == id)
                 .findFirst()
                 .map(Gerente::clone)
-                .orElse(null);
+                .orElseThrow(() -> new GerenteNaoEncontradoException(ID));
     }
 
     /**
@@ -42,13 +46,13 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @param id identificador do {@code Gerente}
      * @return o {@code Gerente} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Gerente buscarReferenciaPorId(int id) {
+    private Gerente consultarReferencia(int id) throws GerenteNaoEncontradoException {
         return this.gerentes
                 .stream()
                 .filter(Gerente::isAtivo)
                 .filter(gerente -> gerente.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new GerenteNaoEncontradoException(ID));
     }
 
     /**
@@ -58,14 +62,14 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return um clone do {@code Gerente} ativo que contém o cpf, {@code null} caso nao encontre
      */
     @Override
-    public Gerente consultar(String cpf) {
+    public Gerente consultar(String cpf) throws GerenteNaoEncontradoException {
         return this.gerentes
                 .stream()
                 .filter(gerente -> gerente.getCpf().equals(cpf))
                 .filter(Gerente::isAtivo)
                 .findFirst()
                 .map(Gerente::clone)
-                .orElse(null);
+                .orElseThrow(() -> new GerenteNaoEncontradoException(CPF));
     }
 
     /**
@@ -99,13 +103,10 @@ public class GerenteRepositorio implements GerenteRepositorioInterface {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) {
-        Gerente gerente = this.buscarReferenciaPorId(id);
-        if (gerente != null) {
-            gerente.setAtivo(false);
-            return true;
-        }
-        return false;
+    public boolean desativar(int id) throws GerenteNaoEncontradoException {
+        Gerente gerente = this.consultarReferencia(id);
+        gerente.setAtivo(false);
+        return true;
     }
 
     /**
