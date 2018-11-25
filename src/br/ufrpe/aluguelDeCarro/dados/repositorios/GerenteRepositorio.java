@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.GerenteRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IGerenteRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.GerenteNaoEncontradoException;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import static br.ufrpe.aluguelDeCarro.excecoes.GerenteNaoEncontradoException.ID;
  *
  * @author Fernando
  */
-public class GerenteRepositorio implements GerenteRepositorioInterface {
+public class GerenteRepositorio implements IGerenteRepositorio {
 
     private final ArrayList<Gerente> gerentes;
 

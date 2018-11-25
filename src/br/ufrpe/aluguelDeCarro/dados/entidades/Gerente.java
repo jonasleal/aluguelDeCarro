@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @author Fernando
  */
 
-public class Gerente extends Pessoa implements Usuario, Cloneable {
+public class Gerente extends Pessoa implements IUsuario, Cloneable {
     private String senha;
 
     public Gerente() {

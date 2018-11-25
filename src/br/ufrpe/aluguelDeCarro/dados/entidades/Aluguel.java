@@ -22,7 +22,7 @@ public class Aluguel implements Cloneable {
     //    private BigDecimal desconto;
     private Cliente cliente;
     private Carro carro;
-    private Usuario usuario;
+    private IUsuario usuario;
 
     public Aluguel() {
         this.retirada = LocalDateTime.now();
@@ -36,7 +36,7 @@ public class Aluguel implements Cloneable {
 
     }
 
-    public Aluguel(Cliente cliente, Carro carro, Usuario usuario) {
+    public Aluguel(Cliente cliente, Carro carro, IUsuario usuario) {
         this.retirada = LocalDateTime.now();
         this.devolucaoEstimada = this.retirada.plusDays(1);
         this.devolucaoReal = null;
@@ -126,11 +126,11 @@ public class Aluguel implements Cloneable {
         this.carro = carro;
     }
 
-    public Usuario getUsuario() {
+    public IUsuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(IUsuario usuario) {
         this.usuario = usuario;
     }
 

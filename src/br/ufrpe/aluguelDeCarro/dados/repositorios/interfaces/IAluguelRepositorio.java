@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * @author JonasJr
  */
-public interface AluguelRepositorioInterface {
+public interface IAluguelRepositorio {
 
     Aluguel consultar(int id) throws AluguelNaoEncontradoException;
 

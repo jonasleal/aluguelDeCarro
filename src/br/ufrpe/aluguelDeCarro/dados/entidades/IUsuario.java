@@ -13,7 +13,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
 /**
  * @author JonasJr
  */
-public interface Usuario {
+public interface IUsuario {
 
     void validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException;
 

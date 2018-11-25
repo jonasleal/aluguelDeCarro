@@ -25,7 +25,7 @@ public class PrincipalApresentacao {
         this.loginApresentacao = new LoginApresentacao();
     }
 
-    public void menus() throws CpfException {
+    public void menus() {
         cadastrarGerente();
         login();
         this.opcoes();
@@ -36,7 +36,7 @@ public class PrincipalApresentacao {
      */
     private void login() {
         System.out.println("Efetue o login");
-        Usuario usuario = null;
+        IUsuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
         Singleton.getInstance().setUsuarioLogado(usuario);
@@ -61,7 +61,7 @@ public class PrincipalApresentacao {
     /**
      * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo escolha uma para executar
      */
-    private void opcoes() throws CpfException {
+    private void opcoes() {
         int opcao;
         do {
             System.out.println("1 - Cadastrar carro\n2 - Cadastrar cliente\n3 - Cadastrar Aluguel\n4 - Visualizar carros\n5 - Visualizar clientes\n6 - Visualizar alugueis\n0 - Sair");
@@ -112,7 +112,7 @@ public class PrincipalApresentacao {
     }
 
     private void cadastrarCarro() {
-        Usuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
+        IUsuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
         if (usuarioLogado instanceof Gerente) {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {

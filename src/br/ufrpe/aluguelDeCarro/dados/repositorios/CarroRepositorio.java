@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import static br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException.PLACA
  *
  * @author Fernando
  */
-public class CarroRepositorio implements CarroRepositorioInterface {
+public class CarroRepositorio implements ICarroRepositorio {
 
     private final ArrayList<Carro> carros;
 

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * @author JonasJr
  */
-public interface ClienteRepositorioInterface {
+public interface IClienteRepositorio {
 
     Cliente consultar(int id) throws ClienteNaoEncontradoException;
 

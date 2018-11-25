@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.servicos;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
+import br.ufrpe.aluguelDeCarro.dados.entidades.IUsuario;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.AluguelRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
@@ -24,7 +24,7 @@ public class Singleton {
     private final GerenteNegocio gerenteNegocio;
     private final AluguelNegocio aluguelNegocio;
 
-    private Usuario usuarioLogado;
+    private IUsuario usuarioLogado;
 
     private Singleton() {
         this.carroNegocio = new CarroNegocio(new CarroRepositorio());
@@ -62,14 +62,14 @@ public class Singleton {
     /**
      * @return o usuário que está utilizando o sistema no momemnto
      */
-    public Usuario getUsuarioLogado() {
+    public IUsuario getUsuarioLogado() {
         return usuarioLogado;
     }
 
     /**
      * @param usuarioLogado o usuário que está utilizando o sistema no momento
      */
-    public void setUsuarioLogado(Usuario usuarioLogado) {
+    public void setUsuarioLogado(IUsuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
 }

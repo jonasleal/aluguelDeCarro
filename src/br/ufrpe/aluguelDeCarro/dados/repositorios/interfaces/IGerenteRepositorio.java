@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * @author JonasJr
  */
-public interface GerenteRepositorioInterface {
+public interface IGerenteRepositorio {
 
     Gerente consultar(int id) throws GerenteNaoEncontradoException;
 

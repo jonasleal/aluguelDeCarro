@@ -5,7 +5,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.AtendenteNaoEncontradoException;
 
 import java.util.ArrayList;
 
-public interface AtendenteRepositorioInterface {
+public interface IAtendenteRepositorio {
 
     Atendente consultar(int id) throws AtendenteNaoEncontradoException;
 

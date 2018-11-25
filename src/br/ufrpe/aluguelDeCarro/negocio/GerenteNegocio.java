@@ -6,7 +6,7 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.GerenteRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IGerenteRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 /**
@@ -14,9 +14,9 @@ import br.ufrpe.aluguelDeCarro.excecoes.*;
  */
 public class GerenteNegocio {
 
-    private final GerenteRepositorioInterface repositorio;
+    private final IGerenteRepositorio repositorio;
 
-    public GerenteNegocio(GerenteRepositorioInterface repositorio) {
+    public GerenteNegocio(IGerenteRepositorio repositorio) {
         this.repositorio = repositorio;
     }
 

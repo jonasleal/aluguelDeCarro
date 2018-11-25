@@ -5,7 +5,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
 
 import java.util.ArrayList;
 
-public interface ManutencaoRepositorioInterface {
+public interface IManutencaoRepositorio {
 
     Manutencao consultar(int id) throws ManutencaoNaoEncontradaException;
 

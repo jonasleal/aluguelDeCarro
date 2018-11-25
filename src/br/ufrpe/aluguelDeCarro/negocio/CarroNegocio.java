@@ -7,7 +7,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.CarroRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import java.util.ArrayList;
  */
 public class CarroNegocio {
 
-    private final CarroRepositorioInterface repositorio;
+    private final ICarroRepositorio repositorio;
 
-    public CarroNegocio(CarroRepositorioInterface repositorio) {
+    public CarroNegocio(ICarroRepositorio repositorio) {
         this.repositorio = repositorio;
     }
 

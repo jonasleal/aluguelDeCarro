@@ -5,7 +5,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 
 import java.util.ArrayList;
 
-public interface ReservaRepositorioInterface {
+public interface IReservaRepositorio {
 
     Reserva consultar(int id) throws ReservaNaoEncontradaException;
 

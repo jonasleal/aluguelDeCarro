@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * @author JonasJr
  */
-public interface CarroRepositorioInterface {
+public interface ICarroRepositorio {
 
     Carro consultar(int id) throws CarroNaoEncontradoException;
 

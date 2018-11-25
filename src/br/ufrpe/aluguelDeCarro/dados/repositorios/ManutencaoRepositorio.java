@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Manutencao;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ManutencaoRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IManutencaoRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException.
  *
  * @author Fernando
  */
-public class ManutencaoRepositorio implements ManutencaoRepositorioInterface {
+public class ManutencaoRepositorio implements IManutencaoRepositorio {
 
     private final ArrayList<Manutencao> manutencoes;
 

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * @author Fernando
  */
-public class Atendente extends Pessoa implements Cloneable, Usuario {
+public class Atendente extends Pessoa implements Cloneable, IUsuario {
     private String senha;
 
     public Atendente() {

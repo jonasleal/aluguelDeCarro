@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ReservaRepositorioInterface;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException.ID;
  *
  * @author Fernando
  */
-public class ReservaRepositorio implements ReservaRepositorioInterface {
+public class ReservaRepositorio implements IReservaRepositorio {
 
     private final ArrayList<Reserva> reservas;
 
