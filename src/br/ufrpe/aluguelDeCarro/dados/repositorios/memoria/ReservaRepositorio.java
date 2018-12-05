@@ -1,4 +1,4 @@
-package br.ufrpe.aluguelDeCarro.dados.repositorios;
+package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;

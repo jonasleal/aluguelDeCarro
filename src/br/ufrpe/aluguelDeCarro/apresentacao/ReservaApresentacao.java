@@ -3,8 +3,8 @@ package br.ufrpe.aluguelDeCarro.apresentacao;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CategoriaRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
@@ -27,7 +27,7 @@ class ReservaApresentacao {
             System.out.println("Informe a data para retirada do veiculo (siga o modelo dd-MM-yyyy HH:mm):");
             reserva.setRetiradaPrevista(DataUtil.transformarStringEmDataTime(InputUtil.getScan().nextLine()));
             System.out.println("Selecione um carro para fazer a reserva\n" + getCarros());
-            reserva.setCarro(new CarroRepositorio().consultarTodos().get(InputUtil.solicitarNumeroInteiro()));
+            reserva.setCategoria(new CategoriaRepositorio().consultarTodos().get(InputUtil.solicitarNumeroInteiro()));
             System.out.println("Selecione o cliente\n" + getClientes());
             reserva.setCliente(new ClienteRepositorio().consultarTodos().get(InputUtil.solicitarNumeroInteiro()));
         } catch (Exception e) {

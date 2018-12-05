@@ -21,7 +21,7 @@ public class AluguelDeCarro {
             PrincipalApresentacao apresentacao = new PrincipalApresentacao();
 
 //            Gerente gerente = new Gerente("02362263045", "kol", LocalDate.now().minusYears(20), Criptografia.criptografarSenha("oi"));
-//            Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
+//            Singleton.getInstance().getUsuarioNegocio().cadastrar(gerente);
 //            Singleton.getInstance().setUsuarioLogado(gerente);
 //
 //            Carro carro = new Carro("pop3444","mod", "mar", Categoria.PERUA, new BigDecimal(34));
