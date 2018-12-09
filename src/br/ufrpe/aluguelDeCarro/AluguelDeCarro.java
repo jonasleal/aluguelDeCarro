@@ -5,39 +5,31 @@
  */
 package br.ufrpe.aluguelDeCarro;
 
-import br.ufrpe.aluguelDeCarro.apresentacao.PrincipalApresentacao;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * @author JonasJr
  */
-public class AluguelDeCarro {
+public class AluguelDeCarro extends Application {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
         try {
-
-            PrincipalApresentacao apresentacao = new PrincipalApresentacao();
-
-//            Gerente gerente = new Gerente("02362263045", "kol", LocalDate.now().minusYears(20), Criptografia.criptografarSenha("oi"));
-//            Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
-//            Singleton.getInstance().setUsuarioLogado(gerente);
-//
-//            Carro carro = new Carro("pop3444","mod", "mar", Categoria.PERUA, new BigDecimal(34));
-//            carro.setDirecao(Direcao.MECANICA);
-//            carro.setCambio(Cambio.AUTOMATICO);
-//            carro.setPortas(4);
-//            carro.setOcupantes(4);
-//            Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) Singleton.getInstance().getUsuarioLogado());
-//
-//            Cliente cliente = new Cliente("02362263045", "geh", LocalDate.now().minusYears(20), "30870472789");
-//            Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
-
-            apresentacao.menus();
-        } catch (Exception e) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("apresentacao/gui/fxml/Layout.fxml"));
+            Scene scene = new Scene(loader.load());
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
