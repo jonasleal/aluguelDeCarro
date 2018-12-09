@@ -1,14 +1,14 @@
 package br.ufrpe.aluguelDeCarro.servicos;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.IUsuario;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.AluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.ClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.GerenteRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.AluguelRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CarroRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.ClienteRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.UsuarioRepositorio;
 import br.ufrpe.aluguelDeCarro.negocio.AluguelNegocio;
 import br.ufrpe.aluguelDeCarro.negocio.CarroNegocio;
 import br.ufrpe.aluguelDeCarro.negocio.ClienteNegocio;
-import br.ufrpe.aluguelDeCarro.negocio.GerenteNegocio;
+import br.ufrpe.aluguelDeCarro.negocio.UsuarioNegocio;
 
 /**
  * Esta classe serve para centralizar todas classes de negócio
@@ -21,15 +21,15 @@ public class Singleton {
 
     private final CarroNegocio carroNegocio;
     private final ClienteNegocio clienteNegocio;
-    private final GerenteNegocio gerenteNegocio;
+    private final UsuarioNegocio usuarioNegocio;
     private final AluguelNegocio aluguelNegocio;
 
-    private IUsuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     private Singleton() {
         this.carroNegocio = new CarroNegocio(new CarroRepositorio());
         this.clienteNegocio = new ClienteNegocio(new ClienteRepositorio());
-        this.gerenteNegocio = new GerenteNegocio(new GerenteRepositorio());
+        this.usuarioNegocio = new UsuarioNegocio(new UsuarioRepositorio());
         this.aluguelNegocio = new AluguelNegocio(new AluguelRepositorio());
     }
 
@@ -51,8 +51,8 @@ public class Singleton {
         return clienteNegocio;
     }
 
-    public GerenteNegocio getGerenteNegocio() {
-        return gerenteNegocio;
+    public UsuarioNegocio getUsuarioNegocio() {
+        return usuarioNegocio;
     }
 
     public AluguelNegocio getAluguelNegocio() {
@@ -62,14 +62,14 @@ public class Singleton {
     /**
      * @return o usuário que está utilizando o sistema no momemnto
      */
-    public IUsuario getUsuarioLogado() {
+    public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }
 
     /**
      * @param usuarioLogado o usuário que está utilizando o sistema no momento
      */
-    public void setUsuarioLogado(IUsuario usuarioLogado) {
+    public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
 }

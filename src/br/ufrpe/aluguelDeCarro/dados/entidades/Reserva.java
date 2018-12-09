@@ -10,18 +10,22 @@ public class Reserva implements Cloneable {
 
     private int id;
     private boolean ativo;
-    private IUsuario usuario;
+    private Usuario usuario;
     private Cliente cliente;
-    private Carro carro;
+    private Categoria categoria;
     private LocalDateTime retiradaPrevista;
 
     public Reserva() {
+        this.usuario = new Usuario();
+        this.cliente = new Cliente();
+        this.categoria = new Categoria();
+        this.retiradaPrevista = LocalDateTime.now();
     }
 
-    public Reserva(IUsuario usuario, Cliente cliente, Carro carro, LocalDateTime retiradaPrevista) {
+    public Reserva(Usuario usuario, Cliente cliente, Categoria categoria, LocalDateTime retiradaPrevista) {
         this.usuario = usuario;
         this.cliente = cliente;
-        this.carro = carro;
+        this.categoria = categoria;
         this.retiradaPrevista = retiradaPrevista;
     }
 
@@ -41,11 +45,11 @@ public class Reserva implements Cloneable {
         this.ativo = ativo;
     }
 
-    public IUsuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(IUsuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -57,12 +61,12 @@ public class Reserva implements Cloneable {
         this.cliente = cliente;
     }
 
-    public Carro getCarro() {
-        return carro;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCarro(Carro carro) {
-        this.carro = carro;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public LocalDateTime getRetiradaPrevista() {

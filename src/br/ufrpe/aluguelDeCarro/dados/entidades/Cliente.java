@@ -20,6 +20,7 @@ public class Cliente extends Pessoa implements Cloneable {
     private String habilitacao;
 
     public Cliente() {
+        this.habilitacao = "";
     }
 
     public Cliente(String cpf, String nome, LocalDate nascimento, String habilitacao) {

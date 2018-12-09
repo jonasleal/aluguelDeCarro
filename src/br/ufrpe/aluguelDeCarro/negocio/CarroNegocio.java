@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 
@@ -23,11 +22,9 @@ public class CarroNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Carro carro, Gerente gerente) throws PlacaException, CpfException,
-            IdadeExcetion, NomeException, MarcaException, ModeloException, CarroException, HabilitacaoException {
-        if (carro != null && gerente != null) {
+    public boolean cadastrar(Carro carro) throws PlacaException, MarcaException, ModeloException, CarroException {
+        if (carro != null) {
             carro.validar();
-            gerente.validar();
             carro.setAtivo(true);
             carro.setDisponivel(true);
             return this.repositorio.cadastrar(carro);
@@ -35,11 +32,10 @@ public class CarroNegocio {
         return false;
     }
 
-    public boolean alterar(Carro carro, Gerente gerente) throws PlacaException, MarcaException,
-            ModeloException, CarroException, CpfException, IdadeExcetion, NomeException, HabilitacaoException {
-        if (carro != null && gerente != null) {
+    public boolean alterar(Carro carro) throws PlacaException, MarcaException,
+            ModeloException, CarroException {
+        if (carro != null) {
             carro.validar();
-            gerente.validar();
             return this.repositorio.alterar(carro);
         }
         return false;

@@ -5,34 +5,75 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import java.math.BigDecimal;
+
 /**
  * @author JonasJr
  */
-public enum Categoria {
+public class Categoria implements Cloneable {
 
-    ECONOMICO("Enconomico", 1),
-    COMPACTO("Compacto", 2),
-    STANDARD("Standard", 3),
-    SUV("SUV", 4),
-    UTILITARIO("Utilirário", 5),
-    MINIVAN("Minivan", 6),
-    LUXO("Luxo", 7),
-    ESPECIAL("Especial", 8);
-
+    private int id;
+    private boolean ativo;
     private String nome;
-    private int valor;
+    private BigDecimal diaria;
 
-    Categoria(String nome, int valor) {
+    public Categoria() {
+        this.nome = "";
+        this.diaria = BigDecimal.ZERO;
+    }
+
+    public Categoria(String nome, BigDecimal diaria) {
         this.nome = nome;
-        this.valor = valor;
+        this.diaria = diaria;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public int getValor() {
-        return valor;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
+    public BigDecimal getDiaria() {
+        return diaria;
+    }
+
+    public void setDiaria(BigDecimal diaria) {
+        this.diaria = diaria;
+    }
+
+    @Override
+    public Categoria clone() {
+        try {
+            return (Categoria) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("Clone não efetuado");
+            return this;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "nome='" + nome + '\'' +
+                ", diaria=" + diaria +
+                '}';
+    }
 }

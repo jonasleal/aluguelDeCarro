@@ -1,6 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,17 +13,21 @@ public class Manutencao implements Cloneable {
 
     private int id;
     private boolean ativo;
-    private Gerente gerente;
+    private Usuario usuario;
     private Carro carro;
     private List<String> afazeres;
     private LocalDate data;
-    private double orcamento;
+    private BigDecimal orcamento;
 
     public Manutencao() {
+        this.usuario = new Usuario();
+        this.afazeres = new ArrayList<>();
+        this.data = LocalDate.now();
+        this.orcamento = BigDecimal.ZERO;
     }
 
-    public Manutencao(Gerente gerente, Carro carro, List<String> afazeres, LocalDate data, double orcamento) {
-        this.gerente = gerente;
+    public Manutencao(Usuario usuario, Carro carro, List<String> afazeres, LocalDate data, BigDecimal orcamento) {
+        this.usuario = usuario;
         this.carro = carro;
         this.afazeres = afazeres;
         this.data = data;
@@ -44,12 +50,12 @@ public class Manutencao implements Cloneable {
         this.ativo = ativo;
     }
 
-    public Gerente getGerente() {
-        return gerente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setGerente(Gerente gerente) {
-        this.gerente = gerente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Carro getCarro() {
@@ -76,11 +82,11 @@ public class Manutencao implements Cloneable {
         this.data = data;
     }
 
-    public double getOrcamento() {
+    public BigDecimal getOrcamento() {
         return orcamento;
     }
 
-    public void setOrcamento(double orcamento) {
+    public void setOrcamento(BigDecimal orcamento) {
         this.orcamento = orcamento;
     }
 

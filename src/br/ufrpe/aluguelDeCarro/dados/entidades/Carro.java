@@ -10,7 +10,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
 import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -23,7 +22,6 @@ public class Carro implements Cloneable {
     private String placa;
     private String modelo;
     private String marca;
-    private BigDecimal preco;
     private int portas;
     private int ocupantes;
     private Categoria categoria;
@@ -37,24 +35,20 @@ public class Carro implements Cloneable {
     private boolean disponivel;
 
     public Carro() {
+        this.placa = "";
+        this.modelo = "";
+        this.marca = "";
+        this.categoria = new Categoria();
+        this.cambio = Cambio.MANUAL;
+        this.direcao = Direcao.MECANICA;
     }
 
-    public Carro(String placa, String modelo, String moarca, Categoria categoria, BigDecimal preco) {
+    public Carro(String placa, String modelo, String moarca, Categoria categoria) {
+        this();
         this.placa = placa;
         this.modelo = modelo;
         this.marca = moarca;
-        this.portas = 0;
-        this.ocupantes = 0;
         this.categoria = categoria;
-        this.cambio = Cambio.MANUAL;
-        this.direcao = Direcao.MECANICA;
-        this.arCondicionado = false;
-        this.airBag = false;
-        this.travaEletrica = false;
-        this.freioAbs = false;
-        this.vidroEletrico = false;
-        this.disponivel = false;
-        this.preco = preco;
     }
 
     public int getId() {
@@ -185,14 +179,6 @@ public class Carro implements Cloneable {
         this.marca = marca;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
     /**
      * Valida os dados obrigatórios para um carro
      *
@@ -237,12 +223,9 @@ public class Carro implements Cloneable {
         if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
             throw new CarroException(CarroException.DIRECAO_INVALIDA);
         }
-        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
-            throw new CarroException(CarroException.CATEGORIA_INVALIDA);
-        }
-        if (preco.compareTo(new BigDecimal(0)) < 1) {
-            throw new CarroException(CarroException.PRECO_INVALIDO);
-        }
+//        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
+//            throw new CarroException(CarroException.CATEGORIA_INVALIDA);
+//        }
     }
 
     @Override
@@ -261,7 +244,6 @@ public class Carro implements Cloneable {
                 + "placa='" + placa + '\''
                 + ", modelo='" + modelo + '\''
                 + ", marca='" + marca + '\''
-                + ", preco=" + preco
                 + ", portas=" + portas
                 + ", ocupantes=" + ocupantes
                 + ", categoria=" + categoria

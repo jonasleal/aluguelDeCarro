@@ -2,10 +2,11 @@ package br.ufrpe.aluguelDeCarro.apresentacao;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Manutencao;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.CarroRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CarroRepositorio;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +27,7 @@ class ManutencaoApresentacao {
             System.out.println("Informe a data da manutencao (siga o modelo dd-MM-yyyy):");
             manutencao.setData(DataUtil.transformarStringEmData(InputUtil.getScan().nextLine()));
             System.out.println("Informe o orcamento da manutencao");
-            manutencao.setOrcamento(InputUtil.solicitarNumeroFlutuante());
+            manutencao.setOrcamento(new BigDecimal(InputUtil.solicitarNumeroFlutuante()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             lerAfazeresDoTeclado();

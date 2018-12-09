@@ -22,7 +22,8 @@ public class Aluguel implements Cloneable {
     //    private BigDecimal desconto;
     private Cliente cliente;
     private Carro carro;
-    private IUsuario usuario;
+    private Categoria categoria;
+    private Usuario usuario;
 
     public Aluguel() {
         this.retirada = LocalDateTime.now();
@@ -30,20 +31,18 @@ public class Aluguel implements Cloneable {
         this.devolucaoReal = null;
         this.valorEstimado = BigDecimal.ZERO;
         this.custoAdicional = BigDecimal.ZERO;
-        this.cliente = null;
-        this.carro = null;
-        this.usuario = null;
+        this.cliente = new Cliente();
+        this.carro = new Carro();
+        this.usuario = new Usuario();
+        this.categoria = new Categoria();
 
     }
 
-    public Aluguel(Cliente cliente, Carro carro, IUsuario usuario) {
-        this.retirada = LocalDateTime.now();
-        this.devolucaoEstimada = this.retirada.plusDays(1);
-        this.devolucaoReal = null;
-        this.valorEstimado = BigDecimal.ZERO;
-        this.custoAdicional = BigDecimal.ZERO;
+    public Aluguel(Cliente cliente, Carro carro, Categoria categoria, Usuario usuario) {
+        this();
         this.cliente = cliente;
         this.carro = carro;
+        this.categoria = categoria;
         this.usuario = usuario;
     }
 
@@ -126,11 +125,19 @@ public class Aluguel implements Cloneable {
         this.carro = carro;
     }
 
-    public IUsuario getUsuario() {
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(IUsuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -176,15 +183,14 @@ public class Aluguel implements Cloneable {
     }
 
     /**
-     * calcula o valor estimado do aluguel, multiplicando o valor do preço do
-     * carro (diária) pela quantidade de dias do aluguel, e coloca o valor no
+     * calcula o valor estimado do aluguel, multiplicando o valor da diaria pela quantidade de dias do aluguel, e coloca o valor no
      * atributo valorEstimado
      */
     public void calcularValorEstimado() {
         if (this.retirada != null && this.devolucaoEstimada != null && this.carro != null) {
             long horas = ChronoUnit.HOURS.between(this.retirada, this.devolucaoEstimada);
             double dias = horas / 24.0;
-            this.valorEstimado = new BigDecimal((dias * this.carro.getPreco().doubleValue()));
+            this.valorEstimado = new BigDecimal((dias * this.categoria.getDiaria().doubleValue()));
         }
     }
 

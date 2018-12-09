@@ -1,6 +1,9 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.*;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
@@ -13,20 +16,20 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 public class PrincipalApresentacao {
     private final CarroApresentacao carroApresentacao;
     private final ClienteApresentacao clienteApresentacao;
-    private final GerenteApresentacao gerenteApresentacao;
+    private final UsuarioApresentacao gerenteApresentacao;
     private final AluguelApresentacao aluguelApresentacao;
     private final LoginApresentacao loginApresentacao;
 
     public PrincipalApresentacao() {
         this.carroApresentacao = new CarroApresentacao();
         this.clienteApresentacao = new ClienteApresentacao();
-        this.gerenteApresentacao = new GerenteApresentacao();
+        this.gerenteApresentacao = new UsuarioApresentacao();
         this.aluguelApresentacao = new AluguelApresentacao();
         this.loginApresentacao = new LoginApresentacao();
     }
 
     public void menus() {
-        cadastrarGerente();
+        cadastrarUsuario();
         login();
         this.opcoes();
     }
@@ -36,7 +39,7 @@ public class PrincipalApresentacao {
      */
     private void login() {
         System.out.println("Efetue o login");
-        IUsuario usuario = null;
+        Usuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
         Singleton.getInstance().setUsuarioLogado(usuario);
@@ -45,16 +48,16 @@ public class PrincipalApresentacao {
     /**
      * efetua o cadastro do gerente no sistema
      */
-    private void cadastrarGerente() {
-        System.out.println("Cadastre o gerente");
-        Gerente gerente = null;
-        while (gerente == null)
-            gerente = this.gerenteApresentacao.lerDadosPeloTeclado();
+    private void cadastrarUsuario() {
+        System.out.println("Cadastre o usuario");
+        Usuario usuario = null;
+        while (usuario == null)
+            usuario = this.gerenteApresentacao.lerDadosPeloTeclado();
         try {
-            Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
+            Singleton.getInstance().getUsuarioNegocio().cadastrar(usuario);
         } catch (CpfException | IdadeExcetion | HabilitacaoException | NomeException e) {
             System.out.println(e.getMessage());
-            cadastrarGerente();
+            cadastrarUsuario();
         }
     }
 
@@ -112,12 +115,12 @@ public class PrincipalApresentacao {
     }
 
     private void cadastrarCarro() {
-        IUsuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
-        if (usuarioLogado instanceof Gerente) {
+        Usuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
+        if (usuarioLogado.isGerente()) {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
-                Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) usuarioLogado);
-            } catch (PlacaException | CpfException | NomeException | HabilitacaoException | ModeloException | CarroException | IdadeExcetion | MarcaException e) {
+                Singleton.getInstance().getCarroNegocio().cadastrar(carro);
+            } catch (PlacaException | ModeloException | CarroException | MarcaException e) {
                 System.out.println(e.getMessage());
                 cadastrarCarro();
             }

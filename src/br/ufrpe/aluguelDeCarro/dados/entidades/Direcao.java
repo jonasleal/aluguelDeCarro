@@ -29,4 +29,7 @@ public enum Direcao {
         return valor;
     }
 
-}
+    @Override
+    public String toString() {
+        return getNome();
+    }}

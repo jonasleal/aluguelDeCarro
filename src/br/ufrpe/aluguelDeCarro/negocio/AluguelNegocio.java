@@ -121,7 +121,7 @@ public class AluguelNegocio {
             }
         }
         long dias = periodoTotal.get(ChronoUnit.DAYS);
-        BigDecimal adicional = aluguel.getCarro().getPreco().multiply(new BigDecimal(dias));
+        BigDecimal adicional = aluguel.getCategoria().getDiaria().multiply(new BigDecimal(dias));
         aluguel.setCustoAdicional(adicional);
     }
 
