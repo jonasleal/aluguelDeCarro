@@ -1,14 +1,8 @@
 package br.ufrpe.aluguelDeCarro.servicos;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.AluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CarroRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.ClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.UsuarioRepositorio;
-import br.ufrpe.aluguelDeCarro.negocio.AluguelNegocio;
-import br.ufrpe.aluguelDeCarro.negocio.CarroNegocio;
-import br.ufrpe.aluguelDeCarro.negocio.ClienteNegocio;
-import br.ufrpe.aluguelDeCarro.negocio.UsuarioNegocio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
+import br.ufrpe.aluguelDeCarro.negocio.*;
 
 /**
  * Esta classe serve para centralizar todas classes de negócio
@@ -23,6 +17,7 @@ public class Singleton {
     private final ClienteNegocio clienteNegocio;
     private final UsuarioNegocio usuarioNegocio;
     private final AluguelNegocio aluguelNegocio;
+    private final CategoriaNegocio categoriaNegocio;
 
     private Usuario usuarioLogado;
 
@@ -31,6 +26,7 @@ public class Singleton {
         this.clienteNegocio = new ClienteNegocio(new ClienteRepositorio());
         this.usuarioNegocio = new UsuarioNegocio(new UsuarioRepositorio());
         this.aluguelNegocio = new AluguelNegocio(new AluguelRepositorio());
+        this.categoriaNegocio = new CategoriaNegocio(new CategoriaRepositorio());
     }
 
     /**
@@ -57,6 +53,10 @@ public class Singleton {
 
     public AluguelNegocio getAluguelNegocio() {
         return aluguelNegocio;
+    }
+
+    public CategoriaNegocio getCategoriaNegocio() {
+        return categoriaNegocio;
     }
 
     /**
