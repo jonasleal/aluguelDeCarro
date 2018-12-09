@@ -18,6 +18,8 @@ public class Categoria implements Cloneable {
     private BigDecimal diaria;
 
     public Categoria() {
+        this.nome = "";
+        this.diaria = BigDecimal.ZERO;
     }
 
     public Categoria(String nome, BigDecimal diaria) {
@@ -65,5 +67,13 @@ public class Categoria implements Cloneable {
             System.out.println("Clone não efetuado");
             return this;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "nome='" + nome + '\'' +
+                ", diaria=" + diaria +
+                '}';
     }
 }

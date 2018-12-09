@@ -35,10 +35,10 @@ class CarroApresentacao {
             carro.setPortas(InputUtil.solicitarNumeroInteiro());
             System.out.println("Informe a capacidade de passageiros do carro");
             carro.setOcupantes(InputUtil.solicitarNumeroInteiro());
-            System.out.println("Informe o valor da diaria do carro");
-            carro.setPreco(new BigDecimal(InputUtil.solicitarNumeroFlutuante()));
-            System.out.println("Informe a categoria do carro\n" + getCategorias());
-            carro.setCategoria(Categoria.values()[InputUtil.solicitarNumeroInteiro() - 1]);
+//            System.out.println("Informe o valor da diaria do carro");
+//            carro.setPreco(new BigDecimal(InputUtil.solicitarNumeroFlutuante()));
+//            System.out.println("Informe a categoria do carro\n" + getCategorias());
+//            carro.setCategoria(Categoria.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo do cambio carro\n" + getCambios());
             carro.setCambio(Cambio.values()[InputUtil.solicitarNumeroInteiro() - 1]);
             System.out.println("Informe o tipo de direcao do carro\n" + getDirecoes());
@@ -50,15 +50,15 @@ class CarroApresentacao {
         return carro;
     }
 
-    private String getCategorias() {
-        Categoria[] categorias = Categoria.values();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Categoria categoria : categorias)
-            stringBuilder.append(categoria.getValor()).append(" - ").append(categoria.getNome()).append("\n");
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        return stringBuilder.toString();
-    }
+//    private String getCategorias() {
+//        Categoria[] categorias = Categoria.values();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (Categoria categoria : categorias)
+//            stringBuilder.append(categoria.getValor()).append(" - ").append(categoria.getNome()).append("\n");
+//        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+//        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+//        return stringBuilder.toString();
+//    }
 
     private String getCambios() {
         Cambio[] cambios = Cambio.values();

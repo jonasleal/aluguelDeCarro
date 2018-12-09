@@ -29,4 +29,7 @@ public enum Cambio {
         return valor;
     }
 
-}
+    @Override
+    public String toString() {
+        return getNome();
+    }}

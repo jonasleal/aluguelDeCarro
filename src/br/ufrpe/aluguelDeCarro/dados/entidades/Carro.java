@@ -35,23 +35,20 @@ public class Carro implements Cloneable {
     private boolean disponivel;
 
     public Carro() {
+        this.placa = "";
+        this.modelo = "";
+        this.marca = "";
+        this.categoria = new Categoria();
+        this.cambio = Cambio.MANUAL;
+        this.direcao = Direcao.MECANICA;
     }
 
     public Carro(String placa, String modelo, String moarca, Categoria categoria) {
+        this();
         this.placa = placa;
         this.modelo = modelo;
         this.marca = moarca;
-        this.portas = 0;
-        this.ocupantes = 0;
         this.categoria = categoria;
-        this.cambio = Cambio.MANUAL;
-        this.direcao = Direcao.MECANICA;
-//        this.arCondicionado = false;
-//        this.airBag = false;
-//        this.travaEletrica = false;
-//        this.freioAbs = false;
-//        this.vidroEletrico = false;
-//        this.disponivel = false;
     }
 
     public int getId() {

@@ -31,18 +31,15 @@ public class Aluguel implements Cloneable {
         this.devolucaoReal = null;
         this.valorEstimado = BigDecimal.ZERO;
         this.custoAdicional = BigDecimal.ZERO;
-        this.cliente = null;
-        this.carro = null;
-        this.usuario = null;
+        this.cliente = new Cliente();
+        this.carro = new Carro();
+        this.usuario = new Usuario();
+        this.categoria = new Categoria();
 
     }
 
     public Aluguel(Cliente cliente, Carro carro, Categoria categoria, Usuario usuario) {
-        this.retirada = LocalDateTime.now();
-        this.devolucaoEstimada = this.retirada.plusDays(1);
-        this.devolucaoReal = null;
-        this.valorEstimado = BigDecimal.ZERO;
-        this.custoAdicional = BigDecimal.ZERO;
+        this();
         this.cliente = cliente;
         this.carro = carro;
         this.categoria = categoria;

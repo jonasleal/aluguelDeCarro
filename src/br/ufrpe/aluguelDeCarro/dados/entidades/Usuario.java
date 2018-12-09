@@ -16,6 +16,7 @@ public class Usuario extends Pessoa implements Cloneable {
     private boolean gerente;
 
     public Usuario() {
+        this.senha = "";
     }
 
     public Usuario(String cpf, String nome, LocalDate nascimento, String senha, boolean gerente) {

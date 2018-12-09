@@ -16,6 +16,10 @@ public class Reserva implements Cloneable {
     private LocalDateTime retiradaPrevista;
 
     public Reserva() {
+        this.usuario = new Usuario();
+        this.cliente = new Cliente();
+        this.categoria = new Categoria();
+        this.retiradaPrevista = LocalDateTime.now();
     }
 
     public Reserva(Usuario usuario, Cliente cliente, Categoria categoria, LocalDateTime retiradaPrevista) {

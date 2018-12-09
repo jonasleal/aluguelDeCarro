@@ -27,6 +27,9 @@ public abstract class Pessoa implements Cloneable {
     private LocalDate nascimento;
 
     Pessoa() {
+        this.cpf = "";
+        this.nome = "";
+        this.nascimento = LocalDate.now();
     }
 
     Pessoa(String cpf, String nome, LocalDate nascimento) {
