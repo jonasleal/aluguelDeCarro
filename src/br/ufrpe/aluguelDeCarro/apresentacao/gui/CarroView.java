@@ -17,10 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -70,7 +68,7 @@ public class CarroView implements Initializable {
     private JFXCheckBox freioABSCheckBox;
 
     @FXML
-    private ChoiceBox<Categoria> categoriaChoiceBox;
+    private ComboBox<Categoria> categoriaComboBox;
 
     @FXML
     private ChoiceBox<Cambio> cambioChoiceBox;
@@ -95,6 +93,9 @@ public class CarroView implements Initializable {
         if (carro != null) {
             try {
                 Singleton.getInstance().getCarroNegocio().desativar(carro.getId());
+                carros.remove(carro);
+                mostrarDetalhes(null);
+                mostrarTooltip(deletarButton, "Carro deletado com sucesso");
             } catch (CarroNaoEncontradoException e) {
                 mostrarTooltip(deletarButton, e.getMessage());
             }
@@ -105,15 +106,18 @@ public class CarroView implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        mostrarDetalhes(new Carro());
+        mostrarDetalhes(null);
     }
 
     @FXML
     void salvar(ActionEvent event) {
-        if (inputValido()) {
+        if (validarInputs()) {
             Carro carro = lerInputs();
             try {
                 Singleton.getInstance().getCarroNegocio().cadastrar(carro);
+                carros.add(carro);
+                mostrarDetalhes(null);
+                mostrarTooltip(salvarButton, "Carro salvo com sucesso");
             } catch (PlacaException e) {
                 mostrarTooltip(placaTextField, e.getMessage());
             } catch (MarcaException e) {
@@ -126,12 +130,32 @@ public class CarroView implements Initializable {
         }
     }
 
-    private boolean inputValido() {
-        return portasTextField.getText().matches("\\d+") && ocupantesTextField.getText().matches("\\d+");
+    private boolean validarInputs() {
+        if (!portasTextField.getText().matches("^\\d+")) {
+            mostrarTooltip(portasTextField, "Valor inválido");
+            return false;
+        } else if (!ocupantesTextField.getText().matches("^\\d+")) {
+            mostrarTooltip(ocupantesTextField, "Valor inválido");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        configurarTabela();
+        configurarComboBox();
+        configurarChoiceBox();
+        mostrarDetalhes(null);
+    }
+
+    private void configurarChoiceBox() {
+        cambioChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Cambio.values())));
+        direcaoChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Direcao.values())));
+    }
+
+    private void configurarTabela() {
         placaColumn.setCellValueFactory(value -> new SimpleStringProperty(
                 value.getValue() != null ? value.getValue().getPlaca() : ""));
         modeloColumn.setCellValueFactory(value -> new SimpleStringProperty(
@@ -142,18 +166,30 @@ public class CarroView implements Initializable {
 
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> mostrarDetalhes(newValue)));
-
-        categoriaChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Categoria.values())));
-        cambioChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Cambio.values())));
-        direcaoChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Direcao.values())));
-
-        ocupantesTextField.textProperty().addListener(
-                (observable, oldValue, newValue) -> ocupantesTextField.setText(newValue.replaceAll("[^\\d]", "")));
-        portasTextField.textProperty().addListener(
-                (observable, oldValue, newValue) -> portasTextField.setText(newValue.replaceAll("[^\\d]", "")));
+        tableView.setItems(carros);
     }
 
-    public Carro lerInputs() {
+    private void configurarComboBox() {
+        categoriaComboBox.setItems(FXCollections.observableArrayList(
+                Singleton.getInstance().getCategoriaNegocio().consultarTodos()));
+        categoriaComboBox.setConverter(new StringConverter<Categoria>() {
+            @Override
+            public String toString(Categoria object) {
+                return object.getNome();
+            }
+
+            @Override
+            public Categoria fromString(String string) {
+                try {
+                    return Singleton.getInstance().getCategoriaNegocio().consultar(string);
+                } catch (CategoriaNaoEncontradaException e) {
+                    return null;
+                }
+            }
+        });
+    }
+
+    private Carro lerInputs() {
         Carro carro = new Carro();
         carro.setPlaca(placaTextField.getText());
         carro.setModelo(modeloTextField.getText());
@@ -165,7 +201,7 @@ public class CarroView implements Initializable {
         carro.setAirBag(airBagCheckBox.isSelected());
         carro.setTravaEletrica(travaEletricaCheckBox.isSelected());
         carro.setFreioAbs(freioABSCheckBox.isSelected());
-        carro.setCategoria(categoriaChoiceBox.getValue());
+        carro.setCategoria(categoriaComboBox.getValue());
         carro.setDirecao(direcaoChoiceBox.getValue());
         carro.setCambio(cambioChoiceBox.getValue());
         return carro;
@@ -183,7 +219,7 @@ public class CarroView implements Initializable {
             airBagCheckBox.setSelected(carro.isAirBag());
             travaEletricaCheckBox.setSelected(carro.isTravaEletrica());
             freioABSCheckBox.setSelected(carro.isFreioAbs());
-            categoriaChoiceBox.setValue(carro.getCategoria());
+            categoriaComboBox.setValue(carro.getCategoria());
             direcaoChoiceBox.setValue(carro.getDirecao());
             cambioChoiceBox.setValue(carro.getCambio());
         } else {
@@ -197,7 +233,7 @@ public class CarroView implements Initializable {
             airBagCheckBox.setSelected(false);
             travaEletricaCheckBox.setSelected(false);
             freioABSCheckBox.setSelected(false);
-            categoriaChoiceBox.setValue(null);
+            categoriaComboBox.setValue(null);
             direcaoChoiceBox.setValue(null);
             cambioChoiceBox.setValue(null);
         }

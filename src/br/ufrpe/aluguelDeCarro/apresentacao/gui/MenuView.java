@@ -53,6 +53,15 @@ public class MenuView implements Initializable {
 
     @FXML
     void irParaCategoria(ActionEvent event) {
+        try {
+            loader = new FXMLLoader(getClass().getResource("fxml/Categoria.fxml"));
+            content.getChildren().clear();
+            AnchorPane conteudo = loader.load();
+            setConstrains(conteudo);
+            content.getChildren().add(conteudo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

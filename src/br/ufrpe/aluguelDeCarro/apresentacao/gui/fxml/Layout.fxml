@@ -2,15 +2,12 @@
 
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.LayoutView">
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.LayoutView">
     <children>
-        <AnchorPane fx:id="content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0"/>
-        <JFXDrawer fx:id="drawer" prefHeight="400.0" prefWidth="99.0" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-        <JFXHamburger fx:id="hamburger" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0"/>
+      <JFXDrawer fx:id="drawer" prefHeight="400.0" prefWidth="99.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <JFXHamburger fx:id="hamburger" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+        <AnchorPane fx:id="content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0" />
     </children>
 </AnchorPane>

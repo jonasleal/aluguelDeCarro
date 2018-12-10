@@ -70,6 +70,7 @@ public class ClienteView implements Initializable {
                 Singleton.getInstance().getClienteNegocio().desativar(selectedItem.getId());
                 clientes.remove(selectedItem);
                 mostrarDetalhes(null);
+                mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
                 mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
             }
@@ -80,7 +81,7 @@ public class ClienteView implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        mostrarDetalhes(new Cliente());
+        mostrarDetalhes(null);
     }
 
     @FXML

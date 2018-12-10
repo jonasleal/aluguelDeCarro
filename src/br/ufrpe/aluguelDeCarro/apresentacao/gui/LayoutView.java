@@ -45,10 +45,16 @@ public class LayoutView implements Initializable {
         hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             basicCloseTransition.setRate(basicCloseTransition.getRate() * -1);
             basicCloseTransition.play();
-            if (drawer.isOpened())
+            if (drawer.isOpened()) {
                 drawer.close();
-            else
+            } else {
                 drawer.open();
+            }
+        });
+        drawer.setOnDrawerClosed(event -> drawer.toBack());
+        drawer.setOnDrawerOpened(event -> {
+            drawer.toFront();
+            hamburger.toFront();
         });
     }
 }
