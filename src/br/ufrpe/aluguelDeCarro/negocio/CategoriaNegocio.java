@@ -17,6 +17,7 @@ public class CategoriaNegocio {
     }
 
     public void cadastrar(Categoria categoria) {
+        categoria.setAtivo(true);
         this.repositorio.cadastrar(categoria);
     }
 
@@ -30,6 +31,10 @@ public class CategoriaNegocio {
 
     public Categoria consultar(int id) throws CategoriaNaoEncontradaException {
         return this.repositorio.consultar(id);
+    }
+
+    public Categoria consultar(String nome) throws CategoriaNaoEncontradaException {
+        return this.repositorio.consultar(nome);
     }
 
     public List<Categoria> consultarTodos() {
