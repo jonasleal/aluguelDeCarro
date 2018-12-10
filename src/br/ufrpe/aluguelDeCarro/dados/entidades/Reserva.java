@@ -14,19 +14,22 @@ public class Reserva implements Cloneable {
     private Cliente cliente;
     private Categoria categoria;
     private LocalDateTime retiradaPrevista;
+    private LocalDateTime devolucaoPrevista;
 
     public Reserva() {
         this.usuario = new Usuario();
         this.cliente = new Cliente();
         this.categoria = new Categoria();
         this.retiradaPrevista = LocalDateTime.now();
+        this.devolucaoPrevista = LocalDateTime.now();
     }
 
-    public Reserva(Usuario usuario, Cliente cliente, Categoria categoria, LocalDateTime retiradaPrevista) {
+    public Reserva(Usuario usuario, Cliente cliente, Categoria categoria, LocalDateTime retiradaPrevista, LocalDateTime devolucaoPrevista) {
         this.usuario = usuario;
         this.cliente = cliente;
         this.categoria = categoria;
         this.retiradaPrevista = retiradaPrevista;
+        this.devolucaoPrevista = devolucaoPrevista;
     }
 
     public int getId() {
@@ -75,6 +78,14 @@ public class Reserva implements Cloneable {
 
     public void setRetiradaPrevista(LocalDateTime retiradaPrevista) {
         this.retiradaPrevista = retiradaPrevista;
+    }
+
+    public LocalDateTime getDevolucaoPrevista() {
+        return devolucaoPrevista;
+    }
+
+    public void setDevolucaoPrevista(LocalDateTime devolucaoPrevista) {
+        this.devolucaoPrevista = devolucaoPrevista;
     }
 
     @Override
