@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.excecoes.Data;
+package br.ufrpe.aluguelDeCarro.excecoes.Aluguel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author JonasJr
  */
-public class DataRetiradaFuturoException extends DataInvalidaException {
+public class DataRetiradaFuturoException extends AluguelInvalidoException {
 
     private LocalDateTime data;
 

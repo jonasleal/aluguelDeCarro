@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro;
-
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaFuturoException;
-import java.time.LocalDateTime;
+package br.ufrpe.aluguelDeCarro.excecoes.Aluguel;
 
 /**
  *
  * @author JonasJr
  */
-public class teste {
-
-    public static void main(String[] args) {
-
+public class AluguelFinalizadoException extends AluguelInvalidoException {
+    
+    public AluguelFinalizadoException() {
+        super("Este aluguel esta finalizado");
     }
-
+    
 }

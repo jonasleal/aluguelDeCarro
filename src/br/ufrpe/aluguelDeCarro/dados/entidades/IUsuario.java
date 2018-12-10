@@ -5,17 +5,15 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 /**
  * @author JonasJr
  */
 public interface IUsuario {
 
-    void validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException;
+    void validar() throws PessoaInvalidaException, HabilitacaoException;
 
     boolean validarSenha(String senha);
 }

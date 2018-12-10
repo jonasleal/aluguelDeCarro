@@ -2,13 +2,13 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException.CPF;
-import static br.ufrpe.aluguelDeCarro.excecoes.ClienteNaoEncontradoException.ID;
+import static br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException.CPF;
+import static br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException.ID;
 
 /**
  * A classe armazena uma lista de instancias de clientes

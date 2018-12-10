@@ -1,6 +1,12 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.CustoAdicionalNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.ValorEstimadoNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -137,31 +143,33 @@ public class Aluguel implements Cloneable {
     /**
      * Valida os dados obrigatórios para o aluguel.
      *
-     * @throws AluguelException     - Se o valor estimado ou custo adicional for
-     *                              negativo.
-     * @throws CpfException         - Se o CPF do cliente ou atendente não for valido.
-     * @throws IdadeExcetion        - Se for menor de idade.
-     * @throws NomeException        - Se o nome do cliente ou atendente não for valido.
+     * @throws AluguelException - Se o valor estimado ou custo adicional for
+     * negativo.
+     * @throws CpfObrigatorioException - Se o CPF do cliente ou atendente não
+     * for valido.
+     * @throws IdadeExcetion - Se for menor de idade.
+     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
      * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
-     *                              mais que 11 dígitos.
-     * @throws PlacaException       - Se a placa passada estiver fora do padrão de 3
-     *                              letras e 4 dígitos.
-     * @throws MarcaException       - Se não for passado uma marca.
-     * @throws ModeloException      - Se não for passado um modelo.
-     * @throws CarroException       - Se número de portas, ocupantes, cambio, direção
-     *                              categoria ou valor da diária não for passado ou for passado um valor
-     *                              diferente dos valores validos.
+     * mais que 11 dígitos.
+     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+     * letras e 4 dígitos.
+     * @throws MarcaException - Se não for passado uma marca.
+     * @throws ModeloException - Se não for passado um modelo.
+     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+     * categoria ou valor da diária não for passado ou for passado um valor
+     * diferente dos valores validos.
      */
-    public void validar() throws AluguelException, CpfException, IdadeExcetion, NomeException, HabilitacaoException, PlacaException, MarcaException, ModeloException, CarroException {
+    public void validar() throws PessoaInvalidaException, HabilitacaoException,  CarroInvalidoException, AluguelInvalidoException {
         this.cliente.validar();
         this.carro.validar();
         this.usuario.validar();
 
         if (this.valorEstimado.compareTo(BigDecimal.ZERO) < 0) {
-            throw new AluguelException(AluguelException.VALOR_INVALIDO);
+
+            throw new ValorEstimadoNegativoException(valorEstimado);
         }
         if (this.custoAdicional.compareTo(BigDecimal.ZERO) < 0) {
-            throw new AluguelException(AluguelException.VALOR_INVALIDO);
+            throw new CustoAdicionalNegativoException(valorEstimado);
         }
     }
 
@@ -205,8 +213,12 @@ public class Aluguel implements Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Aluguel aluguel = (Aluguel) o;
         return id == aluguel.id;
     }

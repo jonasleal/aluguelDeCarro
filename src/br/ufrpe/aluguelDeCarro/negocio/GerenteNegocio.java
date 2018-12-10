@@ -5,9 +5,12 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio;
 
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IGerenteRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 /**
  * @author JonasJr
@@ -20,7 +23,7 @@ public class GerenteNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public boolean cadastrar(Gerente gerente) throws  PessoaInvalidaException, HabilitacaoException {
         if (gerente != null) {
             gerente.validar();
             gerente.setAtivo(true);
@@ -29,7 +32,7 @@ public class GerenteNegocio {
         return false;
     }
 
-    public boolean alterar(Gerente gerente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public boolean alterar(Gerente gerente) throws  PessoaInvalidaException, HabilitacaoException {
         if (gerente != null) {
             gerente.validar();
             return this.repositorio.alterar(gerente);

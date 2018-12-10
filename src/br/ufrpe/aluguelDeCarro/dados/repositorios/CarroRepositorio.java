@@ -2,13 +2,12 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException;
-
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.CarroNaoEncontradoException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException.ID;
-import static br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException.PLACA;
 
 /**
  * A classe armazena uma lista de instancias de carros
@@ -30,7 +29,7 @@ public class CarroRepositorio implements ICarroRepositorio {
      * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
-    public Carro consultar(int id) throws CarroNaoEncontradoException {
+    public Carro consultar(int id) throws IdNaoEncontradoException {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
@@ -38,7 +37,7 @@ public class CarroRepositorio implements ICarroRepositorio {
                 .filter(carro -> carro.getId() == id)
                 .findFirst()
                 .map(Carro::clone)
-                .orElseThrow(() -> new CarroNaoEncontradoException(ID));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
@@ -47,14 +46,14 @@ public class CarroRepositorio implements ICarroRepositorio {
      * @param id identificador do {@code Carro}
      * @return o {@code Carro} ativo que contém o id, {@code null} caso nao encontre
      */
-    private Carro consultarReferencia(int id) throws CarroNaoEncontradoException {
+    private Carro consultarReferencia(int id) throws IdNaoEncontradoException {
         return this.carros
                 .stream()
                 .filter(Carro::isAtivo)
                 .filter(Carro::isDisponivel)
                 .filter(carro -> carro.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new CarroNaoEncontradoException(ID));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
@@ -72,7 +71,7 @@ public class CarroRepositorio implements ICarroRepositorio {
                 .filter(carro -> carro.getPlaca().equals(placa))
                 .findFirst()
                 .map(Carro::clone)
-                .orElseThrow(() -> new CarroNaoEncontradoException(PLACA));
+                .orElseThrow(() -> new CarroNaoEncontradoException(placa));
     }
 
     /**
@@ -106,7 +105,7 @@ public class CarroRepositorio implements ICarroRepositorio {
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) throws CarroNaoEncontradoException {
+    public boolean desativar(int id) throws IdNaoEncontradoException {
         Carro carro = this.consultarReferencia(id);
         carro.setAtivo(false);
         return true;
@@ -130,7 +129,7 @@ public class CarroRepositorio implements ICarroRepositorio {
         try {
             this.consultar(id);
             return true;
-        } catch (CarroNaoEncontradoException e) {
+        } catch (IdNaoEncontradoException e) {
             return false;
         }
     }

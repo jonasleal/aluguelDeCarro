@@ -3,24 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.excecoes.Data;
+package br.ufrpe.aluguelDeCarro.excecoes.Aluguel;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author JonasJr
  */
-public class DataRetiradaPassadoException extends DataInvalidaException {
+public class DataRetiradaPassadoException extends AluguelInvalidoException {
 
-    private LocalDateTime data;
+    private LocalDate data;
 
     public DataRetiradaPassadoException() {
         super("Data de retirada esta no passado");
     }
 
-    public DataRetiradaPassadoException(LocalDateTime data) {
+    public DataRetiradaPassadoException(LocalDate data) {
         this();
         this.data = data;
     }
@@ -28,7 +28,7 @@ public class DataRetiradaPassadoException extends DataInvalidaException {
     @Override
     public String getMessage() {
         if(data != null){
-            return super.getMessage() + " " + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            return super.getMessage() + " " + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
         return getMessage();
     }

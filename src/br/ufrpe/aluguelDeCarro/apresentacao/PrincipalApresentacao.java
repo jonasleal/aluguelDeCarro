@@ -1,7 +1,11 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.dados.entidades.*;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
@@ -11,6 +15,7 @@ import br.ufrpe.aluguelDeCarro.servicos.Singleton;
  * @author Fernando
  */
 public class PrincipalApresentacao {
+
     private final CarroApresentacao carroApresentacao;
     private final ClienteApresentacao clienteApresentacao;
     private final GerenteApresentacao gerenteApresentacao;
@@ -37,8 +42,9 @@ public class PrincipalApresentacao {
     private void login() {
         System.out.println("Efetue o login");
         IUsuario usuario = null;
-        while (usuario == null)
+        while (usuario == null) {
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
+        }
         Singleton.getInstance().setUsuarioLogado(usuario);
     }
 
@@ -48,18 +54,20 @@ public class PrincipalApresentacao {
     private void cadastrarGerente() {
         System.out.println("Cadastre o gerente");
         Gerente gerente = null;
-        while (gerente == null)
+        while (gerente == null) {
             gerente = this.gerenteApresentacao.lerDadosPeloTeclado();
+        }
         try {
             Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
-        } catch (CpfException | IdadeExcetion | HabilitacaoException | NomeException e) {
+        } catch (PessoaInvalidaException | HabilitacaoException  e) {
             System.out.println(e.getMessage());
             cadastrarGerente();
         }
     }
 
     /**
-     * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo escolha uma para executar
+     * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo
+     * escolha uma para executar
      */
     private void opcoes() {
         int opcao;
@@ -95,7 +103,7 @@ public class PrincipalApresentacao {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
-        } catch (AluguelException e) {
+        } catch (AluguelInvalidoException | CarroInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }
@@ -105,7 +113,7 @@ public class PrincipalApresentacao {
         Cliente cliente = this.clienteApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
-        } catch (CpfException | IdadeExcetion | HabilitacaoException | NomeException e) {
+        } catch (PessoaInvalidaException| HabilitacaoException e) {
             System.out.println(e.getMessage());
             cadastrarCliente();
         }
@@ -117,7 +125,7 @@ public class PrincipalApresentacao {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
                 Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) usuarioLogado);
-            } catch (PlacaException | CpfException | NomeException | HabilitacaoException | ModeloException | CarroException | IdadeExcetion | MarcaException e) {
+            } catch (CarroInvalidoException | HabilitacaoException | PessoaInvalidaException e) {
                 System.out.println(e.getMessage());
                 cadastrarCarro();
             }

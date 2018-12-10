@@ -1,17 +1,15 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
 
 /**
  * @author Fernando
  */
-
 public class Gerente extends Pessoa implements IUsuario, Cloneable {
+
     private String senha;
 
     public Gerente() {
@@ -31,13 +29,14 @@ public class Gerente extends Pessoa implements IUsuario, Cloneable {
     }
 
     @Override
-    public void validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public void validar() throws PessoaInvalidaException, HabilitacaoException {
         super.validar();
     }
 
     /**
      * @param senha senha para login do usuário
-     * @return {@code true} se a senha for igual a senha da instancia, {@code false} caso contrário
+     * @return {@code true} se a senha for igual a senha da instancia,
+     * {@code false} caso contrário
      */
     @Override
     public boolean validarSenha(String senha) {
@@ -56,10 +55,10 @@ public class Gerente extends Pessoa implements IUsuario, Cloneable {
 
     @Override
     public String toString() {
-        return "Gerente{" +
-                "cpf='" + this.getCpf() + '\'' +
-                ", nome='" + this.getNome() + '\'' +
-                ", nascimento=" + this.getNascimento() +
-                '}';
+        return "Gerente{"
+                + "cpf='" + this.getCpf() + '\''
+                + ", nome='" + this.getNome() + '\''
+                + ", nascimento=" + this.getNascimento()
+                + '}';
     }
 }

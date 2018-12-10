@@ -5,8 +5,8 @@
  */
 package br.ufrpe.aluguelDeCarro.servicos;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
-
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 
 /**
  * @author JonasJr
@@ -23,16 +23,16 @@ public class CpfUtil {
         return cpfFormatado;
     }
 
-    public static void validarCPF(String cpf) throws CpfException {
+    public static void validarCPF(String cpf) throws CpfObrigatorioException, CpfInvalidoException {
         if (cpf == null || cpf.isEmpty()) {
-            throw new CpfException(CpfException.NULL);
+            throw new CpfObrigatorioException();
         }
         if (cpf.equals("00000000000") || cpf.equals("11111111111")
                 || cpf.equals("22222222222") || cpf.equals("33333333333")
                 || cpf.equals("44444444444") || cpf.equals("55555555555")
                 || cpf.equals("66666666666") || cpf.equals("77777777777")
                 || cpf.equals("88888888888") || cpf.equals("99999999999")) {
-            throw new CpfException(CpfException.INVALIDO);
+            throw new CpfInvalidoException();
         }
 
         char dig10, dig11;
@@ -72,13 +72,12 @@ public class CpfUtil {
             }
 
             if ((cpf.charAt(9) != dig10) || (cpf.charAt(10) != dig11)) {
-                throw new CpfException(CpfException.INVALIDO);
+                throw new CpfInvalidoException();
             }
         } catch (Exception e) {
-            throw new CpfException(CpfException.INVALIDO);
+            throw new CpfInvalidoException(e.getCause());
         }
 
     }
-
 
 }
