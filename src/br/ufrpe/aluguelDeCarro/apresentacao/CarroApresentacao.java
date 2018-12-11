@@ -1,13 +1,10 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cambio;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Direcao;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cambio;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Direcao;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
-
-import java.math.BigDecimal;
+import br.ufrpe.aluguelDeCarro.Fachada.FachadaGerente;
 
 /**
  * Classe de interação com o usuário, para que o mesmo possar gerenciar o carro
@@ -81,7 +78,7 @@ class CarroApresentacao {
     }
 
     void visualizarCarros() {
-        Singleton.getInstance().getCarroNegocio().consultarTodos().forEach(System.out::println);
+        FachadaGerente.getInstance().getCarroNegocio().consultarTodos().forEach(System.out::println);
 
     }
 }

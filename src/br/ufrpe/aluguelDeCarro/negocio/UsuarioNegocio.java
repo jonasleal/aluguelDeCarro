@@ -5,7 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 

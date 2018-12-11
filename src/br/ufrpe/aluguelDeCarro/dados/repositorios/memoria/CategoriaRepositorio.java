@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICategoriaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 

@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Manutencao;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Manutencao;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CarroRepositorio;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;

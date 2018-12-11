@@ -5,9 +5,9 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelEmAbertoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelFinalizadoException;
@@ -206,7 +206,7 @@ public class AluguelNegocio {
      *
      * @param aluguel - Aluguel no estado finalizado.
      * @return True - Se registrado com sucesso.
-     * @throws AluguelException - Contem a mensagem e causa do erro.
+//     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
     public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, AluguelNaoEncontradoException {
         validarDevolucao(aluguel);

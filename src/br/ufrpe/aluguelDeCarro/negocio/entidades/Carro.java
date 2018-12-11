@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.dados.entidades;
+package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CambioInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CategoriaIncalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.DirecaoInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoMarcaException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoModeloException;
@@ -190,11 +189,11 @@ public class Carro implements Cloneable {
     /**
      * Valida os dados obrigatórios para um carro
      *
-     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * letras e 4 dígitos.
-     * @throws MarcaException - Se não for passado uma marca.
-     * @throws ModeloException - Se não for passado um modelo.
-     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+//     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+//     * letras e 4 dígitos.
+//     * @throws MarcaException - Se não for passado uma marca.
+//     * @throws ModeloException - Se não for passado um modelo.
+//     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
      * categoria ou valor da diária não for passado ou for passado um valor
      * diferente dos valores validos.
      */

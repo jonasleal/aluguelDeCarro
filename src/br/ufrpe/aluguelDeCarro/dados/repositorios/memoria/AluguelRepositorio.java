@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;

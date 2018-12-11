@@ -1,12 +1,15 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Usuario;
+import br.ufrpe.aluguelDeCarro.Fachada.FachadaGerente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
 
 /**
  * Classe central das interações com o usuário
@@ -42,7 +45,7 @@ public class PrincipalApresentacao {
         Usuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
-        Singleton.getInstance().setUsuarioLogado(usuario);
+        FachadaGerente.getInstance().setUsuarioLogado(usuario);
     }
 
     /**
@@ -54,12 +57,13 @@ public class PrincipalApresentacao {
         while (usuario == null)
             usuario = this.gerenteApresentacao.lerDadosPeloTeclado();
         try {
-            Singleton.getInstance().getUsuarioNegocio().cadastrar(usuario);
-        } catch (CpfException | IdadeExcetion | HabilitacaoException | NomeException e) {
+            FachadaGerente.getInstance().getUsuarioNegocio().cadastrar(usuario);
+        } catch (HabilitacaoException e) {
             System.out.println(e.getMessage());
             cadastrarUsuario();
         }
     }
+
 
     /**
      * mostra ao usuário as funcionalidades do sistema, e solicita que o mesmo escolha uma para executar
@@ -97,8 +101,8 @@ public class PrincipalApresentacao {
     private void cadastrarAluguel() {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
-            Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
-        } catch (AluguelException e) {
+            FachadaGerente.getInstance().getAluguelNegocio().cadastrar(aluguel);
+        } catch (CarroInvalidoException | AluguelInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }
@@ -107,23 +111,18 @@ public class PrincipalApresentacao {
     private void cadastrarCliente() {
         Cliente cliente = this.clienteApresentacao.lerDadosPeloTeclado();
         try {
-            Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
-        } catch (CpfException | IdadeExcetion | HabilitacaoException | NomeException e) {
+            FachadaGerente.getInstance().getClienteNegocio().cadastrar(cliente);
+        } catch (PessoaInvalidaException | HabilitacaoException e) {
             System.out.println(e.getMessage());
             cadastrarCliente();
         }
     }
 
     private void cadastrarCarro() {
-        Usuario usuarioLogado = Singleton.getInstance().getUsuarioLogado();
+        Usuario usuarioLogado = FachadaGerente.getInstance().getUsuarioLogado();
         if (usuarioLogado.isGerente()) {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
-            try {
-                Singleton.getInstance().getCarroNegocio().cadastrar(carro);
-            } catch (PlacaException | ModeloException | CarroException | MarcaException e) {
-                System.out.println(e.getMessage());
-                cadastrarCarro();
-            }
+                FachadaGerente.getInstance().getCarroNegocio().cadastrar(carro);
         }
     }
 }

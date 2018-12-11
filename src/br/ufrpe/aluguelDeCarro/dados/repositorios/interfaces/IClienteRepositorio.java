@@ -5,7 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
 
 import java.util.ArrayList;

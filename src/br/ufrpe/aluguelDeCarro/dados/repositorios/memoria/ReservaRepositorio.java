@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 

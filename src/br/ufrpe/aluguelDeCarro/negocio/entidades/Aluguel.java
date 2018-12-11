@@ -1,6 +1,5 @@
-package br.ufrpe.aluguelDeCarro.dados.entidades;
+package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.CustoAdicionalNegativoException;
@@ -150,19 +149,19 @@ public class Aluguel implements Cloneable {
     /**
      * Valida os dados obrigatórios para o aluguel.
      *
-     * @throws AluguelException - Se o valor estimado ou custo adicional for
-     * negativo.
-     * @throws CpfObrigatorioException - Se o CPF do cliente ou atendente não
-     * for valido.
-     * @throws IdadeExcetion - Se for menor de idade.
-     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
-     * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
-     * mais que 11 dígitos.
-     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * letras e 4 dígitos.
-     * @throws MarcaException - Se não for passado uma marca.
-     * @throws ModeloException - Se não for passado um modelo.
-     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+//     * @throws AluguelException - Se o valor estimado ou custo adicional for
+//     * negativo.
+//     * @throws CpfObrigatorioException - Se o CPF do cliente ou atendente não
+//     * for valido.
+//     * @throws IdadeExcetion - Se for menor de idade.
+//     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
+//     * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
+//     * mais que 11 dígitos.
+//     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+//     * letras e 4 dígitos.
+//     * @throws MarcaException - Se não for passado uma marca.
+//     * @throws ModeloException - Se não for passado um modelo.
+//     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
      * categoria ou valor da diária não for passado ou for passado um valor
      * diferente dos valores validos.
      */

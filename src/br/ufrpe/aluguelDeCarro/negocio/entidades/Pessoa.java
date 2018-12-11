@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.dados.entidades;
+package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.FormatoNomeException;

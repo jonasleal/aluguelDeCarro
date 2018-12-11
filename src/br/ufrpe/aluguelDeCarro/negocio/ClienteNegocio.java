@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;

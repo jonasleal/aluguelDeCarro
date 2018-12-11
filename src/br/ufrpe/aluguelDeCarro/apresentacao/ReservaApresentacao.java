@@ -1,13 +1,13 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Reserva;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.CategoriaRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.ClienteRepositorio;
 import br.ufrpe.aluguelDeCarro.servicos.DataUtil;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+import br.ufrpe.aluguelDeCarro.Fachada.FachadaGerente;
 
 import java.util.ArrayList;
 
@@ -42,7 +42,7 @@ class ReservaApresentacao {
      */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Carro> carros = Singleton.getInstance().getCarroNegocio().consultarTodos();
+        ArrayList<Carro> carros = FachadaGerente.getInstance().getCarroNegocio().consultarTodos();
         if (carros != null && !carros.isEmpty()) {
             carros.forEach(carro -> stringBuilder.append(carro.getId()).append(" - ").append(carro));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -56,7 +56,7 @@ class ReservaApresentacao {
      */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<Cliente> clientes = Singleton.getInstance().getClienteNegocio().consultarTodos();
+        ArrayList<Cliente> clientes = FachadaGerente.getInstance().getClienteNegocio().consultarTodos();
         if (clientes != null && !clientes.isEmpty()) {
             clientes.forEach(cliente -> stringBuilder.append(cliente.getId()).append(" - ").append(cliente));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);

@@ -1,10 +1,10 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

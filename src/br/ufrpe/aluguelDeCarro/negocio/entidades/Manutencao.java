@@ -1,4 +1,4 @@
-package br.ufrpe.aluguelDeCarro.dados.entidades;
+package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

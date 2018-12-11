@@ -5,9 +5,8 @@
  */
 package br.ufrpe.aluguelDeCarro.excecoes.Aluguel;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 
 /**

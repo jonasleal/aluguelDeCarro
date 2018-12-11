@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Manutencao;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Manutencao;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IManutencaoRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
 
