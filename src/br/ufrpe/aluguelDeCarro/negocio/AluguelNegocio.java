@@ -9,7 +9,19 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelEmAbertoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelFinalizadoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataEstimadaInconsistenteException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataEstimadaPassado;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaInconsistenteException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaPassadoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroIndisponivelException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,44 +41,53 @@ public class AluguelNegocio {
         this.repositorio = repositorio;
     }
 
-    private void validacaoBasica(Aluguel aluguel) throws AluguelException {
+    private void validacaoBasica(Aluguel aluguel) throws AluguelInvalidoException {
         try {
             aluguel.validar();
-        } catch (CarroException | CpfException | HabilitacaoException
-                | IdadeExcetion | MarcaException | ModeloException
-                | NomeException | PlacaException e) {
-            throw new AluguelException(e.getMessage(), e.fillInStackTrace());
+        } catch (CarroInvalidoException | HabilitacaoException | PessoaInvalidaException e) {
+            throw new AluguelInvalidoException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
-    private void validarDevolucao(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
+    private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
-        if (aluguelOriginal.getDevolucaoReal() != null) {
-            throw new AluguelException(AluguelException.ALUGUEL_FINALIZADO);
+
+        LocalDateTime dataNoBanco = aluguelOriginal.getDevolucaoReal();
+
+        if (dataNoBanco != null) {
+            throw new AluguelFinalizadoException();
         }
-        if (!aluguel.getDevolucaoEstimada().equals(aluguelOriginal.getDevolucaoEstimada())) {
-            throw new AluguelException(AluguelException.DATA_ESTIMADA_INCONSISTENTE);
+
+        dataNoBanco = aluguelOriginal.getDevolucaoEstimada();
+
+        if (!aluguel.getDevolucaoEstimada().equals(dataNoBanco)) {
+            throw new DataEstimadaInconsistenteException(dataNoBanco, aluguel.getDevolucaoEstimada());
         }
         if (!aluguel.getRetirada().equals(aluguelOriginal.getRetirada())) {
-            throw new AluguelException(AluguelException.DATA_RETIRADA_INCONSISTENTE);
+            throw new DataRetiradaInconsistenteException(dataNoBanco, aluguel.getRetirada());
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException {
         validacaoBasica(aluguel);
         if (this.repositorio.existe(aluguel.getCliente())) {
-            throw new AluguelException(AluguelException.CPF_CONTEM_PENDENCIA);
+            throw new AluguelEmAbertoException(aluguel.getCliente().getCpf());
         }
-        if (aluguel.getRetirada().toLocalDate().compareTo(LocalDate.now()) < 0) {
-            throw new AluguelException(AluguelException.DATA_INVALIDA);
+        LocalDate dataNoObjeto = aluguel.getRetirada().toLocalDate();
+        if (dataNoObjeto.compareTo(LocalDate.now()) < 0) {
+            throw new DataRetiradaPassadoException(dataNoObjeto);
         }
-        if (aluguel.getDevolucaoEstimada().toLocalDate().compareTo(LocalDate.now()) < 1) {
-            throw new AluguelException(AluguelException.DATA_INVALIDA);
+        dataNoObjeto = aluguel.getDevolucaoEstimada().toLocalDate();
+        if (dataNoObjeto.compareTo(LocalDate.now()) < 1) {
+            throw new DataEstimadaPassado(dataNoObjeto);
         }
         Carro carro = aluguel.getCarro();
-        if (carro == null || !carro.isAtivo() || !carro.isDisponivel()) {
-            throw new AluguelException(AluguelException.INDISPONIVEL);
+        if (carro == null) {
+            throw new CarroObrigatorioException();
+        }
+        if (!carro.isAtivo() || !carro.isDisponivel()) {
+            throw new CarroIndisponivelException(carro.getPlaca());
         }
     }
 
@@ -77,9 +98,9 @@ public class AluguelNegocio {
      *
      * @param aluguel Instancia a ser cadastrada
      * @return True - Se concluído com sucesso.
-     * @throws AluguelException - Contem a causa e a mensagem de erro.
+     * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
@@ -89,7 +110,7 @@ public class AluguelNegocio {
         return false;
     }
 
-    public boolean alterar(Aluguel aluguel) throws AluguelException {
+    public boolean alterar(Aluguel aluguel) throws AluguelInvalidoException {
         if (aluguel != null) {
             this.validacaoBasica(aluguel);
             return this.repositorio.alterar(aluguel);
@@ -104,9 +125,9 @@ public class AluguelNegocio {
     /**
      * Calcula o debito do aluguel em aberto e o finaliza no momento da chamada.
      *
-     * @param aluguel            - Objeto com os dados do aluguel em aberto
-     * @param considerarHorario - Considerar a hora da entrega com tolerância
-     *                           de 30 minutos.
+     * @param aluguel - Objeto com os dados do aluguel em aberto
+     * @param considerarHorario - Considerar a hora da entrega com tolerância de
+     * 30 minutos.
      */
     private void calcularDebito(Aluguel aluguel, boolean considerarHorario) {
         aluguel.setDevolucaoReal(LocalDateTime.now());
@@ -126,12 +147,12 @@ public class AluguelNegocio {
     }
 
     /**
-     * Busca e calcula o debito de um aluguel em aberto para um determinado cliente
-     * entrega um aluguel finalizado no momento da chamada.
+     * Busca e calcula o debito de um aluguel em aberto para um determinado
+     * cliente entrega um aluguel finalizado no momento da chamada.
      *
-     * @param cliente           - cliente registrado no aluguel em aberto
+     * @param cliente - cliente registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     *                          30 minutos.
+     * 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
@@ -143,12 +164,12 @@ public class AluguelNegocio {
     }
 
     /**
-     * Busca e calcula o debito de um aluguel em aberto para um determinado carro
-     * entrega um aluguel finalizado no momento da chamada.
+     * Busca e calcula o debito de um aluguel em aberto para um determinado
+     * carro entrega um aluguel finalizado no momento da chamada.
      *
-     * @param carro             - carro registrado no aluguel em aberto
+     * @param carro - carro registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     *                          30 minutos.
+     * 30 minutos.
      * @return Objeto Aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Carro carro, boolean considerarHorario) throws AluguelNaoEncontradoException {
@@ -187,7 +208,7 @@ public class AluguelNegocio {
      * @return True - Se registrado com sucesso.
      * @throws AluguelException - Contem a mensagem e causa do erro.
      */
-    public boolean devolucao(Aluguel aluguel) throws AluguelException, AluguelNaoEncontradoException {
+    public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, AluguelNaoEncontradoException {
         validarDevolucao(aluguel);
         return this.alterar(aluguel);
     }

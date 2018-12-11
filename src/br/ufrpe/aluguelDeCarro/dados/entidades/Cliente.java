@@ -5,10 +5,9 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
 
@@ -37,7 +36,7 @@ public class Cliente extends Pessoa implements Cloneable {
     }
 
     @Override
-    public void validar() throws HabilitacaoException, IdadeExcetion, NomeException, CpfException {
+    public void validar() throws HabilitacaoException,  CpfObrigatorioException,   PessoaInvalidaException {
         if (this.habilitacao == null) {
             throw new HabilitacaoException(HabilitacaoException.NULL);
         }

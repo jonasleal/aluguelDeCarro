@@ -1,4 +1,4 @@
-package br.ufrpe.aluguelDeCarro.excecoes;
+package br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados;
 
 /**
  * @author Fernando

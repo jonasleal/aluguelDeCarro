@@ -4,12 +4,13 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static br.ufrpe.aluguelDeCarro.excecoes.AluguelNaoEncontradoException.*;
 
 /**
  * A classe armazena uma lista de instancias de alugueis
@@ -38,7 +39,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElseThrow(() -> new AluguelNaoEncontradoException(ID));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(new IdNaoEncontradoException(id)));
     }
 
     /**
@@ -56,7 +57,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(aluguel -> aluguel.getCliente().getCpf().equals(cliente.getCpf()))
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElseThrow(() -> new AluguelNaoEncontradoException(CLIENTE));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(new ClienteNaoEncontradoException()));
     }
 
     /**
@@ -74,7 +75,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(aluguel -> aluguel.getCarro().getPlaca().equals(carro.getPlaca()))
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElseThrow(() -> new AluguelNaoEncontradoException(CARRO));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(carro));
     }
 
     /**
@@ -89,7 +90,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AluguelNaoEncontradoException(ID));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(id));
     }
 
     /**

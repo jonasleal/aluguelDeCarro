@@ -2,7 +2,9 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.*;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ public class ClienteNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public boolean cadastrar(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
         if (cliente != null) {
             cliente.validar();
             cliente.setAtivo(true);
@@ -26,7 +28,7 @@ public class ClienteNegocio {
         return false;
     }
 
-    public boolean alterar(Cliente cliente) throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public boolean alterar(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
         if (cliente != null) {
             cliente.validar();
             return repositorio.alterar(cliente);

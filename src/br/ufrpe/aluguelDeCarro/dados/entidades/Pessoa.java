@@ -5,10 +5,10 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CpfException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.IdadeExcetion;
-import br.ufrpe.aluguelDeCarro.excecoes.NomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.FormatoNomeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.MenorDeIdadeException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 
 import java.time.LocalDate;
@@ -82,13 +82,14 @@ public abstract class Pessoa implements Cloneable {
         return Period.between(nascimento, LocalDate.now()).getYears();
     }
 
-    public void validar() throws CpfException, IdadeExcetion, NomeException, HabilitacaoException {
+    public void validar() throws PessoaInvalidaException, HabilitacaoException {
         CpfUtil.validarCPF(this.cpf);
-        if (getIdade() <= 18) {
-            throw new IdadeExcetion(IdadeExcetion.MENOR);
+        int idade = getIdade();
+        if (idade <= 18) {
+            throw new MenorDeIdadeException(idade);
         }
         if (!this.nome.matches("[a-zA-Z]{2,}")) {
-            throw new NomeException(NomeException.INVALIDO);
+            throw new FormatoNomeException(nome);
         }
     }
 

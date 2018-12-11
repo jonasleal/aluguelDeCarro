@@ -5,10 +5,18 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.CarroException;
-import br.ufrpe.aluguelDeCarro.excecoes.MarcaException;
-import br.ufrpe.aluguelDeCarro.excecoes.ModeloException;
-import br.ufrpe.aluguelDeCarro.excecoes.PlacaException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CambioInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CategoriaIncalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.DirecaoInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoMarcaException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoModeloException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoPlacaInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.MarcaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.ModeloObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.NumeroDeOcupantesException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.NumeroDePortasException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.PlacaObrigatorioException;
 
 import java.util.Objects;
 
@@ -182,46 +190,45 @@ public class Carro implements Cloneable {
     /**
      * Valida os dados obrigatórios para um carro
      *
-     * @throws PlacaException  - Se a placa passada estiver fora do padrão de 3
-     *                         letras e 4 dígitos.
-     * @throws MarcaException  - Se não for passado uma marca.
+     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
+     * letras e 4 dígitos.
+     * @throws MarcaException - Se não for passado uma marca.
      * @throws ModeloException - Se não for passado um modelo.
-     * @throws CarroException  - Se número de portas, ocupantes, cambio, direção
-     *                         categoria ou valor da diária não for passado ou for passado um valor
-     *                         diferente dos valores validos.
+     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
+     * categoria ou valor da diária não for passado ou for passado um valor
+     * diferente dos valores validos.
      */
-
-    public void validar() throws PlacaException, MarcaException, ModeloException, CarroException {
+    public void validar() throws CarroInvalidoException {
 
         if (placa == null || placa.isEmpty()) {
-            throw new PlacaException(PlacaException.NULL);
+            throw new PlacaObrigatorioException();
         }
         if (!placa.matches("[a-zA-Z]{3}\\d{4}")) {
-            throw new PlacaException(PlacaException.INVALIDA);
+            throw new FormatoPlacaInvalidoException(placa);
         }
         if (marca == null || marca.isEmpty()) {
-            throw new MarcaException(MarcaException.NULL);
+            throw new MarcaObrigatorioException();
         }
         if (!marca.matches("[a-zA-Z]{2,}")) {
-            throw new MarcaException(MarcaException.INVALIDA);
+            throw new FormatoMarcaException(marca);
         }
         if (modelo == null || modelo.isEmpty()) {
-            throw new ModeloException(ModeloException.NULL);
+            throw new ModeloObrigatorioException();
         }
         if (!modelo.matches("[a-zA-Z]{2,}")) {
-            throw new ModeloException(ModeloException.INVALIDA);
+            throw new FormatoModeloException(modelo);
         }
         if (portas < 1) {
-            throw new CarroException(CarroException.NUMERO_PORTAS);
+            throw new NumeroDePortasException(portas);
         }
         if (ocupantes < 1) {
-            throw new CarroException(CarroException.NUMERO_OCUPANTES);
+            throw new NumeroDeOcupantesException(ocupantes);
         }
         if (cambio == null || (cambio.getValor() < 1 || cambio.getValor() > 3)) {
-            throw new CarroException(CarroException.CAMBIO_INVALIDO);
+            throw new CambioInvalidoException();
         }
         if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
-            throw new CarroException(CarroException.DIRECAO_INVALIDA);
+            throw new DirecaoInvalidaException();
         }
 //        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
 //            throw new CarroException(CarroException.CATEGORIA_INVALIDA);

@@ -6,7 +6,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.excecoes.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public interface ICarroRepositorio {
 
-    Carro consultar(int id) throws CarroNaoEncontradoException;
+    Carro consultar(int id) throws IdNaoEncontradoException;
 
     Carro consultar(String placa) throws CarroNaoEncontradoException;
 
@@ -23,7 +24,7 @@ public interface ICarroRepositorio {
 
     boolean alterar(Carro carroEditado);
 
-    boolean desativar(int id) throws CarroNaoEncontradoException;
+    boolean desativar(int id) throws IdNaoEncontradoException;
 
     ArrayList<Carro> consultarTodos();
 
