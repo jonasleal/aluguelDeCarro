@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.MenuView">
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.MenuView">
     <children>
-        <VBox alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox>
             <children>
                 <AnchorPane>
                     <children>
@@ -39,6 +38,6 @@
                     </children>
                 </AnchorPane>
             </children>
-        </VBox>
+        </HBox>
     </children>
 </AnchorPane>
