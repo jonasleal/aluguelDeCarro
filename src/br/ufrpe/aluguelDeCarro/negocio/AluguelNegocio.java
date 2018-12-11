@@ -20,7 +20,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroIndisponivelException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;

@@ -5,7 +5,7 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;

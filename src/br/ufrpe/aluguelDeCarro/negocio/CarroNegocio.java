@@ -11,7 +11,7 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Gerente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
