@@ -41,62 +41,78 @@ public class Test {
 
     }
 
-    private List<Categoria> verificarCategoriasDisponiveis(Aluguel param) {
-
-        LocalDateTime aluguelRetirada = param.getRetirada();
-        LocalDateTime aluguelDevolucao = param.getDevolucaoEstimada();
-
-        List<Categoria> categorias = this.categoriaNegocio.consultarTodos();
-
+    private List<Categoria> verificarCategoriasDisponiveis(Aluguel aluguel) {
         List<Reserva> reservas = this.reservaNegocio.consultarTodos();
-
-        // um set de categorias, a categoria deve estar contida em alguma reserva que deu conflito com o aluguel
-        // e existir mais de um carro disponivel naquela categoria
-        Set<Categoria> collect = reservas.
-                stream().
-                filter(reserva -> {
-                    LocalDateTime reservaRetirada = reserva.getRetiradaPrevista();
-                    LocalDateTime reservaDevolucao = reserva.getDevolucaoPrevista();
-                    // verifica se está dando conflito com as datas do aluguel com as reservas existentes
-                    return (reservaRetirada.isAfter(aluguelRetirada) && reservaRetirada.isBefore(aluguelDevolucao)) ||
-                            (reservaDevolucao.isAfter(aluguelRetirada) && reservaDevolucao.isBefore(aluguelDevolucao)) ||
-                            reservaRetirada.isEqual(aluguelRetirada) || reservaRetirada.isEqual(aluguelDevolucao) ||
-                            reservaDevolucao.isEqual(aluguelRetirada) || reservaDevolucao.isEqual(aluguelDevolucao) ||
-                            (aluguelRetirada.isAfter(reservaRetirada) && aluguelDevolucao.isBefore(reservaDevolucao));
-                }).
-                filter(reserva -> quantCarros(reserva.getCategoria()) > 1).
-                map(Reserva::getCategoria).
-                collect(Collectors.toSet());
-
-
-        // adiciona as categorias que estão contidas nas reservas que não deram conflito com o aluguel e existir mais
-        // de uma carro disponivel naquela categoria
-        collect.addAll(
-                reservas.
-                        stream().
-                        filter(reserva -> {
-                            LocalDateTime reservaRetirada = reserva.getRetiradaPrevista();
-                            LocalDateTime reservaDevolucao = reserva.getDevolucaoPrevista();
-                            // verifica quais reservas não estão tendo conflito com o aluguel
-                            return !(reservaRetirada.isAfter(aluguelRetirada) && reservaRetirada.isBefore(aluguelDevolucao)) ||
-                                    (reservaDevolucao.isAfter(aluguelRetirada) && reservaDevolucao.isBefore(aluguelDevolucao)) ||
-                                    reservaRetirada.isEqual(aluguelRetirada) || reservaRetirada.isEqual(aluguelDevolucao) ||
-                                    reservaDevolucao.isEqual(aluguelRetirada) || reservaDevolucao.isEqual(aluguelDevolucao) ||
-                                    (aluguelRetirada.isAfter(reservaRetirada) && aluguelDevolucao.isBefore(reservaDevolucao));
-                        }).
-                        filter(reserva -> quantCarros(reserva.getCategoria()) > 1).
-                        map(Reserva::getCategoria).
-                        collect(Collectors.toList()));
-
-        // adiciona as categorias que não estão nas reservas e existe mais de um carro naquela categoria
-        categorias.removeAll(reservas.stream().map(Reserva::getCategoria).collect(Collectors.toList()));
-        collect.addAll(categorias.stream().filter(categoria -> quantCarros(categoria) > 1).collect(Collectors.toList()));
+        List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);
+        Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);
+        List<Reserva> reservasSemConflito = reservasSemConflitoComAluguel(reservas, aluguel);
+        collect.addAll(categoriasDasReservasSemConflito(reservasSemConflito));
+        collect.addAll(categoriasNaoContidasNasReservas(reservas));
         return new ArrayList<>(collect);
     }
 
-    private long quantCarros(Categoria categoria) {
-        return this.carroNegocio.consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
+    private List<Categoria> categoriasNaoContidasNasReservas(List<Reserva> reservas) {
+        List<Categoria> categorias = this.categoriaNegocio.consultarTodos();
+        categorias.removeAll(reservas.stream().map(Reserva::getCategoria).collect(Collectors.toSet()));
+        return categorias;
+    }
 
+    private List<Categoria> categoriasDasReservasSemConflito(List<Reserva> reservasSemConflito) {
+        return reservasSemConflito
+                .stream()
+                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > 1)
+                .map(Reserva::getCategoria)
+                .collect(Collectors.toList());
+    }
+
+    private Set<Categoria> categoriasDasReservasComConflito(List<Reserva> reservasComConflito) {
+        return reservasComConflito
+                .stream()
+                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > quantidadeDeReservasPor(reservasComConflito, reserva.getCategoria()))
+                .map(Reserva::getCategoria)
+                .collect(Collectors.toSet());
+    }
+
+    private List<Reserva> reservasComConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
+        return reservas
+                .stream()
+                .filter(reserva -> conflitoAluguelReserva(
+                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Reserva> reservasSemConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
+        return reservas
+                .stream()
+                .filter(reserva -> !conflitoAluguelReserva(
+                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                .collect(Collectors.toList());
+    }
+
+    private long quantidadeDeReservasPor(List<Reserva> reservas, Categoria categoria) {
+        return reservas.stream().filter(reserva -> reserva.getCategoria().equals(categoria)).count();
+    }
+
+    private boolean conflitoAluguelReserva(LocalDateTime aluguelRetirada, LocalDateTime aluguelDevolucao, LocalDateTime reservaRetirada, LocalDateTime reservaDevolucao) {
+        return estaNoIntervalo(reservaRetirada, aluguelRetirada, aluguelDevolucao) ||
+                estaNoIntervalo(reservaDevolucao, aluguelRetirada, aluguelDevolucao) ||
+                estaNoIntervalo(aluguelRetirada, reservaRetirada, reservaDevolucao);
+    }
+
+    /**
+     * Verifica se o parametro time está no intervalo (incluso) end e time
+     *
+     * @param start data inicial do intervalo
+     * @param end   data final do intervalo
+     * @param time  data a ser avaliada
+     * @return {@code true} se a data estiver contida no intervalo, {@code false} caso contrário
+     */
+    private boolean estaNoIntervalo(LocalDateTime time, LocalDateTime start, LocalDateTime end) {
+        return !time.isBefore(start) && !time.isAfter(end);
+    }
+
+    private long quantidadeDeCarrosPor(Categoria categoria) {
+        return this.carroNegocio.consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
     }
 
     private void cadastrar() throws PlacaException, MarcaException, CarroException, ModeloException, CpfException, NomeException, HabilitacaoException, IdadeExcetion, CategoriaNaoEncontradaException, UsuarioNaoEncontradoException, ClienteNaoEncontradoException {
@@ -121,7 +137,7 @@ public class Test {
         this.usuarioNegocio.cadastrar(usuario);
         usuario = this.usuarioNegocio.consultar(1);
 
-        Reserva reserva = new Reserva(usuario, cliente, categoria, LocalDateTime.now(), LocalDateTime.now().plusDays(2));
+        Reserva reserva = new Reserva(usuario, cliente, categoria1, LocalDateTime.now(), LocalDateTime.now().plusDays(2));
         this.reservaNegocio.cadastrar(reserva);
 
         this.carroNegocio.cadastrar(carro);
