@@ -6,7 +6,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public interface IClienteRepositorio {
 
-    Cliente consultar(int id) throws ClienteNaoEncontradoException;
+    Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException;
 
     Cliente consultar(String cpf) throws ClienteNaoEncontradoException;
 
@@ -23,11 +24,11 @@ public interface IClienteRepositorio {
 
     boolean alterar(Cliente clienteEditado);
 
-    boolean desativar(int id) throws ClienteNaoEncontradoException;
+    boolean desativar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException;
 
     ArrayList<Cliente> consultarTodos();
 
-    boolean existe(int id);
+    boolean existe(int id) throws IdNaoEncontradoException;
 
     boolean existe(String cpf);
 

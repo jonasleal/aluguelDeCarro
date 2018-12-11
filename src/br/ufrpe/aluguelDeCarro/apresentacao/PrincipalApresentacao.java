@@ -1,10 +1,12 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.dados.entidades.*;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
 import br.ufrpe.aluguelDeCarro.servicos.Singleton;
@@ -59,7 +61,7 @@ public class PrincipalApresentacao {
         }
         try {
             Singleton.getInstance().getGerenteNegocio().cadastrar(gerente);
-        } catch (PessoaInvalidaException | HabilitacaoException  e) {
+        } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarGerente();
         }
@@ -113,7 +115,7 @@ public class PrincipalApresentacao {
         Cliente cliente = this.clienteApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
-        } catch (PessoaInvalidaException| HabilitacaoException e) {
+        } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarCliente();
         }
@@ -125,7 +127,7 @@ public class PrincipalApresentacao {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
                 Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) usuarioLogado);
-            } catch (CarroInvalidoException | HabilitacaoException | PessoaInvalidaException e) {
+            } catch (CarroInvalidoException | FormatoHabilitacaoException | PessoaInvalidaException e) {
                 System.out.println(e.getMessage());
                 cadastrarCarro();
             }

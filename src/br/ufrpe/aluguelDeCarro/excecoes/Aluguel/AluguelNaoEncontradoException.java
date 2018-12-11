@@ -17,7 +17,6 @@ import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 public class AluguelNaoEncontradoException extends AluguelInvalidoException {
 
     private Cliente cliente;
-    private int id;
     private Carro carro;
 
     public AluguelNaoEncontradoException() {
@@ -33,11 +32,6 @@ public class AluguelNaoEncontradoException extends AluguelInvalidoException {
         this.cliente = cliente;
     }
 
-    public AluguelNaoEncontradoException(int id) {
-        this();
-        this.id = id;
-    }
-
     public AluguelNaoEncontradoException(Carro carro) {
         this();
         this.carro = carro;
@@ -46,11 +40,9 @@ public class AluguelNaoEncontradoException extends AluguelInvalidoException {
     @Override
     public String getMessage() {
         String saida = super.getMessage();
-        if (id != 0) {
-            saida += ": Id " + id;
-        }else if(cliente != null){
+        if (cliente != null) {
             saida += ": Cpf " + CpfUtil.cpfToString(cliente.getCpf());
-        }else if(carro != null){
+        } else if (carro != null) {
             saida += ": Placa " + carro.getPlaca();
         }
         return saida;

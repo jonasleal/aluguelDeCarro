@@ -5,7 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 /**
@@ -13,7 +13,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
  */
 public interface IUsuario {
 
-    void validar() throws PessoaInvalidaException, HabilitacaoException;
+    void validar() throws PessoaInvalidaException, ClienteInvalidoException;
 
     boolean validarSenha(String senha);
 }

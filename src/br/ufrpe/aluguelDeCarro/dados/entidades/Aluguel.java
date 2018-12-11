@@ -1,11 +1,13 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.*;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.CustoAdicionalNegativoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.ValorEstimadoNegativoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
@@ -149,8 +151,8 @@ public class Aluguel implements Cloneable {
      * for valido.
      * @throws IdadeExcetion - Se for menor de idade.
      * @throws NomeException - Se o nome do cliente ou atendente não for valido.
-     * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
-     * mais que 11 dígitos.
+     * @throws FormatoHabilitacaoException - Se o número de habilitação tiver
+     * menos ou mais que 11 dígitos.
      * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
      * letras e 4 dígitos.
      * @throws MarcaException - Se não for passado uma marca.
@@ -159,7 +161,7 @@ public class Aluguel implements Cloneable {
      * categoria ou valor da diária não for passado ou for passado um valor
      * diferente dos valores validos.
      */
-    public void validar() throws PessoaInvalidaException, HabilitacaoException,  CarroInvalidoException, AluguelInvalidoException {
+    public void validar() throws PessoaInvalidaException, CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException {
         this.cliente.validar();
         this.carro.validar();
         this.usuario.validar();

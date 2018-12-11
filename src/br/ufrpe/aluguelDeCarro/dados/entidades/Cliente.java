@@ -5,8 +5,9 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.pessoa.CpfObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
@@ -35,12 +36,12 @@ public class Cliente extends Pessoa implements Cloneable {
     }
 
     @Override
-    public void validar() throws HabilitacaoException,  CpfObrigatorioException,   PessoaInvalidaException {
+    public void validar() throws ClienteInvalidoException, PessoaInvalidaException {
         if (this.habilitacao == null) {
-            throw new HabilitacaoException(HabilitacaoException.NULL);
+            throw new HabilitacaoObrigatoriException();
         }
         if (this.habilitacao.isEmpty() || this.habilitacao.length() != 11) {
-            throw new HabilitacaoException(HabilitacaoException.TAMANHO);
+            throw new FormatoHabilitacaoException(habilitacao);
         }
         super.validar();
     }
@@ -57,11 +58,11 @@ public class Cliente extends Pessoa implements Cloneable {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "cpf='" + this.getCpf() + '\'' +
-                ", nome='" + this.getNome() + '\'' +
-                ", nascimento=" + this.getNascimento() +
-                ", habilitacao='" + this.getHabilitacao() + '\'' +
-                '}';
+        return "Cliente{"
+                + "cpf='" + this.getCpf() + '\''
+                + ", nome='" + this.getNome() + '\''
+                + ", nascimento=" + this.getNascimento()
+                + ", habilitacao='" + this.getHabilitacao() + '\''
+                + '}';
     }
 }

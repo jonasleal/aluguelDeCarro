@@ -1,6 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class Gerente extends Pessoa implements IUsuario, Cloneable {
     }
 
     @Override
-    public void validar() throws PessoaInvalidaException, HabilitacaoException {
+    public void validar() throws PessoaInvalidaException, ClienteInvalidoException {
         super.validar();
     }
 

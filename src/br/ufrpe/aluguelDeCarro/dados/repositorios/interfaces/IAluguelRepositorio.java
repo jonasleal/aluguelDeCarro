@@ -9,6 +9,7 @@ import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 public interface IAluguelRepositorio {
 
-    Aluguel consultar(int id) throws AluguelNaoEncontradoException;
+    Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException;
 
     Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException;
 
@@ -27,11 +28,11 @@ public interface IAluguelRepositorio {
 
     boolean alterar(Aluguel aluguelEditado);
 
-    boolean desativar(int id) throws AluguelNaoEncontradoException;
+    boolean desativar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException;
 
     ArrayList<Aluguel> consultarTodos();
 
-    boolean existe(int id);
+    boolean existe(int id) throws IdNaoEncontradoException;
 
     boolean existe(Cliente cliente);
 
