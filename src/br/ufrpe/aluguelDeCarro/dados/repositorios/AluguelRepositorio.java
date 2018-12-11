@@ -75,7 +75,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(aluguel -> aluguel.getCarro().getPlaca().equals(carro.getPlaca()))
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElseThrow(() -> new AluguelNaoEncontradoException(CARRO));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(carro));
     }
 
     /**
@@ -90,7 +90,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AluguelNaoEncontradoException(ID));
+                .orElseThrow(() -> new AluguelNaoEncontradoException(id));
     }
 
     /**
