@@ -18,6 +18,8 @@ public class Singleton {
     private final UsuarioNegocio usuarioNegocio;
     private final AluguelNegocio aluguelNegocio;
     private final CategoriaNegocio categoriaNegocio;
+    private final ManutencaoNegocio manutencaoNegocio;
+    private final ReservaNegocio reservaNegocio;
 
     private Usuario usuarioLogado;
 
@@ -27,6 +29,8 @@ public class Singleton {
         this.usuarioNegocio = new UsuarioNegocio(new UsuarioRepositorio());
         this.aluguelNegocio = new AluguelNegocio(new AluguelRepositorio());
         this.categoriaNegocio = new CategoriaNegocio(new CategoriaRepositorio());
+        this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
+        this.reservaNegocio = new ReservaNegocio(new ReservaRepositorio());
     }
 
     /**
@@ -57,6 +61,14 @@ public class Singleton {
 
     public CategoriaNegocio getCategoriaNegocio() {
         return categoriaNegocio;
+    }
+
+    public ManutencaoNegocio getManutencaoNegocio() {
+        return manutencaoNegocio;
+    }
+
+    public ReservaNegocio getReservaNegocio() {
+        return reservaNegocio;
     }
 
     /**
