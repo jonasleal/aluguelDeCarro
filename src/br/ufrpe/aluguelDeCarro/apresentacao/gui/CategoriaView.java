@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,7 +56,7 @@ public class CategoriaView implements Initializable {
         Categoria categoria = tableView.getSelectionModel().getSelectedItem();
         if (categoria != null) {
             try {
-                Singleton.getInstance().getCategoriaNegocio().desativar(categoria.getId());
+                FachadaGerente.getInstance().desativarCategoria(categoria.getId());
                 categorias.remove(categoria);
                 mostrarDetalhes(null);
                 mostrarTooltip(deletarButton, "Categoria deletada com sucesso");
@@ -75,7 +75,7 @@ public class CategoriaView implements Initializable {
     void salvar(ActionEvent event) {
         if (validarCampo()) {
             Categoria categoria = lerInputs();
-            Singleton.getInstance().getCategoriaNegocio().cadastrar(categoria);
+            FachadaGerente.getInstance().cadastrarCategoria(categoria);
             categorias.add(categoria);
             mostrarDetalhes(null);
             mostrarTooltip(salvarButton, "Categoria salva com sucesso");
@@ -101,7 +101,7 @@ public class CategoriaView implements Initializable {
                 (observable, oldValue, newValue) -> mostrarDetalhes(newValue));
 
         categorias = FXCollections.observableArrayList();
-        categorias.addAll(Singleton.getInstance().getCategoriaNegocio().consultarTodos());
+        categorias.addAll(FachadaGerente.getInstance().consultarCategorias());
         tableView.setItems(categorias);
     }
 

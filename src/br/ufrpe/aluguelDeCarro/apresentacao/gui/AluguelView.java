@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Aluguel;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;

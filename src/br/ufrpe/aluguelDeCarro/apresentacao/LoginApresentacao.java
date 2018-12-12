@@ -1,9 +1,9 @@
 package br.ufrpe.aluguelDeCarro.apresentacao;
 
+import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
 import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
-import br.ufrpe.aluguelDeCarro.Fachada.FachadaGerente;
 
 /**
  * Classe de interação com o usuário, para que o mesmo possar efetuar o login

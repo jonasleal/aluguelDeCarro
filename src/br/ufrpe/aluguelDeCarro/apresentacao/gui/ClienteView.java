@@ -1,8 +1,13 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.excecoes.*;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.*;
+import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -67,14 +72,14 @@ public class ClienteView implements Initializable {
         Cliente selectedItem = tableView.getSelectionModel().getSelectedItem();
         try {
             if (selectedItem != null) {
-                Singleton.getInstance().getClienteNegocio().desativar(selectedItem.getId());
+                FachadaGerente.getInstance().desativarCliente(selectedItem.getId());
                 clientes.remove(selectedItem);
                 mostrarDetalhes(null);
                 mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
                 mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
             }
-        } catch (ClienteNaoEncontradoException e) {
+        } catch (ClienteNaoEncontradoException | IdNaoEncontradoException e) {
             mostrarTooltip(deletarButton, e.getMessage());
         }
     }
@@ -88,18 +93,20 @@ public class ClienteView implements Initializable {
     void salvar(ActionEvent event) {
         Cliente cliente = lerInputs();
         try {
-            Singleton.getInstance().getClienteNegocio().cadastrar(cliente);
+            FachadaGerente.getInstance().cadastrarCliente(cliente);
             clientes.add(cliente);
             mostrarDetalhes(null);
             mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
-        } catch (CpfException e) {
+        } catch (CpfInvalidoException | CpfObrigatorioException e) {
             mostrarTooltip(cpfTextField, e.getMessage());
-        } catch (IdadeExcetion idadeExcetion) {
+        } catch (MenorDeIdadeException idadeExcetion) {
             mostrarTooltip(nascimentoDatePicker, idadeExcetion.getMessage());
-        } catch (NomeException e) {
+        } catch (NomeObrigatorioException e) {
             mostrarTooltip(nomeTextField, e.getMessage());
-        } catch (HabilitacaoException e) {
+        } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
             mostrarTooltip(habilitacaoTextField, e.getMessage());
+        } catch (PessoaInvalidaException | ClienteInvalidoException e) {
+            mostrarTooltip(salvarButton, e.getMessage());
         }
     }
 
@@ -127,7 +134,7 @@ public class ClienteView implements Initializable {
                 value -> new SimpleStringProperty(value.getValue() != null ? value.getValue().getCpf() : ""));
 
         clientes = FXCollections.observableArrayList();
-        clientes.addAll(Singleton.getInstance().getClienteNegocio().consultarTodos());
+        clientes.addAll(FachadaGerente.getInstance().consultarClientes());
         tableView.setItems(clientes);
 
         tableView.getSelectionModel().selectedItemProperty().addListener(

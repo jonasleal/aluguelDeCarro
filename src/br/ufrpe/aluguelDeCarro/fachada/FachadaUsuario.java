@@ -1,47 +1,41 @@
-package br.ufrpe.aluguelDeCarro.Fachada;
+package br.ufrpe.aluguelDeCarro.fachada;
 
+import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
 import br.ufrpe.aluguelDeCarro.negocio.*;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
 import java.util.List;
 
 /**
- * Esta classe serve para centralizar todas classes de negócio
- *
  * @author Fernando
  */
-public class FachadaGerente {
+public class FachadaUsuario {
 
-    private static FachadaGerente myself = null;
+    private static FachadaUsuario myself = null;
 
     private final CarroNegocio carroNegocio;
     private final ClienteNegocio clienteNegocio;
-    private final UsuarioNegocio usuarioNegocio;
     private final AluguelNegocio aluguelNegocio;
     private final CategoriaNegocio categoriaNegocio;
-    private final ManutencaoNegocio manutencaoNegocio;
     private final ReservaNegocio reservaNegocio;
 
     private Usuario usuarioLogado;
 
-    private FachadaGerente() {
+    private FachadaUsuario() {
         this.carroNegocio = new CarroNegocio(new CarroRepositorio());
         this.clienteNegocio = new ClienteNegocio(new ClienteRepositorio());
-        this.usuarioNegocio = new UsuarioNegocio(new UsuarioRepositorio());
         this.aluguelNegocio = new AluguelNegocio(new AluguelRepositorio());
         this.categoriaNegocio = new CategoriaNegocio(new CategoriaRepositorio());
-        this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
         this.reservaNegocio = new ReservaNegocio(new ReservaRepositorio());
     }
 
@@ -49,22 +43,18 @@ public class FachadaGerente {
      * @return uma instancia da classe, caso já tenha sido inicializada simplementes a retorna, caso contrário cria uma
      * nova
      */
-    public static FachadaGerente getInstance() {
+    public static FachadaUsuario getInstance() {
         if (myself == null)
-            myself = new FachadaGerente();
+            myself = new FachadaUsuario();
         return myself;
     }
 
-    public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
+    public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         this.clienteNegocio.cadastrar(cliente);
     }
 
-    public void alterarCliente(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
+    public void alterarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         this.clienteNegocio.alterar(cliente);
-    }
-
-    public void desativarCliente(int id) throws ClienteNaoEncontradoException {
-        this.clienteNegocio.desativar(id);
     }
 
     public Cliente consultarCliente(String cpf) throws ClienteNaoEncontradoException {
@@ -83,10 +73,6 @@ public class FachadaGerente {
         this.carroNegocio.alterar(carro);
     }
 
-    public void desativarCarro(int id) throws IdNaoEncontradoException {
-        this.carroNegocio.desativar(id);
-    }
-
     public Carro consultarCarro(String placa) throws CarroNaoEncontradoException {
         return this.carroNegocio.consultar(placa);
     }
@@ -103,10 +89,6 @@ public class FachadaGerente {
         this.reservaNegocio.alterar(reserva);
     }
 
-    public void desativarReserva(int id) throws ReservaNaoEncontradaException {
-        this.reservaNegocio.desativar(id);
-    }
-
     public Reserva consultarReserva(int id) throws ReservaNaoEncontradaException {
         return this.reservaNegocio.consultar(id);
     }
@@ -115,14 +97,40 @@ public class FachadaGerente {
         return this.reservaNegocio.consultarTodos();
     }
 
-
-
-    public ManutencaoNegocio getManutencaoNegocio() {
-        return manutencaoNegocio;
+    public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException {
+        this.aluguelNegocio.cadastrar(aluguel);
     }
 
-    public ReservaNegocio getReservaNegocio() {
-        return reservaNegocio;
+    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
+        this.aluguelNegocio.alterar(aluguel);
+    }
+
+    public Aluguel consultarAluguel(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
+        return this.aluguelNegocio.consultar(id);
+    }
+
+    public List<Aluguel> consultarAlugueis() {
+        return this.aluguelNegocio.consultarTodos();
+    }
+
+    public void cadastrarCategoria(Categoria categoria) {
+        this.categoriaNegocio.cadastrar(categoria);
+    }
+
+    public void alterarCategoria(Categoria categoria) {
+        this.categoriaNegocio.alterar(categoria);
+    }
+
+    public Categoria consultarCategoria(int id) throws CategoriaNaoEncontradaException {
+        return this.categoriaNegocio.consultar(id);
+    }
+
+    public Categoria consultarCategoria(String nome) throws CategoriaNaoEncontradaException {
+        return this.categoriaNegocio.consultar(nome);
+    }
+
+    public List<Categoria> consultarCategorias() {
+        return this.categoriaNegocio.consultarTodos();
     }
 
     /**
@@ -138,4 +146,5 @@ public class FachadaGerente {
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
+
 }

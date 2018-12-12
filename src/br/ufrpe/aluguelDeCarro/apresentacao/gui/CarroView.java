@@ -1,11 +1,13 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui;
 
-import br.ufrpe.aluguelDeCarro.dados.entidades.Cambio;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Categoria;
-import br.ufrpe.aluguelDeCarro.dados.entidades.Direcao;
-import br.ufrpe.aluguelDeCarro.excecoes.*;
-import br.ufrpe.aluguelDeCarro.servicos.Singleton;
+import br.ufrpe.aluguelDeCarro.excecoes.Carro.*;
+import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cambio;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Direcao;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
@@ -92,12 +94,13 @@ public class CarroView implements Initializable {
         Carro carro = tableView.getSelectionModel().getSelectedItem();
         if (carro != null) {
             try {
-                Singleton.getInstance().getCarroNegocio().desativar(carro.getId());
+                FachadaGerente.getInstance().desativarCarro(carro.getId());
                 carros.remove(carro);
                 mostrarDetalhes(null);
                 mostrarTooltip(deletarButton, "Carro deletado com sucesso");
-            } catch (CarroNaoEncontradoException e) {
+            } catch (IdNaoEncontradoException e) {
                 mostrarTooltip(deletarButton, e.getMessage());
+                e.printStackTrace();
             }
         } else {
             mostrarTooltip(deletarButton, "Selecione um carro para deletar");
@@ -114,17 +117,17 @@ public class CarroView implements Initializable {
         if (validarInputs()) {
             Carro carro = lerInputs();
             try {
-                Singleton.getInstance().getCarroNegocio().cadastrar(carro);
+                FachadaGerente.getInstance().cadastrarCarro(carro);
                 carros.add(carro);
                 mostrarDetalhes(null);
                 mostrarTooltip(salvarButton, "Carro salvo com sucesso");
-            } catch (PlacaException e) {
+            } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException e) {
                 mostrarTooltip(placaTextField, e.getMessage());
-            } catch (MarcaException e) {
+            } catch (MarcaObrigatorioException | FormatoMarcaException e) {
                 mostrarTooltip(marcaTextField, e.getMessage());
-            } catch (ModeloException e) {
+            } catch (ModeloObrigatorioException | FormatoModeloException e) {
                 mostrarTooltip(modeloTextField, e.getMessage());
-            } catch (CarroException e) {
+            } catch (CarroInvalidoException e) {
                 mostrarTooltip(salvarButton, e.getMessage());
             }
         }
@@ -162,7 +165,7 @@ public class CarroView implements Initializable {
                 value.getValue() != null ? value.getValue().getModelo() : ""));
 
         carros = FXCollections.observableArrayList();
-        carros.addAll(Singleton.getInstance().getCarroNegocio().consultarTodos());
+        carros.addAll(FachadaGerente.getInstance().consultarCarros());
 
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> mostrarDetalhes(newValue)));
@@ -171,7 +174,7 @@ public class CarroView implements Initializable {
 
     private void configurarComboBox() {
         categoriaComboBox.setItems(FXCollections.observableArrayList(
-                Singleton.getInstance().getCategoriaNegocio().consultarTodos()));
+                FachadaGerente.getInstance().consultarCategorias()));
         categoriaComboBox.setConverter(new StringConverter<Categoria>() {
             @Override
             public String toString(Categoria object) {
@@ -181,7 +184,7 @@ public class CarroView implements Initializable {
             @Override
             public Categoria fromString(String string) {
                 try {
-                    return Singleton.getInstance().getCategoriaNegocio().consultar(string);
+                    return FachadaGerente.getInstance().consultarCategoria(string);
                 } catch (CategoriaNaoEncontradaException e) {
                     return null;
                 }
