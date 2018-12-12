@@ -4,8 +4,10 @@ import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -72,6 +74,17 @@ public class CarroRepositorio implements ICarroRepositorio {
                 .findFirst()
                 .map(Carro::clone)
                 .orElseThrow(() -> new CarroNaoEncontradoException(placa));
+    }
+
+    @Override
+    public List<Carro> consultar(Categoria categoria) {
+        return this.carros
+                .stream()
+                .filter(Carro::isAtivo)
+                .filter(Carro::isDisponivel)
+                .filter(carro -> carro.getCategoria().equals(categoria))
+                .map(Carro::clone)
+                .collect(Collectors.toList());
     }
 
     /**

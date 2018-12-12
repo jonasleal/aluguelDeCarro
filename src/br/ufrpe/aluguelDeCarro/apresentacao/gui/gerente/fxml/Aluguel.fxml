@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller.CarroController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171"
+            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller.AluguelController">
     <children>
-        <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0"
-                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                   AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
@@ -40,48 +38,49 @@
                                 </Label>
                                 <VBox minHeight="10.0" minWidth="10.0" spacing="20.0">
                                     <children>
-                                        <AnchorPane>
+                                        <FlowPane>
                                             <children>
-                                                <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
-                                                               promptText="Retirada" AnchorPane.bottomAnchor="0.0"
-                                                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                                               AnchorPane.topAnchor="0.0"/>
+                                                <StackPane>
+                                                    <children>
+                                                        <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
+                                                                       overLay="true" promptText="Retirada"/>
+                                                    </children>
+                                                </StackPane>
+                                                <JFXTimePicker fx:id="retiradaTimePicker" defaultColor="#4059a9"
+                                                               overLay="true"/>
                                             </children>
-                                        </AnchorPane>
-                                        <AnchorPane>
+                                        </FlowPane>
+                                        <FlowPane>
                                             <children>
                                                 <JFXDatePicker fx:id="devolucaoEstimadaDatePicker"
-                                                               defaultColor="#4059a9" promptText="Devolução estimada"
-                                                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                                               defaultColor="#4059a9" overLay="true"
+                                                               promptText="Devolução estimada"/>
+                                                <JFXTimePicker fx:id="devolucaoEstimadaTimePicker"
+                                                               defaultColor="#4059a9" overLay="true"/>
                                             </children>
-                                        </AnchorPane>
-                                        <AnchorPane>
+                                        </FlowPane>
+                                        <FlowPane>
                                             <children>
                                                 <JFXDatePicker fx:id="devolucaoRealDatePicker" defaultColor="#4059a9"
-                                                               promptText="Devolução Real" AnchorPane.bottomAnchor="0.0"
-                                                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                                               AnchorPane.topAnchor="0.0"/>
+                                                               overLay="true" promptText="Devolução Real"/>
+                                                <JFXTimePicker fx:id="devolucaoRealTimePicker" defaultColor="#4059a9"
+                                                               overLay="true"/>
                                             </children>
-                                        </AnchorPane>
-                                        <JFXTextField fx:id="valorEstimadoTextField" labelFloat="true"
+                                        </FlowPane>
+                                        <JFXTextField fx:id="valorEstimadoTextField" editable="false" labelFloat="true"
                                                       promptText="Valor estimado"/>
                                         <JFXTextField fx:id="custoAdicionalTextField" labelFloat="true"
                                                       promptText="Custo adicional"/>
-                                        <AnchorPane>
+                                        <FlowPane hgap="5.0" prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <ChoiceBox fx:id="clienteChoiceBox" prefWidth="150.0"
-                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                                <JFXComboBox fx:id="clienteComboBox" labelFloat="true"
+                                                             promptText="Cliente"/>
+                                                <JFXComboBox fx:id="categoriaComboBox" labelFloat="true"
+                                                             promptText="Categoria"/>
+                                                <JFXComboBox fx:id="carroComboBox" labelFloat="true"
+                                                             promptText="Carro"/>
                                             </children>
-                                        </AnchorPane>
-                                        <AnchorPane>
-                                            <children>
-                                                <ChoiceBox fx:id="CarroChoiceBox" prefWidth="150.0"
-                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                                            </children>
-                                        </AnchorPane>
+                                        </FlowPane>
                                     </children>
                                 </VBox>
                                 <HBox alignment="TOP_CENTER" spacing="10.0">

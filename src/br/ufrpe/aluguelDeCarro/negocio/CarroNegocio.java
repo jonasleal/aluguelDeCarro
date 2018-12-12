@@ -10,8 +10,10 @@ import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author JonasJr
@@ -48,6 +50,10 @@ public class CarroNegocio {
 
     public Carro consultar(String placa) throws CarroNaoEncontradoException {
         return this.repositorio.consultar(placa);
+    }
+
+    public List<Carro> consultar(Categoria categoria) {
+        return this.repositorio.consultar(categoria);
     }
 
     public boolean desativar(int id) throws IdNaoEncontradoException {

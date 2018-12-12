@@ -8,6 +8,7 @@ import br.ufrpe.aluguelDeCarro.negocio.entidades.Cambio;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Direcao;
+import br.ufrpe.aluguelDeCarro.servicos.ViewUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
@@ -17,12 +18,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -99,12 +97,12 @@ public class CarroController implements Initializable {
                 carros.remove(carro);
                 mostrarDetalhes(null);
                 tableView.getSelectionModel().clearSelection();
-                mostrarTooltip(deletarButton, "Carro deletado com sucesso");
+                ViewUtil.mostrarTooltip(deletarButton, "Carro deletado com sucesso");
             } catch (IdNaoEncontradoException e) {
-                mostrarTooltip(deletarButton, e.getMessage());
+                ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
             }
         } else {
-            mostrarTooltip(deletarButton, "Selecione um carro para deletar");
+            ViewUtil.mostrarTooltip(deletarButton, "Selecione um carro para deletar");
         }
     }
 
@@ -123,25 +121,25 @@ public class CarroController implements Initializable {
                 carros.add(carro);
                 mostrarDetalhes(null);
                 tableView.getSelectionModel().clearSelection();
-                mostrarTooltip(salvarButton, "Carro salvo com sucesso");
+                ViewUtil.mostrarTooltip(salvarButton, "Carro salvo com sucesso");
             } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException e) {
-                mostrarTooltip(placaTextField, e.getMessage());
+                ViewUtil.mostrarTooltip(placaTextField, e.getMessage());
             } catch (MarcaObrigatorioException | FormatoMarcaException e) {
-                mostrarTooltip(marcaTextField, e.getMessage());
+                ViewUtil.mostrarTooltip(marcaTextField, e.getMessage());
             } catch (ModeloObrigatorioException | FormatoModeloException e) {
-                mostrarTooltip(modeloTextField, e.getMessage());
+                ViewUtil.mostrarTooltip(modeloTextField, e.getMessage());
             } catch (CarroInvalidoException e) {
-                mostrarTooltip(salvarButton, e.getMessage());
+                ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
             }
         }
     }
 
     private boolean validarInputs() {
         if (!portasTextField.getText().matches("^\\d+")) {
-            mostrarTooltip(portasTextField, "Valor inválido");
+            ViewUtil.mostrarTooltip(portasTextField, "Valor inválido");
             return false;
         } else if (!ocupantesTextField.getText().matches("^\\d+")) {
-            mostrarTooltip(ocupantesTextField, "Valor inválido");
+            ViewUtil.mostrarTooltip(ocupantesTextField, "Valor inválido");
             return false;
         } else {
             return true;
@@ -237,12 +235,5 @@ public class CarroController implements Initializable {
             direcaoComboBox.setValue(null);
             cambioComboBox.setValue(null);
         }
-    }
-
-    private void mostrarTooltip(Node node, String message) {
-        Tooltip tooltip = new Tooltip(message);
-        tooltip.setAutoHide(true);
-        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-        tooltip.show(node, bounds.getMinX(), bounds.getMaxY());
     }
 }

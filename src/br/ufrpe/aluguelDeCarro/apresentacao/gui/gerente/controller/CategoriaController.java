@@ -3,6 +3,7 @@ package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
+import br.ufrpe.aluguelDeCarro.servicos.ViewUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,11 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -59,9 +57,9 @@ public class CategoriaController implements Initializable {
                 FachadaGerente.getInstance().desativarCategoria(categoria.getId());
                 categorias.remove(categoria);
                 mostrarDetalhes(null);
-                mostrarTooltip(deletarButton, "Categoria deletada com sucesso");
+                ViewUtil.mostrarTooltip(deletarButton, "Categoria deletada com sucesso");
             } catch (CategoriaNaoEncontradaException e) {
-                mostrarTooltip(deletarButton, "Categoria não encontrada");
+                ViewUtil.mostrarTooltip(deletarButton, "Categoria não encontrada");
             }
         }
     }
@@ -78,13 +76,13 @@ public class CategoriaController implements Initializable {
             FachadaGerente.getInstance().cadastrarCategoria(categoria);
             categorias.add(categoria);
             mostrarDetalhes(null);
-            mostrarTooltip(salvarButton, "Categoria salva com sucesso");
+            ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
         }
     }
 
     private boolean validarCampo() {
         if (!precoTextField.getText().matches("^\\d+(\\.\\d+)?")) {
-            mostrarTooltip(precoTextField, "Valor inválido");
+            ViewUtil.mostrarTooltip(precoTextField, "Valor inválido");
             return false;
         } else{
             return true;
@@ -120,12 +118,5 @@ public class CategoriaController implements Initializable {
         categoria.setNome(nomeTextField.getText());
         categoria.setDiaria(new BigDecimal(precoTextField.getText()));
         return categoria;
-    }
-
-    private void mostrarTooltip(Node node, String message) {
-        Tooltip tooltip = new Tooltip(message);
-        tooltip.setAutoHide(true);
-        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-        tooltip.show(node, bounds.getMinX(), bounds.getMaxY());
     }
 }

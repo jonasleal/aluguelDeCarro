@@ -8,6 +8,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.*;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.servicos.ViewUtil;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -17,11 +18,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -75,12 +73,12 @@ public class ClienteController implements Initializable {
                 FachadaGerente.getInstance().desativarCliente(cliente.getId());
                 clientes.remove(cliente);
                 mostrarDetalhes(null);
-                mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
+                ViewUtil.mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
-                mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
+                ViewUtil.mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
             }
         } catch (ClienteNaoEncontradoException | IdNaoEncontradoException e) {
-            mostrarTooltip(deletarButton, e.getMessage());
+            ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
         }
     }
 
@@ -96,25 +94,18 @@ public class ClienteController implements Initializable {
             FachadaGerente.getInstance().cadastrarCliente(cliente);
             clientes.add(cliente);
             mostrarDetalhes(null);
-            mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
+            ViewUtil.mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
         } catch (CpfInvalidoException | CpfObrigatorioException e) {
-            mostrarTooltip(cpfTextField, e.getMessage());
+            ViewUtil.mostrarTooltip(cpfTextField, e.getMessage());
         } catch (MenorDeIdadeException idadeExcetion) {
-            mostrarTooltip(nascimentoDatePicker, idadeExcetion.getMessage());
+            ViewUtil.mostrarTooltip(nascimentoDatePicker, idadeExcetion.getMessage());
         } catch (NomeObrigatorioException e) {
-            mostrarTooltip(nomeTextField, e.getMessage());
+            ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
         } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
-            mostrarTooltip(habilitacaoTextField, e.getMessage());
+            ViewUtil.mostrarTooltip(habilitacaoTextField, e.getMessage());
         } catch (PessoaInvalidaException | ClienteInvalidoException e) {
-            mostrarTooltip(salvarButton, e.getMessage());
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         }
-    }
-
-    private void mostrarTooltip(Node node, String message) {
-        Tooltip tooltip = new Tooltip(message);
-        tooltip.setAutoHide(true);
-        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-        tooltip.show(node, bounds.getMinX(), bounds.getMaxY());
     }
 
     private Cliente lerInputs() {
