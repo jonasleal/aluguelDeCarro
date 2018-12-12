@@ -5,7 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.FormatoNomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.MenorDeIdadeException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
@@ -82,7 +82,7 @@ public abstract class Pessoa implements Cloneable {
         return Period.between(nascimento, LocalDate.now()).getYears();
     }
 
-    public void validar() throws PessoaInvalidaException, HabilitacaoException {
+    public void validar() throws PessoaInvalidaException, ClienteInvalidoException {
         CpfUtil.validarCPF(this.cpf);
         int idade = getIdade();
         if (idade <= 18) {
@@ -95,8 +95,12 @@ public abstract class Pessoa implements Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Pessoa pessoa = (Pessoa) o;
         return id == pessoa.id;
     }

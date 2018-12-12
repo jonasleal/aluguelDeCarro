@@ -4,13 +4,12 @@ import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
 
 /**
  * A classe armazena uma lista de instancias de alugueis
@@ -29,24 +28,26 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * consulta o aluguel pelo id
      *
      * @param id identificador do {@code Aluguel}
-     * @return um clone do {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
+     * @return um clone do {@code Aluguel} ativo que contém o id, {@code null}
+     * caso nao encontre
      */
     @Override
-    public Aluguel consultar(int id) throws AluguelNaoEncontradoException {
+    public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
                 .map(Aluguel::clone)
-                .orElseThrow(() -> new AluguelNaoEncontradoException(new IdNaoEncontradoException(id)));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
      * consulta o aluguel pelo cliente
      *
      * @param cliente cliente que realizou o aluguel
-     * @return {@code Aluguel} ativo e não finalizado que contém o cliente {@code null} caso nao encontre
+     * @return {@code Aluguel} ativo e não finalizado que contém o cliente
+     * {@code null} caso nao encontre
      */
     @Override
     public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
@@ -64,7 +65,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * consulta o aluguel pelo carro
      *
      * @param carro carro contido no aluguel
-     * @return aluguel ativo e não finalizado que contém o carro, null caso não encontre
+     * @return aluguel ativo e não finalizado que contém o carro, null caso não
+     * encontre
      */
     @Override
     public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
@@ -82,20 +84,22 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * consulta o aluguel pelo id
      *
      * @param id identificador do {@code Aluguel}
-     * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao encontre
+     * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao
+     * encontre
      */
-    private Aluguel consultarReferencia(int id) throws AluguelNaoEncontradoException {
+    private Aluguel consultarReferencia(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
                 .filter(aluguel -> aluguel.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new AluguelNaoEncontradoException(id));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
      * @param aluguel instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso
+     * contrário
      */
     @Override
     public boolean cadastrar(Aluguel aluguel) {
@@ -105,7 +109,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
 
     /**
      * @param aluguelEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     * @return {@code true} caso altere com sucesso, {@code false} caso
+     * contrário
      */
     @Override
     public boolean alterar(Aluguel aluguelEditado) {
@@ -121,10 +126,11 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * altera o atributo {@code ativo} do aluguel para false
      *
      * @param id identificador do {@code Aluguel}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     * @return {@code true} caso desative com sucesso, {@code false} caso
+     * contrário
      */
     @Override
-    public boolean desativar(int id) throws AluguelNaoEncontradoException {
+    public boolean desativar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
         Aluguel aluguel = this.consultarReferencia(id);
         aluguel.setAtivo(false);
         return true;
@@ -143,7 +149,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     }
 
     @Override
-    public boolean existe(int id) {
+    public boolean existe(int id) throws IdNaoEncontradoException {
         try {
             this.consultar(id);
             return true;
@@ -173,7 +179,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     }
 
     /**
-     * altera o id do aluguel, o id que ele recebe é o maior até então acrescido de 1
+     * altera o id do aluguel, o id que ele recebe é o maior até então acrescido
+     * de 1
      *
      * @param aluguel instancia a ter o id alterado
      */

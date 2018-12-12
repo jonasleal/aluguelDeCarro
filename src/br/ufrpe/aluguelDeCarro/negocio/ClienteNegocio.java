@@ -2,8 +2,10 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class ClienteNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
+    public boolean cadastrar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente != null) {
             cliente.validar();
             cliente.setAtivo(true);
@@ -28,7 +30,7 @@ public class ClienteNegocio {
         return false;
     }
 
-    public boolean alterar(Cliente cliente) throws PessoaInvalidaException, HabilitacaoException {
+    public boolean alterar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente != null) {
             cliente.validar();
             return repositorio.alterar(cliente);
@@ -36,7 +38,7 @@ public class ClienteNegocio {
         return false;
     }
 
-    public Cliente consultar(int id) throws ClienteNaoEncontradoException {
+    public Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
         return this.repositorio.consultar(id);
     }
 
@@ -44,7 +46,7 @@ public class ClienteNegocio {
         return this.repositorio.consultar(cpf);
     }
 
-    public boolean desativar(int id) throws ClienteNaoEncontradoException {
+    public boolean desativar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
         return repositorio.desativar(id);
     }
 

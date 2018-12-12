@@ -19,8 +19,10 @@ import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaPassadoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroIndisponivelException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.HabilitacaoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
@@ -41,15 +43,15 @@ public class AluguelNegocio {
         this.repositorio = repositorio;
     }
 
-    private void validacaoBasica(Aluguel aluguel) throws AluguelInvalidoException {
+    private void validacaoBasica(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
         try {
             aluguel.validar();
-        } catch (CarroInvalidoException | HabilitacaoException | PessoaInvalidaException e) {
+        } catch (CarroInvalidoException | FormatoHabilitacaoException | PessoaInvalidaException e) {
             throw new AluguelInvalidoException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
-    private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException {
+    private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, ClienteInvalidoException {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
 
@@ -69,7 +71,7 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException {
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException {
         validacaoBasica(aluguel);
         if (this.repositorio.existe(aluguel.getCliente())) {
             throw new AluguelEmAbertoException(aluguel.getCliente().getCpf());
@@ -100,7 +102,7 @@ public class AluguelNegocio {
      * @return True - Se concluído com sucesso.
      * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
@@ -110,7 +112,7 @@ public class AluguelNegocio {
         return false;
     }
 
-    public boolean alterar(Aluguel aluguel) throws AluguelInvalidoException {
+    public boolean alterar(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
         if (aluguel != null) {
             this.validacaoBasica(aluguel);
             return this.repositorio.alterar(aluguel);
@@ -118,7 +120,7 @@ public class AluguelNegocio {
         return false;
     }
 
-    public Aluguel consultar(int id) throws AluguelNaoEncontradoException {
+    public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
         return this.repositorio.consultar(id);
     }
 
@@ -208,7 +210,7 @@ public class AluguelNegocio {
      * @return True - Se registrado com sucesso.
 //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
-    public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, AluguelNaoEncontradoException {
+    public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, ClienteInvalidoException {
         validarDevolucao(aluguel);
         return this.alterar(aluguel);
     }

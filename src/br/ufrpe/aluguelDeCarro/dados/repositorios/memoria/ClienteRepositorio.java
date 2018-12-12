@@ -2,13 +2,11 @@ package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import static br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException.CPF;
-import static br.ufrpe.aluguelDeCarro.excecoes.bacoDeDados.ClienteNaoEncontradoException.ID;
 
 /**
  * A classe armazena uma lista de instancias de clientes
@@ -27,39 +25,42 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * busca o cliente pelo id, nos já cadastrados
      *
      * @param id identificador do {@code Cliente}
-     * @return um clone do {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
+     * @return um clone do {@code Cliente} ativo que contém o id, {@code null}
+     * caso nao encontre
      */
     @Override
-    public Cliente consultar(int id) throws ClienteNaoEncontradoException {
+    public Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
                 .map(Cliente::clone)
-                .orElseThrow(() -> new ClienteNaoEncontradoException(ID));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
      * busca o cliente pelo id, nos já cadastrados
      *
      * @param id identificador do {@code Cliente}
-     * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao encontre
+     * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao
+     * encontre
      */
-    private Cliente consultarReferencia(int id) throws ClienteNaoEncontradoException {
+    private Cliente consultarReferencia(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new ClienteNaoEncontradoException(ID));
+                .orElseThrow(() -> new IdNaoEncontradoException(id));
     }
 
     /**
      * busca o cliente pelo cpf, nos já cadastrados
      *
      * @param cpf identificador do {@code Cliente}
-     * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null} caso nao encontre
+     * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null}
+     * caso nao encontre
      */
     @Override
     public Cliente consultar(String cpf) throws ClienteNaoEncontradoException {
@@ -68,12 +69,13 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 .filter(cliente -> cliente.getCpf().equals(cpf))
                 .findFirst()
                 .map(Cliente::clone)
-                .orElseThrow(() -> new ClienteNaoEncontradoException(CPF));
+                .orElseThrow(() -> new ClienteNaoEncontradoException(cpf));
     }
 
     /**
      * @param cliente instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
+     * @return {@code true} caso cadastre com sucesso, {@code false} caso
+     * contrário
      */
     @Override
     public boolean cadastrar(Cliente cliente) {
@@ -83,7 +85,8 @@ public class ClienteRepositorio implements IClienteRepositorio {
 
     /**
      * @param clienteEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
+     * @return {@code true} caso altere com sucesso, {@code false} caso
+     * contrário
      */
     @Override
     public boolean alterar(Cliente clienteEditado) {
@@ -99,10 +102,11 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * altera o atributo {@code ativo} do cliente para false
      *
      * @param id identificador do {@code Cliente}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
+     * @return {@code true} caso desative com sucesso, {@code false} caso
+     * contrário
      */
     @Override
-    public boolean desativar(int id) throws ClienteNaoEncontradoException {
+    public boolean desativar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
         Cliente cliente = this.consultarReferencia(id);
         cliente.setAtivo(false);
         return true;
@@ -121,7 +125,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
     }
 
     @Override
-    public boolean existe(int id) {
+    public boolean existe(int id) throws IdNaoEncontradoException {
         try {
             this.consultar(id);
             return true;
@@ -141,18 +145,20 @@ public class ClienteRepositorio implements IClienteRepositorio {
     }
 
     /**
-     * altera o id do cliente, o id que ele recebe é o maior até então acrescido de 1
+     * altera o id do cliente, o id que ele recebe é o maior até então acrescido
+     * de 1
      *
      * @param cliente instancia a ter o id alterado
      */
     private void setarId(Cliente cliente) {
-        if (this.clientes.isEmpty())
+        if (this.clientes.isEmpty()) {
             cliente.setId(1);
-        else
+        } else {
             cliente.setId(this.clientes
                     .stream()
                     .mapToInt(Cliente::getId)
                     .max()
                     .getAsInt() + 1);
+        }
     }
 }
