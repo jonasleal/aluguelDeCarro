@@ -177,11 +177,11 @@ public class FachadaGerente {
         return this.manutencaoNegocio.consultarTodos();
     }
 
-    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException {
+    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
         this.usuarioNegocio.cadastrar(usuario);
     }
 
-    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException {
+    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
         this.usuarioNegocio.alterar(usuario);
     }
 

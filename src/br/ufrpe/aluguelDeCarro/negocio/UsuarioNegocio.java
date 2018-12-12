@@ -7,6 +7,7 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
@@ -23,7 +24,7 @@ public class UsuarioNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Usuario usuario) throws HabilitacaoException, PessoaInvalidaException {
+    public boolean cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException {
         if (usuario != null) {
             usuario.validar();
             usuario.setAtivo(true);
@@ -32,7 +33,7 @@ public class UsuarioNegocio {
         return false;
     }
 
-    public boolean alterar(Usuario usuario) throws HabilitacaoException, PessoaInvalidaException {
+    public boolean alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
         if (usuario != null) {
             usuario.validar();
             return this.repositorio.alterar(usuario);

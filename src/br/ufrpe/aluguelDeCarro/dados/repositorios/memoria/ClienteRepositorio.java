@@ -1,9 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IClienteRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -29,14 +28,14 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * caso nao encontre
      */
     @Override
-    public Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
+    public Cliente consultar(int id) throws ClienteNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
                 .map(Cliente::clone)
-                .orElseThrow(() -> new IdNaoEncontradoException(id));
+                .orElseThrow(ClienteNaoEncontradoException::new);
     }
 
     /**
@@ -46,13 +45,13 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * @return o {@code Cliente} ativo que contém o id, {@code null} caso nao
      * encontre
      */
-    private Cliente consultarReferencia(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
+    private Cliente consultarReferencia(int id) throws ClienteNaoEncontradoException {
         return this.clientes
                 .stream()
                 .filter(Cliente::isAtivo)
                 .filter(cliente -> cliente.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new IdNaoEncontradoException(id));
+                .orElseThrow(ClienteNaoEncontradoException::new);
     }
 
     /**
@@ -106,7 +105,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * contrário
      */
     @Override
-    public boolean desativar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
+    public boolean desativar(int id) throws ClienteNaoEncontradoException {
         Cliente cliente = this.consultarReferencia(id);
         cliente.setAtivo(false);
         return true;
@@ -125,7 +124,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
     }
 
     @Override
-    public boolean existe(int id) throws IdNaoEncontradoException {
+    public boolean existe(int id) {
         try {
             this.consultar(id);
             return true;

@@ -19,7 +19,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -71,12 +74,10 @@ public class CarroController implements Initializable {
 
     @FXML
     private ComboBox<Categoria> categoriaComboBox;
-
     @FXML
-    private ChoiceBox<Cambio> cambioChoiceBox;
-
+    private ComboBox<Cambio> cambioComboBox;
     @FXML
-    private ChoiceBox<Direcao> direcaoChoiceBox;
+    private ComboBox<Direcao> direcaoComboBox;
 
     @FXML
     private JFXButton deletarButton;
@@ -97,7 +98,8 @@ public class CarroController implements Initializable {
                 FachadaGerente.getInstance().desativarCarro(carro.getId());
                 carros.remove(carro);
                 mostrarDetalhes(null);
-                mostrarTooltip(deletarButton, "carro deletado com sucesso");
+                tableView.getSelectionModel().clearSelection();
+                mostrarTooltip(deletarButton, "Carro deletado com sucesso");
             } catch (IdNaoEncontradoException e) {
                 mostrarTooltip(deletarButton, e.getMessage());
             }
@@ -109,6 +111,7 @@ public class CarroController implements Initializable {
     @FXML
     void novo(ActionEvent event) {
         mostrarDetalhes(null);
+        tableView.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -119,7 +122,8 @@ public class CarroController implements Initializable {
                 FachadaGerente.getInstance().cadastrarCarro(carro);
                 carros.add(carro);
                 mostrarDetalhes(null);
-                mostrarTooltip(salvarButton, "carro salvo com sucesso");
+                tableView.getSelectionModel().clearSelection();
+                mostrarTooltip(salvarButton, "Carro salvo com sucesso");
             } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException e) {
                 mostrarTooltip(placaTextField, e.getMessage());
             } catch (MarcaObrigatorioException | FormatoMarcaException e) {
@@ -148,20 +152,12 @@ public class CarroController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         configurarTabela();
         configurarComboBox();
-        configurarChoiceBox();
         mostrarDetalhes(null);
     }
 
-    private void configurarChoiceBox() {
-        cambioChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Cambio.values())));
-        direcaoChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(Direcao.values())));
-    }
-
     private void configurarTabela() {
-        placaColumn.setCellValueFactory(value -> new SimpleStringProperty(
-                value.getValue() != null ? value.getValue().getPlaca() : ""));
-        modeloColumn.setCellValueFactory(value -> new SimpleStringProperty(
-                value.getValue() != null ? value.getValue().getModelo() : ""));
+        placaColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getPlaca()));
+        modeloColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getModelo()));
 
         carros = FXCollections.observableArrayList();
         carros.addAll(FachadaGerente.getInstance().consultarCarros());
@@ -172,6 +168,8 @@ public class CarroController implements Initializable {
     }
 
     private void configurarComboBox() {
+        cambioComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Cambio.values())));
+        direcaoComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Direcao.values())));
         categoriaComboBox.setItems(FXCollections.observableArrayList(
                 FachadaGerente.getInstance().consultarCategorias()));
         categoriaComboBox.setConverter(new StringConverter<Categoria>() {
@@ -204,8 +202,8 @@ public class CarroController implements Initializable {
         carro.setTravaEletrica(travaEletricaCheckBox.isSelected());
         carro.setFreioAbs(freioABSCheckBox.isSelected());
         carro.setCategoria(categoriaComboBox.getValue());
-        carro.setDirecao(direcaoChoiceBox.getValue());
-        carro.setCambio(cambioChoiceBox.getValue());
+        carro.setDirecao(direcaoComboBox.getValue());
+        carro.setCambio(cambioComboBox.getValue());
         return carro;
     }
 
@@ -222,8 +220,8 @@ public class CarroController implements Initializable {
             travaEletricaCheckBox.setSelected(carro.isTravaEletrica());
             freioABSCheckBox.setSelected(carro.isFreioAbs());
             categoriaComboBox.setValue(carro.getCategoria());
-            direcaoChoiceBox.setValue(carro.getDirecao());
-            cambioChoiceBox.setValue(carro.getCambio());
+            direcaoComboBox.setValue(carro.getDirecao());
+            cambioComboBox.setValue(carro.getCambio());
         } else {
             placaTextField.clear();
             modeloTextField.clear();
@@ -236,8 +234,8 @@ public class CarroController implements Initializable {
             travaEletricaCheckBox.setSelected(false);
             freioABSCheckBox.setSelected(false);
             categoriaComboBox.setValue(null);
-            direcaoChoiceBox.setValue(null);
-            cambioChoiceBox.setValue(null);
+            direcaoComboBox.setValue(null);
+            cambioComboBox.setValue(null);
         }
     }
 

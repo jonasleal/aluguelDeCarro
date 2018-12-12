@@ -46,7 +46,7 @@
                                         <AnchorPane>
                                             <children>
                                                 <JFXDatePicker fx:id="nascimentoDatePicker" defaultColor="#4059a9"
-                                                               minWidth="20.0" promptText="Nascimento"
+                                                               minWidth="20.0" overLay="true" promptText="Nascimento"
                                                                AnchorPane.leftAnchor="0.0"
                                                                AnchorPane.rightAnchor="0.0"/>
                                             </children>

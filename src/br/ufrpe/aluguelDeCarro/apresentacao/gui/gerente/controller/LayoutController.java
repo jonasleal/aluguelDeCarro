@@ -23,7 +23,7 @@ public class LayoutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Menu.fxml"));
             AnchorPane menu = loader.load();
             MenuController controller = loader.getController();
             controller.setContent(content);

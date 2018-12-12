@@ -69,11 +69,11 @@ public class ClienteController implements Initializable {
 
     @FXML
     void deletar(ActionEvent event) {
-        Cliente selectedItem = tableView.getSelectionModel().getSelectedItem();
+        Cliente cliente = tableView.getSelectionModel().getSelectedItem();
         try {
-            if (selectedItem != null) {
-                FachadaGerente.getInstance().desativarCliente(selectedItem.getId());
-                clientes.remove(selectedItem);
+            if (cliente != null) {
+                FachadaGerente.getInstance().desativarCliente(cliente.getId());
+                clientes.remove(cliente);
                 mostrarDetalhes(null);
                 mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
@@ -128,10 +128,8 @@ public class ClienteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        nomeColumn.setCellValueFactory(
-                value -> new SimpleStringProperty(value.getValue() != null ? value.getValue().getNome() : ""));
-        cpfColumn.setCellValueFactory(
-                value -> new SimpleStringProperty(value.getValue() != null ? value.getValue().getCpf() : ""));
+        nomeColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNome()));
+        cpfColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCpf()));
 
         clientes = FXCollections.observableArrayList();
         clientes.addAll(FachadaGerente.getInstance().consultarClientes());

@@ -51,9 +51,12 @@
                                         </FlowPane>
                                         <FlowPane hgap="5.0" vgap="5.0">
                                             <children>
-                                    <ComboBox fx:id="categoriaComboBox" prefWidth="150.0" />
-                                                <ChoiceBox fx:id="cambioChoiceBox" prefWidth="150.0" />
-                                                <ChoiceBox fx:id="direcaoChoiceBox" prefWidth="150.0" />
+                                                <JFXComboBox fx:id="categoriaComboBox" labelFloat="true"
+                                                             promptText="Categoria"/>
+                                                <JFXComboBox fx:id="cambioComboBox" labelFloat="true"
+                                                             promptText="Cambio"/>
+                                                <JFXComboBox fx:id="direcaoComboBox" labelFloat="true"
+                                                             promptText="Direção"/>
                                             </children>
                                         </FlowPane>
                                     </children>

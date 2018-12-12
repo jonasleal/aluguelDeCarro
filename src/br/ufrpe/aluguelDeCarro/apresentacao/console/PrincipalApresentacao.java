@@ -58,7 +58,7 @@ public class PrincipalApresentacao {
             usuario = this.gerenteApresentacao.lerDadosPeloTeclado();
         try {
             FachadaGerente.getInstance().cadastrarUsuario(usuario);
-        } catch (PessoaInvalidaException e) {
+        } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarUsuario();
         }

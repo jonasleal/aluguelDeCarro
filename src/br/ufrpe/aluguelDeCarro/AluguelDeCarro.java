@@ -26,6 +26,7 @@ public class AluguelDeCarro extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("apresentacao/gui/gerente/fxml/Layout.fxml"));
             Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add(getClass().getResource("sample.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

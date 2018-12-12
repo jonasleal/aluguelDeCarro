@@ -21,7 +21,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaAluguel(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/aluguel.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Aluguel.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
@@ -41,7 +41,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaCarro(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/carro.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Carro.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
@@ -54,7 +54,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaCategoria(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/Categoria.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Categoria.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
@@ -67,7 +67,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaCliente(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/Cliente.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Cliente.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
@@ -80,7 +80,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaManutencao(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/Manutencao.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Manutencao.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
@@ -93,7 +93,7 @@ public class MenuController implements Initializable {
     @FXML
     void irParaReserva(ActionEvent event) {
         try {
-            loader = new FXMLLoader(getClass().getResource("fxml/Reserva.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Reserva.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);
