@@ -6,6 +6,7 @@
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * @author JonasJr
@@ -75,5 +76,18 @@ public class Categoria implements Cloneable {
                 "nome='" + nome + '\'' +
                 ", diaria=" + diaria +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        return id == categoria.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
