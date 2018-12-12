@@ -1,13 +1,13 @@
 package br.ufrpe.aluguelDeCarro.fachada;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;

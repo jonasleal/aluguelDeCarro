@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller.MenuController">
+    <children>
+        <HBox>
+            <children>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaCliente" style="-fx-background-color: #e0e0e0;" text="Cliente" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaCarro" style="-fx-background-color: #e0e0e0;" text="Carro" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaAluguel" style="-fx-background-color: #e0e0e0;" text="Aluguel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaReserva" style="-fx-background-color: #e0e0e0;" text="Reserva" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaManutencao" style="-fx-background-color: #e0e0e0;" text="Manutençao" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <JFXButton onAction="#irParaCategoria" style="-fx-background-color: #e0e0e0;" text="Categoria" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

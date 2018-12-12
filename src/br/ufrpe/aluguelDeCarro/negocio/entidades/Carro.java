@@ -5,17 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CambioInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.DirecaoInvalidaException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoMarcaException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoModeloException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.FormatoPlacaInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.MarcaObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.ModeloObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.NumeroDeOcupantesException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.NumeroDePortasException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.PlacaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.*;
 
 import java.util.Objects;
 
@@ -246,7 +236,7 @@ public class Carro implements Cloneable {
 
     @Override
     public String toString() {
-        return "Carro{"
+        return "carro{"
                 + "placa='" + placa + '\''
                 + ", modelo='" + modelo + '\''
                 + ", marca='" + marca + '\''

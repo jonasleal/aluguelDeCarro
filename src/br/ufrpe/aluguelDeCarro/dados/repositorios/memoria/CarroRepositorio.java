@@ -1,10 +1,10 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -25,8 +25,8 @@ public class CarroRepositorio implements ICarroRepositorio {
     /**
      * busca o carro pelo id, nos já cadastrados
      *
-     * @param id identificador do {@code Carro}
-     * @return um clone do {@code Carro} ativo que contém o id, {@code null} caso nao encontre
+     * @param id identificador do {@code carro}
+     * @return um clone do {@code carro} ativo que contém o id, {@code null} caso nao encontre
      */
     @Override
     public Carro consultar(int id) throws IdNaoEncontradoException {
@@ -43,8 +43,8 @@ public class CarroRepositorio implements ICarroRepositorio {
     /**
      * busca o carro pelo id, nos já cadastrados
      *
-     * @param id identificador do {@code Carro}
-     * @return o {@code Carro} ativo que contém o id, {@code null} caso nao encontre
+     * @param id identificador do {@code carro}
+     * @return o {@code carro} ativo que contém o id, {@code null} caso nao encontre
      */
     private Carro consultarReferencia(int id) throws IdNaoEncontradoException {
         return this.carros
@@ -59,8 +59,8 @@ public class CarroRepositorio implements ICarroRepositorio {
     /**
      * busca o carro pela placa, nos já cadastrados
      *
-     * @param placa identificador do {@code Carro}
-     * @return um clone do {@code Carro} ativo que contém a placa, {@code null} caso nao encontre
+     * @param placa identificador do {@code carro}
+     * @return um clone do {@code carro} ativo que contém a placa, {@code null} caso nao encontre
      */
     @Override
     public Carro consultar(String placa) throws CarroNaoEncontradoException {
@@ -101,7 +101,7 @@ public class CarroRepositorio implements ICarroRepositorio {
     /**
      * altera o atributo {@code ativo} do carro para false
      *
-     * @param id identificador do {@code Carro}
+     * @param id identificador do {@code carro}
      * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override

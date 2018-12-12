@@ -5,25 +5,17 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio;
 
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.*;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroIndisponivelException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelEmAbertoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelFinalizadoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataEstimadaInconsistenteException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataEstimadaPassado;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaInconsistenteException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.DataRetiradaPassadoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroIndisponivelException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -43,10 +35,10 @@ public class AluguelNegocio {
         this.repositorio = repositorio;
     }
 
-    private void validacaoBasica(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
+    private void validacaoBasica(Aluguel aluguel) throws AluguelInvalidoException {
         try {
             aluguel.validar();
-        } catch (CarroInvalidoException | FormatoHabilitacaoException | PessoaInvalidaException e) {
+        } catch (CarroInvalidoException | PessoaInvalidaException | ClienteInvalidoException e) {
             throw new AluguelInvalidoException(e.getMessage(), e.fillInStackTrace());
         }
     }
@@ -155,7 +147,7 @@ public class AluguelNegocio {
      * @param cliente - cliente registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
      * 30 minutos.
-     * @return Objeto Aluguel no estado finalizado.
+     * @return Objeto aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(cliente);
@@ -172,7 +164,7 @@ public class AluguelNegocio {
      * @param carro - carro registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
      * 30 minutos.
-     * @return Objeto Aluguel no estado finalizado.
+     * @return Objeto aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Carro carro, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(carro);
@@ -206,7 +198,7 @@ public class AluguelNegocio {
      * Verifica a consistência datas passados com as já cadastradas, se forem
      * iguais registra a devolução, caso contrário levanta exceção com a causa.
      *
-     * @param aluguel - Aluguel no estado finalizado.
+     * @param aluguel - aluguel no estado finalizado.
      * @return True - Se registrado com sucesso.
 //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */

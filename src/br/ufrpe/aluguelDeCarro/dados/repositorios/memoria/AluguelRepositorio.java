@@ -1,12 +1,12 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
-import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -27,8 +27,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     /**
      * consulta o aluguel pelo id
      *
-     * @param id identificador do {@code Aluguel}
-     * @return um clone do {@code Aluguel} ativo que contém o id, {@code null}
+     * @param id identificador do {@code aluguel}
+     * @return um clone do {@code aluguel} ativo que contém o id, {@code null}
      * caso nao encontre
      */
     @Override
@@ -46,7 +46,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * consulta o aluguel pelo cliente
      *
      * @param cliente cliente que realizou o aluguel
-     * @return {@code Aluguel} ativo e não finalizado que contém o cliente
+     * @return {@code aluguel} ativo e não finalizado que contém o cliente
      * {@code null} caso nao encontre
      */
     @Override
@@ -83,8 +83,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     /**
      * consulta o aluguel pelo id
      *
-     * @param id identificador do {@code Aluguel}
-     * @return o {@code Aluguel} ativo que contém o id, {@code null} caso nao
+     * @param id identificador do {@code aluguel}
+     * @return o {@code aluguel} ativo que contém o id, {@code null} caso nao
      * encontre
      */
     private Aluguel consultarReferencia(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
@@ -125,7 +125,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     /**
      * altera o atributo {@code ativo} do aluguel para false
      *
-     * @param id identificador do {@code Aluguel}
+     * @param id identificador do {@code aluguel}
      * @return {@code true} caso desative com sucesso, {@code false} caso
      * contrário
      */

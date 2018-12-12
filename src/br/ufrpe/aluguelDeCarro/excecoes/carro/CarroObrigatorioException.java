@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro;
+package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
  *
  * @author JonasJr
  */
-public class teste {
-
-    public static void main(String[] args) {
-
+public class CarroObrigatorioException extends CarroInvalidoException {
+    
+    public CarroObrigatorioException() {
+        super("carro é obrigatorio");
     }
-
+    
 }

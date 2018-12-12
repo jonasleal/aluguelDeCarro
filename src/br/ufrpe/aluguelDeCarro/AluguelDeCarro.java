@@ -24,7 +24,7 @@ public class AluguelDeCarro extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("apresentacao/gui/fxml/Layout.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("apresentacao/gui/gerente/fxml/Layout.fxml"));
             Scene scene = new Scene(loader.load());
             primaryStage.setScene(scene);
             primaryStage.show();

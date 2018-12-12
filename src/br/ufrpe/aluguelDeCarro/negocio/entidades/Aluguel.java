@@ -1,10 +1,10 @@
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.*;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.AluguelInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.CustoAdicionalNegativoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Aluguel.ValorEstimadoNegativoException;
-import br.ufrpe.aluguelDeCarro.excecoes.Carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.CustoAdicionalNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.ValorEstimadoNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.math.BigDecimal;
@@ -165,7 +165,7 @@ public class Aluguel implements Cloneable {
      * categoria ou valor da diária não for passado ou for passado um valor
      * diferente dos valores validos.
      */
-    public void validar() throws PessoaInvalidaException, HabilitacaoException,  CarroInvalidoException, AluguelInvalidoException {
+    public void validar() throws PessoaInvalidaException, CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException {
         this.cliente.validar();
         this.carro.validar();
         this.usuario.validar();
@@ -203,7 +203,7 @@ public class Aluguel implements Cloneable {
 
     @Override
     public String toString() {
-        return "Aluguel{"
+        return "aluguel{"
                 + "retirada=" + retirada
                 + ", devolucaoEstimada=" + devolucaoEstimada
                 + ", devolucaoReal=" + devolucaoReal
