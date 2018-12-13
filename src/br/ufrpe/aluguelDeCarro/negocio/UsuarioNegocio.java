@@ -9,6 +9,7 @@ import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio
 import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioObrigatorioException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
 import java.util.List;
@@ -24,19 +25,17 @@ public class UsuarioNegocio {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException {
-        if (usuario != null) {
-            usuario.validar();
-            usuario.setAtivo(true);
-            repositorio.cadastrar(usuario);
-        }
+    public void cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException, UsuarioObrigatorioException {
+        if (usuario == null) throw new UsuarioObrigatorioException();
+        usuario.validar();
+        usuario.setAtivo(true);
+        repositorio.cadastrar(usuario);
     }
 
-    public void alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
-        if (usuario != null) {
-            usuario.validar();
-            this.repositorio.alterar(usuario);
-        }
+    public void alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioObrigatorioException {
+        if (usuario == null) throw new UsuarioObrigatorioException();
+        usuario.validar();
+        this.repositorio.alterar(usuario);
     }
 
     public Usuario consultar(int id) throws UsuarioNaoEncontradoException {

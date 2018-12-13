@@ -103,7 +103,7 @@ public class FachadaUsuario {
         this.aluguelNegocio.cadastrar(aluguel);
     }
 
-    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
+    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
         this.aluguelNegocio.alterar(aluguel);
     }
 
@@ -119,7 +119,7 @@ public class FachadaUsuario {
         this.categoriaNegocio.cadastrar(categoria);
     }
 
-    public void alterarCategoria(Categoria categoria) {
+    public void alterarCategoria(Categoria categoria) throws CategoriaInvalidaException {
         this.categoriaNegocio.alterar(categoria);
     }
 

@@ -34,10 +34,10 @@ public class ClienteNegocio {
     }
 
     public void alterar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
-        if (cliente != null) {
-            cliente.validar();
-            repositorio.alterar(cliente);
-        }
+        if (cliente == null) throw new ClienteObrigatorioException();
+        if (cliente.getNascimento() == null) throw new DataNascimentoObrigatorioException();
+        cliente.validar();
+        repositorio.alterar(cliente);
     }
 
     public Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {

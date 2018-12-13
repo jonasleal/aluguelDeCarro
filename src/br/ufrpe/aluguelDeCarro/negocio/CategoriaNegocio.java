@@ -22,17 +22,27 @@ public class CategoriaNegocio {
     }
 
     public void cadastrar(Categoria categoria) throws CategoriaInvalidaException {
-        String nome = categoria.getNome();
-        if (nome == null || nome.isEmpty()) throw new NomeCategoriaObrigatorioException();
-        if (this.repositorio.existe(nome)) throw new CategoriaJaCadastradaException(nome);
-        if (categoria.getDiaria().compareTo(BigDecimal.ZERO) < 1)
-            throw new PrecoNegativoException(categoria.getDiaria());
+        validarParaCadastrar(categoria);
         categoria.setAtivo(true);
         this.repositorio.cadastrar(categoria);
     }
 
-    public void alterar(Categoria categoria) {
+    private void validarParaCadastrar(Categoria categoria) throws NomeCategoriaObrigatorioException, CategoriaJaCadastradaException, PrecoNegativoException {
+        validacaoBasica(categoria);
+        String nome = categoria.getNome();
+        if (this.repositorio.existe(nome)) throw new CategoriaJaCadastradaException(nome);
+    }
+
+    public void alterar(Categoria categoria) throws NomeCategoriaObrigatorioException, PrecoNegativoException {
+        validacaoBasica(categoria);
         this.repositorio.alterar(categoria);
+    }
+
+    private void validacaoBasica(Categoria categoria) throws NomeCategoriaObrigatorioException, PrecoNegativoException {
+        String nome = categoria.getNome();
+        if (nome == null || nome.isEmpty()) throw new NomeCategoriaObrigatorioException();
+        BigDecimal preco = categoria.getDiaria();
+        if (preco.compareTo(BigDecimal.ZERO) < 1) throw new PrecoNegativoException(preco);
     }
 
     public void desativar(int id) throws CategoriaNaoEncontradaException {

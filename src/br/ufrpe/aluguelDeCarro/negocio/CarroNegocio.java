@@ -39,10 +39,9 @@ public class CarroNegocio {
     }
 
     public void alterar(Carro carro) throws CarroInvalidoException {
-        if (carro != null) {
-            carro.validar();
-            this.repositorio.alterar(carro);
-        }
+        if (carro == null) throw new CarroObrigatorioException();
+        carro.validar();
+        this.repositorio.alterar(carro);
     }
 
     public Carro consultar(int id) throws IdNaoEncontradoException {

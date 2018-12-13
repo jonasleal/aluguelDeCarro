@@ -11,6 +11,8 @@ import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
@@ -71,7 +73,7 @@ public class FachadaGerente {
         this.clienteNegocio.alterar(cliente);
     }
 
-    public void desativarCliente(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
+    public void desativarCliente(int id) throws ClienteNaoEncontradoException {
         this.clienteNegocio.desativar(id);
     }
 
@@ -131,7 +133,7 @@ public class FachadaGerente {
         this.aluguelNegocio.cadastrar(aluguel);
     }
 
-    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
+    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
         this.aluguelNegocio.alterar(aluguel);
     }
 
@@ -147,7 +149,7 @@ public class FachadaGerente {
         this.categoriaNegocio.cadastrar(categoria);
     }
 
-    public void alterarCategoria(Categoria categoria) {
+    public void alterarCategoria(Categoria categoria) throws PrecoNegativoException, NomeCategoriaObrigatorioException {
         this.categoriaNegocio.alterar(categoria);
     }
 
@@ -187,11 +189,11 @@ public class FachadaGerente {
         return this.manutencaoNegocio.consultarTodos();
     }
 
-    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
+    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
         this.usuarioNegocio.cadastrar(usuario);
     }
 
-    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
+    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
         this.usuarioNegocio.alterar(usuario);
     }
 
