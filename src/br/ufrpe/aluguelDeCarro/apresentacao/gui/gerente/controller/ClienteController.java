@@ -1,6 +1,5 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
-import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.*;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.*;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
@@ -75,7 +74,7 @@ public class ClienteController implements Initializable {
                 tableView.requestFocus();
                 ViewUtil.mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
             }
-        } catch (ClienteNaoEncontradoException | IdNaoEncontradoException e) {
+        } catch (ClienteNaoEncontradoException e) {
             ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
         }
     }
