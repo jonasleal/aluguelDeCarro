@@ -24,21 +24,19 @@ public class UsuarioNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException {
+    public void cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException {
         if (usuario != null) {
             usuario.validar();
             usuario.setAtivo(true);
-            return repositorio.cadastrar(usuario);
+            repositorio.cadastrar(usuario);
         }
-        return false;
     }
 
-    public boolean alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
+    public void alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException {
         if (usuario != null) {
             usuario.validar();
-            return this.repositorio.alterar(usuario);
+            this.repositorio.alterar(usuario);
         }
-        return false;
     }
 
     public Usuario consultar(int id) throws UsuarioNaoEncontradoException {
@@ -49,8 +47,8 @@ public class UsuarioNegocio {
         return this.repositorio.consultar(cpf);
     }
 
-    public boolean desativar(int id) throws UsuarioNaoEncontradoException {
-        return repositorio.desativar(id);
+    public void desativar(int id) throws UsuarioNaoEncontradoException {
+        repositorio.desativar(id);
     }
 
     public List<Usuario> consultarTodos() {

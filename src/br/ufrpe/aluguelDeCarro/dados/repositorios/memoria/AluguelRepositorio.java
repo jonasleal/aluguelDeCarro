@@ -87,7 +87,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * @return o {@code aluguel} ativo que contém o id, {@code null} caso nao
      * encontre
      */
-    private Aluguel consultarReferencia(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
+    private Aluguel consultarReferencia(int id) throws IdNaoEncontradoException {
         return this.alugueis
                 .stream()
                 .filter(Aluguel::isAtivo)
@@ -98,42 +98,32 @@ public class AluguelRepositorio implements IAluguelRepositorio {
 
     /**
      * @param aluguel instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean cadastrar(Aluguel aluguel) {
+    public void cadastrar(Aluguel aluguel) {
         this.setarId(aluguel);
-        return this.alugueis.add(aluguel.clone());
+        this.alugueis.add(aluguel.clone());
     }
 
     /**
      * @param aluguelEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean alterar(Aluguel aluguelEditado) {
+    public void alterar(Aluguel aluguelEditado) {
         int indexOf = this.alugueis.indexOf(aluguelEditado);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.alugueis.set(indexOf, aluguelEditado.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do aluguel para false
      *
      * @param id identificador do {@code aluguel}
-     * @return {@code true} caso desative com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean desativar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
+    public void desativar(int id) throws IdNaoEncontradoException {
         Aluguel aluguel = this.consultarReferencia(id);
         aluguel.setAtivo(false);
-        return true;
     }
 
     /**

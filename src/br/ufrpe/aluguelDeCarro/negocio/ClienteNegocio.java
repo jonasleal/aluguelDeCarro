@@ -23,22 +23,21 @@ public class ClienteNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
+    public void cadastrar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente == null) throw new ClienteObrigatorioException();
         String cpf = cliente.getCpf();
         if (this.repositorio.existe(cpf)) throw new ClienteJaCadastradoException(cpf);
         if (cliente.getNascimento() == null) throw new DataNascimentoObrigatorioException();
         cliente.validar();
         cliente.setAtivo(true);
-        return repositorio.cadastrar(cliente);
+        repositorio.cadastrar(cliente);
     }
 
-    public boolean alterar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
+    public void alterar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente != null) {
             cliente.validar();
-            return repositorio.alterar(cliente);
+            repositorio.alterar(cliente);
         }
-        return false;
     }
 
     public Cliente consultar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
@@ -49,8 +48,8 @@ public class ClienteNegocio {
         return this.repositorio.consultar(cpf);
     }
 
-    public boolean desativar(int id) throws ClienteNaoEncontradoException, IdNaoEncontradoException {
-        return repositorio.desativar(id);
+    public void desativar(int id) throws ClienteNaoEncontradoException {
+        repositorio.desativar(id);
     }
 
     public ArrayList<Cliente> consultarTodos() {

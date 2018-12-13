@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -56,39 +56,31 @@ public class ReservaRepositorio implements IReservaRepositorio {
 
     /**
      * @param reserva instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean cadastrar(Reserva reserva) {
+    public void cadastrar(Reserva reserva) {
         this.setarId(reserva);
-        return this.reservas.add(reserva.clone());
     }
 
     /**
      * @param reservaEditada instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean alterar(Reserva reservaEditada) {
+    public void alterar(Reserva reservaEditada) {
         int indexOf = this.reservas.indexOf(reservaEditada);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.reservas.set(indexOf, reservaEditada.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do reserva para false
      *
      * @param id identificador do {@code Reserva}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) throws ReservaNaoEncontradaException {
+    public void desativar(int id) throws ReservaNaoEncontradaException {
         Reserva reserva = this.consultarReferencia(id);
         reserva.setAtivo(false);
-        return true;
     }
 
     /**

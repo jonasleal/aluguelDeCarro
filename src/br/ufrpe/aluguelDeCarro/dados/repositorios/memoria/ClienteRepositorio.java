@@ -73,42 +73,31 @@ public class ClienteRepositorio implements IClienteRepositorio {
 
     /**
      * @param cliente instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean cadastrar(Cliente cliente) {
+    public void cadastrar(Cliente cliente) {
         this.setarId(cliente);
-        return this.clientes.add(cliente.clone());
     }
 
     /**
      * @param clienteEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean alterar(Cliente clienteEditado) {
+    public void alterar(Cliente clienteEditado) {
         int indexOf = this.clientes.indexOf(clienteEditado);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.clientes.set(indexOf, clienteEditado.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do cliente para false
      *
      * @param id identificador do {@code Cliente}
-     * @return {@code true} caso desative com sucesso, {@code false} caso
-     * contrário
      */
     @Override
-    public boolean desativar(int id) throws ClienteNaoEncontradoException {
+    public void desativar(int id) throws ClienteNaoEncontradoException {
         Cliente cliente = this.consultarReferencia(id);
         cliente.setAtivo(false);
-        return true;
     }
 
     /**

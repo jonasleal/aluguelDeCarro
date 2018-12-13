@@ -24,11 +24,11 @@ public interface IAluguelRepositorio {
 
     Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException;
 
-    boolean cadastrar(Aluguel aluguel);
+    void cadastrar(Aluguel aluguel);
 
-    boolean alterar(Aluguel aluguelEditado);
+    void alterar(Aluguel aluguelEditado);
 
-    boolean desativar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException;
+    void desativar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException;
 
     ArrayList<Aluguel> consultarTodos();
 

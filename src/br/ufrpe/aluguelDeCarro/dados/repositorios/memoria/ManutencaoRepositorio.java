@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Manutencao;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IManutencaoRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Manutencao;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -56,39 +56,31 @@ public class ManutencaoRepositorio implements IManutencaoRepositorio {
 
     /**
      * @param manutencao instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean cadastrar(Manutencao manutencao) {
+    public void cadastrar(Manutencao manutencao) {
         this.setarId(manutencao);
-        return this.manutencoes.add(manutencao.clone());
     }
 
     /**
      * @param manutencaoEditada instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean alterar(Manutencao manutencaoEditada) {
+    public void alterar(Manutencao manutencaoEditada) {
         int indexOf = this.manutencoes.indexOf(manutencaoEditada);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.manutencoes.set(indexOf, manutencaoEditada.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do manutencao para false
      *
      * @param id identificador do {@code Manutencao}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) throws ManutencaoNaoEncontradaException {
+    public void desativar(int id) throws ManutencaoNaoEncontradaException {
         Manutencao manutencao = this.consultarReferencia(id);
         manutencao.setAtivo(false);
-        return true;
     }
 
     /**

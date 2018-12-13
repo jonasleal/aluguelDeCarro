@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ public interface ICategoriaRepositorio {
 
     Categoria consultar(int id) throws CategoriaNaoEncontradaException;
 
-    boolean cadastrar(Categoria categoria);
+    void cadastrar(Categoria categoria);
 
-    boolean alterar(Categoria categoria);
+    void alterar(Categoria categoria);
 
-    boolean desativar(int id) throws CategoriaNaoEncontradaException;
+    void desativar(int id) throws CategoriaNaoEncontradaException;
 
     boolean existe(String nome);
 

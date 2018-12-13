@@ -48,7 +48,7 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, ClienteInvalidoException {
+    private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException {
         validacaoBasica(aluguel);
         Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
 
@@ -99,25 +99,21 @@ public class AluguelNegocio {
      * exceção referente a causa da falha.
      *
      * @param aluguel Instancia a ser cadastrada
-     * @return True - Se concluído com sucesso.
      * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
+    public void cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
             aluguel.getCarro().setDisponivel(false);
-            return repositorio.cadastrar(aluguel);
         }
-        return false;
     }
 
-    public boolean alterar(Aluguel aluguel) throws AluguelInvalidoException, ClienteInvalidoException {
+    public void alterar(Aluguel aluguel) throws AluguelInvalidoException {
         if (aluguel != null) {
             this.validacaoBasica(aluguel);
-            return this.repositorio.alterar(aluguel);
+            this.repositorio.alterar(aluguel);
         }
-        return false;
     }
 
     public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
@@ -207,12 +203,11 @@ public class AluguelNegocio {
      * iguais registra a devolução, caso contrário levanta exceção com a causa.
      *
      * @param aluguel - aluguel no estado finalizado.
-     * @return True - Se registrado com sucesso.
      * //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
-    public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, ClienteInvalidoException {
+    public void devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException {
         validarDevolucao(aluguel);
-        return this.alterar(aluguel);
+        this.alterar(aluguel);
     }
 
     public ArrayList<Aluguel> consultarTodos() {

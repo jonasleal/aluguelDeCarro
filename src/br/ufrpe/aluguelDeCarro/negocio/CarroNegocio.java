@@ -28,22 +28,21 @@ public class CarroNegocio {
         this.repositorio = repositorio;
     }
 
-    public boolean cadastrar(Carro carro) throws CarroInvalidoException {
+    public void cadastrar(Carro carro) throws CarroInvalidoException {
         if (carro == null) throw new CarroObrigatorioException();
         String placa = carro.getPlaca();
         if (this.repositorio.existe(placa)) throw new CarroJaCadastradoException(placa);
         carro.validar();
         carro.setAtivo(true);
         carro.setDisponivel(true);
-        return this.repositorio.cadastrar(carro);
+        this.repositorio.cadastrar(carro);
     }
 
-    public boolean alterar(Carro carro) throws CarroInvalidoException {
+    public void alterar(Carro carro) throws CarroInvalidoException {
         if (carro != null) {
             carro.validar();
-            return this.repositorio.alterar(carro);
+            this.repositorio.alterar(carro);
         }
-        return false;
     }
 
     public Carro consultar(int id) throws IdNaoEncontradoException {
@@ -58,8 +57,8 @@ public class CarroNegocio {
         return this.repositorio.consultar(categoria);
     }
 
-    public boolean desativar(int id) throws IdNaoEncontradoException {
-        return this.repositorio.desativar(id);
+    public void desativar(int id) throws IdNaoEncontradoException {
+        this.repositorio.desativar(id);
     }
 
     public ArrayList<Carro> consultarTodos() {

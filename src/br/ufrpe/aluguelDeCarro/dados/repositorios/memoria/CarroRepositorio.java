@@ -89,39 +89,32 @@ public class CarroRepositorio implements ICarroRepositorio {
 
     /**
      * @param carro instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean cadastrar(Carro carro) {
+    public void cadastrar(Carro carro) {
         this.setarId(carro);
-        return this.carros.add(carro.clone());
+        this.carros.add(carro.clone());
     }
 
     /**
      * @param carroEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean alterar(Carro carroEditado) {
+    public void alterar(Carro carroEditado) {
         int indexOf = this.carros.indexOf(carroEditado);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.carros.set(indexOf, carroEditado.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do carro para false
      *
      * @param id identificador do {@code carro}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) throws IdNaoEncontradoException {
+    public void desativar(int id) throws IdNaoEncontradoException {
         Carro carro = this.consultarReferencia(id);
         carro.setAtivo(false);
-        return true;
     }
 
     /**

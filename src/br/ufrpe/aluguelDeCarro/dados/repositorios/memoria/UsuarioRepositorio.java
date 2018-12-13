@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -71,39 +71,31 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
 
     /**
      * @param usuario instancia a ser cadastrada
-     * @return {@code true} caso cadastre com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean cadastrar(Usuario usuario) {
+    public void cadastrar(Usuario usuario) {
         this.setarId(usuario);
-        return this.usuarios.add(usuario.clone());
     }
 
     /**
      * @param usuarioEditado instancia a ser editada
-     * @return {@code true} caso altere com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean alterar(Usuario usuarioEditado) {
+    public void alterar(Usuario usuarioEditado) {
         int indexOf = this.usuarios.indexOf(usuarioEditado);
-        if (indexOf != -1) {
+        if (indexOf != -1)
             this.usuarios.set(indexOf, usuarioEditado.clone());
-            return true;
-        }
-        return false;
     }
 
     /**
      * altera o atributo {@code ativo} do usuario para false
      *
      * @param id identificador do {@code Usuario}
-     * @return {@code true} caso desative com sucesso, {@code false} caso contrário
      */
     @Override
-    public boolean desativar(int id) throws UsuarioNaoEncontradoException {
+    public void desativar(int id) throws UsuarioNaoEncontradoException {
         Usuario usuario = this.consultarReferencia(id);
         usuario.setAtivo(false);
-        return true;
     }
 
     /**

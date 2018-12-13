@@ -24,11 +24,11 @@ public interface ICarroRepositorio {
 
     List<Carro> consultar(Categoria categoria);
 
-    boolean cadastrar(Carro carro);
+    void cadastrar(Carro carro);
 
-    boolean alterar(Carro carroEditado);
+    void alterar(Carro carroEditado);
 
-    boolean desativar(int id) throws IdNaoEncontradoException;
+    void desativar(int id) throws IdNaoEncontradoException;
 
     ArrayList<Carro> consultarTodos();
 

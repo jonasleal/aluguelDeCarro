@@ -19,11 +19,11 @@ public interface IClienteRepositorio {
 
     Cliente consultar(String cpf) throws ClienteNaoEncontradoException;
 
-    boolean cadastrar(Cliente cliente);
+    void cadastrar(Cliente cliente);
 
-    boolean alterar(Cliente clienteEditado);
+    void alterar(Cliente clienteEditado);
 
-    boolean desativar(int id) throws ClienteNaoEncontradoException;
+    void desativar(int id) throws ClienteNaoEncontradoException;
 
     ArrayList<Cliente> consultarTodos();
 
