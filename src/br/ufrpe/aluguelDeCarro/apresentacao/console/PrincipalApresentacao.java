@@ -2,8 +2,10 @@ package br.ufrpe.aluguelDeCarro.apresentacao.console;
 
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
@@ -102,7 +104,7 @@ public class PrincipalApresentacao {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             FachadaGerente.getInstance().cadastrarAluguel(aluguel);
-        } catch (CarroInvalidoException | AluguelInvalidoException | ClienteInvalidoException e) {
+        } catch (CarroInvalidoException | AluguelInvalidoException | ClienteInvalidoException | UsuarioInvalidoException | CategoriaInvalidaException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }

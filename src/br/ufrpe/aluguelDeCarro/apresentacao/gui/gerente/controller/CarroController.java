@@ -102,6 +102,7 @@ public class CarroController implements Initializable {
                 ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
             }
         } else {
+            tableView.requestFocus();
             ViewUtil.mostrarTooltip(deletarButton, "Selecione um carro para deletar");
         }
     }
@@ -122,11 +123,14 @@ public class CarroController implements Initializable {
                 mostrarDetalhes(null);
                 tableView.getSelectionModel().clearSelection();
                 ViewUtil.mostrarTooltip(salvarButton, "Carro salvo com sucesso");
-            } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException e) {
+            } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException | CarroJaCadastradoException e) {
+                placaTextField.requestFocus();
                 ViewUtil.mostrarTooltip(placaTextField, e.getMessage());
             } catch (MarcaObrigatorioException | FormatoMarcaException e) {
+                marcaTextField.requestFocus();
                 ViewUtil.mostrarTooltip(marcaTextField, e.getMessage());
             } catch (ModeloObrigatorioException | FormatoModeloException e) {
+                modeloTextField.requestFocus();
                 ViewUtil.mostrarTooltip(modeloTextField, e.getMessage());
             } catch (CarroInvalidoException e) {
                 ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
@@ -136,9 +140,11 @@ public class CarroController implements Initializable {
 
     private boolean validarInputs() {
         if (!portasTextField.getText().matches("^\\d+")) {
+            portasTextField.requestFocus();
             ViewUtil.mostrarTooltip(portasTextField, "Valor inválido");
             return false;
         } else if (!ocupantesTextField.getText().matches("^\\d+")) {
+            ocupantesTextField.requestFocus();
             ViewUtil.mostrarTooltip(ocupantesTextField, "Valor inválido");
             return false;
         } else {

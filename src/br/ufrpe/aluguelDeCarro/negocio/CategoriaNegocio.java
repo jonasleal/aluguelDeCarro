@@ -1,9 +1,14 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICategoriaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaJaCadastradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,7 +21,12 @@ public class CategoriaNegocio {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Categoria categoria) {
+    public void cadastrar(Categoria categoria) throws CategoriaInvalidaException {
+        String nome = categoria.getNome();
+        if (nome == null || nome.isEmpty()) throw new NomeCategoriaObrigatorioException();
+        if (this.repositorio.existe(nome)) throw new CategoriaJaCadastradaException(nome);
+        if (categoria.getDiaria().compareTo(BigDecimal.ZERO) < 1)
+            throw new PrecoNegativoException(categoria.getDiaria());
         categoria.setAtivo(true);
         this.repositorio.cadastrar(categoria);
     }

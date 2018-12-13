@@ -1,6 +1,10 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaJaCadastradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.servicos.ViewUtil;
@@ -66,6 +70,7 @@ public class CategoriaController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
+        tableView.getSelectionModel().clearSelection();
         mostrarDetalhes(null);
     }
 
@@ -73,15 +78,26 @@ public class CategoriaController implements Initializable {
     void salvar(ActionEvent event) {
         if (validarCampo()) {
             Categoria categoria = lerInputs();
-            FachadaGerente.getInstance().cadastrarCategoria(categoria);
-            categorias.add(categoria);
-            mostrarDetalhes(null);
-            ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
+            try {
+                FachadaGerente.getInstance().cadastrarCategoria(categoria);
+                categorias.add(categoria);
+                mostrarDetalhes(null);
+                ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
+            } catch (NomeCategoriaObrigatorioException | CategoriaJaCadastradaException e) {
+                nomeTextField.requestFocus();
+                ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
+            } catch (PrecoNegativoException e) {
+                precoTextField.requestFocus();
+                ViewUtil.mostrarTooltip(precoTextField, e.getMessage());
+            } catch (CategoriaInvalidaException e) {
+                ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+            }
         }
     }
 
     private boolean validarCampo() {
         if (!precoTextField.getText().matches("^\\d+(\\.\\d+)?")) {
+            precoTextField.requestFocus();
             ViewUtil.mostrarTooltip(precoTextField, "Valor inválido");
             return false;
         } else{

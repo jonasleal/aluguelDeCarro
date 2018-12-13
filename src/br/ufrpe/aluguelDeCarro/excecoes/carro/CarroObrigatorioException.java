@@ -12,7 +12,7 @@ package br.ufrpe.aluguelDeCarro.excecoes.carro;
 public class CarroObrigatorioException extends CarroInvalidoException {
     
     public CarroObrigatorioException() {
-        super("carro é obrigatorio");
+        super("Carro é obrigatorio");
     }
     
 }

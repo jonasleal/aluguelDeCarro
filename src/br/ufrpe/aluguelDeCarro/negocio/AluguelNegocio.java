@@ -11,8 +11,13 @@ import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroIndisponivelException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioObrigatorioException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
@@ -63,8 +68,13 @@ public class AluguelNegocio {
         }
     }
 
-    private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException {
-        validacaoBasica(aluguel);
+    private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
+        if (aluguel.getCliente() == null) throw new ClienteObrigatorioException();
+        if (aluguel.getCarro() == null) throw new CarroObrigatorioException();
+        if (aluguel.getUsuario() == null) throw new UsuarioObrigatorioException();
+        if (aluguel.getCategoria() == null) throw new CategoriaObrigatorioException();
+        if (aluguel.getRetirada() == null) throw new DataRetiradaObrigatoriaException();
+        if (aluguel.getDevolucaoEstimada() == null) throw new DataDevolucacaoEstimadaObrigatoriaException();
         if (this.repositorio.existe(aluguel.getCliente())) {
             throw new AluguelEmAbertoException(aluguel.getCliente().getCpf());
         }
@@ -77,12 +87,10 @@ public class AluguelNegocio {
             throw new DataEstimadaPassado(dataNoObjeto);
         }
         Carro carro = aluguel.getCarro();
-        if (carro == null) {
-            throw new CarroObrigatorioException();
-        }
         if (!carro.isAtivo() || !carro.isDisponivel()) {
             throw new CarroIndisponivelException(carro.getPlaca());
         }
+        validacaoBasica(aluguel);
     }
 
     /**
@@ -94,7 +102,7 @@ public class AluguelNegocio {
      * @return True - Se concluído com sucesso.
      * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
      */
-    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException {
+    public boolean cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
             aluguel.setAtivo(true);
@@ -119,9 +127,9 @@ public class AluguelNegocio {
     /**
      * Calcula o debito do aluguel em aberto e o finaliza no momento da chamada.
      *
-     * @param aluguel - Objeto com os dados do aluguel em aberto
+     * @param aluguel           - Objeto com os dados do aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     * 30 minutos.
+     *                          30 minutos.
      */
     private void calcularDebito(Aluguel aluguel, boolean considerarHorario) {
         aluguel.setDevolucaoReal(LocalDateTime.now());
@@ -144,9 +152,9 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado
      * cliente entrega um aluguel finalizado no momento da chamada.
      *
-     * @param cliente - cliente registrado no aluguel em aberto
+     * @param cliente           - cliente registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     * 30 minutos.
+     *                          30 minutos.
      * @return Objeto aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
@@ -161,9 +169,9 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado
      * carro entrega um aluguel finalizado no momento da chamada.
      *
-     * @param carro - carro registrado no aluguel em aberto
+     * @param carro             - carro registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     * 30 minutos.
+     *                          30 minutos.
      * @return Objeto aluguel no estado finalizado.
      */
     public Aluguel consultarDebito(Carro carro, boolean considerarHorario) throws AluguelNaoEncontradoException {
@@ -200,7 +208,7 @@ public class AluguelNegocio {
      *
      * @param aluguel - aluguel no estado finalizado.
      * @return True - Se registrado com sucesso.
-//     * @throws AluguelException - Contem a mensagem e causa do erro.
+     * //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
     public boolean devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, ClienteInvalidoException {
         validarDevolucao(aluguel);

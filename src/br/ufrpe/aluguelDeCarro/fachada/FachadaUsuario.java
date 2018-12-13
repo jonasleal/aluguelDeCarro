@@ -8,9 +8,11 @@ import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.negocio.*;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
@@ -97,7 +99,7 @@ public class FachadaUsuario {
         return this.reservaNegocio.consultarTodos();
     }
 
-    public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException {
+    public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, CategoriaInvalidaException, UsuarioInvalidoException {
         this.aluguelNegocio.cadastrar(aluguel);
     }
 
@@ -113,7 +115,7 @@ public class FachadaUsuario {
         return this.aluguelNegocio.consultarTodos();
     }
 
-    public void cadastrarCategoria(Categoria categoria) {
+    public void cadastrarCategoria(Categoria categoria) throws CategoriaInvalidaException {
         this.categoriaNegocio.cadastrar(categoria);
     }
 

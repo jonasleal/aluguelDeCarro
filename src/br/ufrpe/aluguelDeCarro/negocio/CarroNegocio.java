@@ -8,7 +8,9 @@ package br.ufrpe.aluguelDeCarro.negocio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroJaCadastradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroObrigatorioException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
@@ -27,13 +29,13 @@ public class CarroNegocio {
     }
 
     public boolean cadastrar(Carro carro) throws CarroInvalidoException {
-        if (carro != null) {
-            carro.validar();
-            carro.setAtivo(true);
-            carro.setDisponivel(true);
-            return this.repositorio.cadastrar(carro);
-        }
-        return false;
+        if (carro == null) throw new CarroObrigatorioException();
+        String placa = carro.getPlaca();
+        if (this.repositorio.existe(placa)) throw new CarroJaCadastradoException(placa);
+        carro.validar();
+        carro.setAtivo(true);
+        carro.setDisponivel(true);
+        return this.repositorio.cadastrar(carro);
     }
 
     public boolean alterar(Carro carro) throws CarroInvalidoException {

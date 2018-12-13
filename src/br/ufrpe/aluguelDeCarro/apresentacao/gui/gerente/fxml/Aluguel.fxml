@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -9,7 +8,9 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171"
             fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller.AluguelController">
     <children>
-        <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0">
+        <SplitPane dividerPositions="0.29797979797979796" prefHeight="400.0" prefWidth="600.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
@@ -43,7 +44,7 @@
                                                 <StackPane>
                                                     <children>
                                                         <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
-                                                                       overLay="true" promptText="Retirada"/>
+                                                                       promptText="Retirada"/>
                                                     </children>
                                                 </StackPane>
                                                 <JFXTimePicker fx:id="retiradaTimePicker" defaultColor="#4059a9"
@@ -53,8 +54,7 @@
                                         <FlowPane>
                                             <children>
                                                 <JFXDatePicker fx:id="devolucaoEstimadaDatePicker"
-                                                               defaultColor="#4059a9" overLay="true"
-                                                               promptText="Devolução estimada"/>
+                                                               defaultColor="#4059a9" promptText="Devolução estimada"/>
                                                 <JFXTimePicker fx:id="devolucaoEstimadaTimePicker"
                                                                defaultColor="#4059a9" overLay="true"/>
                                             </children>
@@ -62,7 +62,7 @@
                                         <FlowPane>
                                             <children>
                                                 <JFXDatePicker fx:id="devolucaoRealDatePicker" defaultColor="#4059a9"
-                                                               overLay="true" promptText="Devolução Real"/>
+                                                               promptText="Devolução Real"/>
                                                 <JFXTimePicker fx:id="devolucaoRealTimePicker" defaultColor="#4059a9"
                                                                overLay="true"/>
                                             </children>

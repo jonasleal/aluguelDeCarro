@@ -1,8 +1,13 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
+import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.*;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
@@ -18,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.util.StringConverter;
 
 import java.math.BigDecimal;
 import java.net.URL;
@@ -99,17 +105,27 @@ public class AluguelController implements Initializable {
         try {
             FachadaGerente.getInstance().cadastrarAluguel(aluguel);
         } catch (CustoAdicionalNegativoException e) {
+            custoAdicionalTextField.requestFocus();
             ViewUtil.mostrarTooltip(custoAdicionalTextField, e.getMessage());
-        } catch (DataEstimadaInconsistenteException | DataEstimadaPassado e) {
+        } catch (DataEstimadaInconsistenteException | DataEstimadaPassado | DataDevolucacaoEstimadaObrigatoriaException e) {
+            devolucaoEstimadaTimePicker.requestFocus();
             ViewUtil.mostrarTooltip(devolucaoEstimadaDatePicker, e.getMessage());
-        } catch (DataRetiradaInconsistenteException | DataRetiradaFuturoException | DataRetiradaPassadoException e) {
+        } catch (DataRetiradaInconsistenteException | DataRetiradaFuturoException | DataRetiradaPassadoException | DataRetiradaObrigatoriaException e) {
+            retiradaDatePicker.requestFocus();
             ViewUtil.mostrarTooltip(retiradaDatePicker, e.getMessage());
         } catch (CarroInvalidoException e) {
+            carroComboBox.requestFocus();
             ViewUtil.mostrarTooltip(carroComboBox, e.getMessage());
+        } catch (CategoriaInvalidaException e) {
+            categoriaComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
         } catch (AluguelInvalidoException e) {
-            e.printStackTrace();
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         } catch (ClienteInvalidoException e) {
+            clienteComboBox.requestFocus();
             ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
+        } catch (UsuarioInvalidoException e) {
+            e.printStackTrace();
         }
     }
 
@@ -117,16 +133,87 @@ public class AluguelController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         configurarTabela();
         configurarComboBox();
+        configurarTimePicker();
+        configurarOnActionDatas();
+    }
+
+    private void configurarOnActionDatas() {
+        retiradaDatePicker.setOnAction(event -> limparComboBoxes());
+        retiradaTimePicker.setOnAction(event -> limparComboBoxes());
+        devolucaoRealDatePicker.setOnAction(event -> limparComboBoxes());
+        devolucaoRealTimePicker.setOnAction(event -> limparComboBoxes());
+        devolucaoEstimadaDatePicker.setOnAction(event -> limparComboBoxes());
+        devolucaoEstimadaTimePicker.setOnAction(event -> limparComboBoxes());
+    }
+
+    private void limparComboBoxes() {
+        categorias.clear();
+        carros.clear();
+    }
+
+    private void configurarTimePicker() {
+        retiradaTimePicker.setOverLay(false);
+        devolucaoRealTimePicker.setOverLay(false);
+        devolucaoEstimadaTimePicker.setOverLay(false);
     }
 
     private void configurarComboBox() {
+        configurarConverter();
         clienteComboBox.getItems().addAll(FachadaGerente.getInstance().consultarClientes());
         categorias = FXCollections.observableArrayList();
         categoriaComboBox.setItems(categorias);
-        categoriaComboBox.setOnShowing(event -> carregarCategorias());
+        categoriaComboBox.setOnMouseClicked(event -> carregarCategorias());
         carros = FXCollections.observableArrayList();
         carroComboBox.setItems(carros);
-        carroComboBox.setOnShowing(event -> carregarCarros());
+        carroComboBox.setOnMouseClicked(event -> carregarCarros());
+    }
+
+    private void configurarConverter() {
+        clienteComboBox.setConverter(new StringConverter<Cliente>() {
+            @Override
+            public String toString(Cliente cliente) {
+                return cliente != null ? cliente.getCpf() : "";
+            }
+
+            @Override
+            public Cliente fromString(String cpf) {
+                try {
+                    return FachadaGerente.getInstance().consultarCliente(cpf);
+                } catch (ClienteNaoEncontradoException e) {
+                    return null;
+                }
+            }
+        });
+        categoriaComboBox.setConverter(new StringConverter<Categoria>() {
+            @Override
+            public String toString(Categoria categoria) {
+                return categoria != null ? categoria.getNome() : "";
+            }
+
+            @Override
+            public Categoria fromString(String nome) {
+                try {
+                    return FachadaGerente.getInstance().consultarCategoria(nome);
+                } catch (CategoriaNaoEncontradaException e) {
+                    return null;
+                }
+            }
+        });
+        carroComboBox.setConverter(new StringConverter<Carro>() {
+            @Override
+            public String toString(Carro carro) {
+                return carro != null ? carro.getPlaca() : "";
+            }
+
+            @Override
+            public Carro fromString(String placa) {
+                try {
+                    return FachadaGerente.getInstance().consultarCarro(placa);
+                } catch (CarroNaoEncontradoException e) {
+                    return null;
+                }
+            }
+        });
     }
 
     private void carregarCarros() {
@@ -134,6 +221,8 @@ public class AluguelController implements Initializable {
             carros.clear();
             carros.addAll(FachadaGerente.getInstance().consultarCarros(categoriaComboBox.getValue()));
         } else {
+            carroComboBox.hide();
+            categoriaComboBox.requestFocus();
             ViewUtil.mostrarTooltip(carroComboBox, "Selecione uma categoria");
         }
     }
@@ -144,6 +233,8 @@ public class AluguelController implements Initializable {
             categorias.clear();
             categorias.addAll(FachadaGerente.getInstance().verificarCategoriasDisponiveis(aluguel));
         } else {
+            categoriaComboBox.hide();
+            retiradaDatePicker.requestFocus();
             ViewUtil.mostrarTooltip(categoriaComboBox, "Preencha a data de retirada e devolução");
         }
     }
@@ -160,10 +251,26 @@ public class AluguelController implements Initializable {
 
     private Aluguel lerInputs() {
         Aluguel aluguel = new Aluguel();
-        aluguel.setRetirada(LocalDateTime.of(retiradaDatePicker.getValue(), retiradaTimePicker.getValue()));
-        aluguel.setDevolucaoEstimada(LocalDateTime.of(devolucaoEstimadaDatePicker.getValue(), devolucaoEstimadaTimePicker.getValue()));
-        aluguel.setDevolucaoReal(LocalDateTime.of(devolucaoRealDatePicker.getValue(), devolucaoRealTimePicker.getValue()));
-        aluguel.setCustoAdicional(new BigDecimal(custoAdicionalTextField.getText()));
+        if (!custoAdicionalTextField.getText().isEmpty()) {
+            aluguel.setCustoAdicional(new BigDecimal(custoAdicionalTextField.getText()));
+        } else {
+            aluguel.setCustoAdicional(BigDecimal.ZERO);
+        }
+        if (retiradaDatePicker.getValue() != null && retiradaTimePicker.getValue() != null) {
+            aluguel.setRetirada(LocalDateTime.of(retiradaDatePicker.getValue(), retiradaTimePicker.getValue()));
+        } else {
+            aluguel.setRetirada(null);
+        }
+        if (devolucaoEstimadaDatePicker.getValue() != null && devolucaoEstimadaTimePicker.getValue() != null) {
+            aluguel.setDevolucaoEstimada(LocalDateTime.of(devolucaoEstimadaDatePicker.getValue(), devolucaoEstimadaTimePicker.getValue()));
+        } else {
+            aluguel.setDevolucaoEstimada(null);
+        }
+        if (devolucaoRealDatePicker.getValue() != null && devolucaoRealTimePicker.getValue() != null) {
+            aluguel.setDevolucaoReal(LocalDateTime.of(devolucaoRealDatePicker.getValue(), devolucaoRealTimePicker.getValue()));
+        } else {
+            aluguel.setDevolucaoReal(null);
+        }
         aluguel.setCliente(clienteComboBox.getValue());
         aluguel.setCategoria(categoriaComboBox.getValue());
         aluguel.setCarro(carroComboBox.getValue());
@@ -196,6 +303,5 @@ public class AluguelController implements Initializable {
             carroComboBox.getSelectionModel().clearSelection();
             clienteComboBox.getSelectionModel().clearSelection();
         }
-
     }
 }

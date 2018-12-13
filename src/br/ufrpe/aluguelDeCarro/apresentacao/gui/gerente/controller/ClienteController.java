@@ -1,10 +1,7 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.*;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.*;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
@@ -75,6 +72,7 @@ public class ClienteController implements Initializable {
                 mostrarDetalhes(null);
                 ViewUtil.mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
+                tableView.requestFocus();
                 ViewUtil.mostrarTooltip(deletarButton, "Selecione um cliente para deletar");
             }
         } catch (ClienteNaoEncontradoException | IdNaoEncontradoException e) {
@@ -95,13 +93,17 @@ public class ClienteController implements Initializable {
             clientes.add(cliente);
             mostrarDetalhes(null);
             ViewUtil.mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
-        } catch (CpfInvalidoException | CpfObrigatorioException e) {
+        } catch (CpfInvalidoException | CpfObrigatorioException | ClienteJaCadastradoException e) {
+            cpfTextField.requestFocus();
             ViewUtil.mostrarTooltip(cpfTextField, e.getMessage());
-        } catch (MenorDeIdadeException idadeExcetion) {
-            ViewUtil.mostrarTooltip(nascimentoDatePicker, idadeExcetion.getMessage());
-        } catch (NomeObrigatorioException e) {
+        } catch (DataNascimentoObrigatorioException | MenorDeIdadeException e) {
+            nascimentoDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(nascimentoDatePicker, e.getMessage());
+        } catch (NomeObrigatorioException | FormatoNomeException e) {
+            nomeTextField.requestFocus();
             ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
         } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
+            habilitacaoTextField.requestFocus();
             ViewUtil.mostrarTooltip(habilitacaoTextField, e.getMessage());
         } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
