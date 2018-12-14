@@ -111,7 +111,7 @@ public class PrincipalApresentacao {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             fachada.cadastrarAluguel(aluguel);
-        } catch (CarroInvalidoException | AluguelInvalidoException | ClienteInvalidoException | UsuarioInvalidoException | CategoriaInvalidaException e) {
+        } catch (CarroInvalidoException | AluguelInvalidoException | ClienteInvalidoException | UsuarioInvalidoException | CategoriaInvalidaException | PessoaInvalidaException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }

@@ -71,11 +71,11 @@ public class FachadaUsuario {
         return singleton.getReservaNegocio().consultarTodos();
     }
 
-    public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, CategoriaInvalidaException, UsuarioInvalidoException {
+    public void cadastrarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         singleton.getAluguelNegocio().cadastrar(aluguel);
     }
 
-    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
+    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         singleton.getAluguelNegocio().alterar(aluguel);
     }
 

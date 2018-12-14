@@ -7,6 +7,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
@@ -120,8 +121,17 @@ public class AluguelController implements Initializable {
         } catch (DataRetiradaInconsistenteException | DataRetiradaFuturoException | DataRetiradaPassadoException | DataRetiradaObrigatoriaException e) {
             retiradaDatePicker.requestFocus();
             ViewUtil.mostrarTooltip(retiradaDatePicker, e.getMessage());
-        } catch (AluguelInvalidoException e) {
+        } catch (AluguelInvalidoException | PessoaInvalidaException | UsuarioInvalidoException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        } catch (ClienteInvalidoException e) {
+            clienteComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
+        } catch (CarroInvalidoException e) {
+            carroComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(carroComboBox, e.getMessage());
+        } catch (CategoriaInvalidaException e) {
+            categoriaComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
         }
     }
 
@@ -148,13 +158,11 @@ public class AluguelController implements Initializable {
         } catch (CategoriaInvalidaException e) {
             categoriaComboBox.requestFocus();
             ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
-        } catch (AluguelInvalidoException e) {
+        } catch (AluguelInvalidoException | UsuarioInvalidoException | PessoaInvalidaException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         } catch (ClienteInvalidoException e) {
             clienteComboBox.requestFocus();
             ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
-        } catch (UsuarioInvalidoException e) {
-            e.printStackTrace();
         }
     }
 
