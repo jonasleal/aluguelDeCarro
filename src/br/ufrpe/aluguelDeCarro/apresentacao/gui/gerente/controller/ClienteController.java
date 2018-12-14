@@ -68,7 +68,7 @@ public class ClienteController implements Initializable {
             if (cliente != null) {
                 FachadaGerente.getInstance().desativarCliente(cliente.getId());
                 clientes.remove(cliente);
-                mostrarDetalhes(null);
+                limparSelecaoTabela();
                 ViewUtil.mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
             } else {
                 tableView.requestFocus();
@@ -81,16 +81,50 @@ public class ClienteController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        mostrarDetalhes(null);
+        limparSelecaoTabela();
     }
 
     @FXML
     void salvar(ActionEvent event) {
-        Cliente cliente = lerInputs();
+        Cliente cliente = tableView.getSelectionModel().getSelectedItem();
+        if (cliente == null) {
+            cliente = new Cliente();
+            lerInputs(cliente);
+            cadastrar(cliente);
+        } else {
+            lerInputs(cliente);
+            alterar(cliente);
+        }
+    }
+
+    private void alterar(Cliente cliente) {
+        try {
+            FachadaGerente.getInstance().alterarCliente(cliente);
+            limparSelecaoTabela();
+            clientes.set(clientes.indexOf(cliente), cliente);
+            ViewUtil.mostrarTooltip(salvarButton, "Cliente alterado com sucesso");
+        } catch (CpfInvalidoException | CpfObrigatorioException e) {
+            cpfTextField.requestFocus();
+            ViewUtil.mostrarTooltip(cpfTextField, e.getMessage());
+        } catch (DataNascimentoObrigatorioException | MenorDeIdadeException e) {
+            nascimentoDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(nascimentoDatePicker, e.getMessage());
+        } catch (NomeObrigatorioException | FormatoNomeException e) {
+            nomeTextField.requestFocus();
+            ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
+        } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
+            habilitacaoTextField.requestFocus();
+            ViewUtil.mostrarTooltip(habilitacaoTextField, e.getMessage());
+        } catch (PessoaInvalidaException | ClienteInvalidoException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    private void cadastrar(Cliente cliente) {
         try {
             FachadaGerente.getInstance().cadastrarCliente(cliente);
             clientes.add(cliente);
-            mostrarDetalhes(null);
+            limparSelecaoTabela();
             ViewUtil.mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
         } catch (CpfInvalidoException | CpfObrigatorioException | ClienteJaCadastradoException e) {
             cpfTextField.requestFocus();
@@ -109,13 +143,16 @@ public class ClienteController implements Initializable {
         }
     }
 
-    private Cliente lerInputs() {
-        Cliente cliente = new Cliente();
+    private void limparSelecaoTabela() {
+        tableView.getSelectionModel().clearSelection();
+        mostrarDetalhes(null);
+    }
+
+    private void lerInputs(Cliente cliente) {
         cliente.setCpf(cpfTextField.getText());
         cliente.setNome(nomeTextField.getText());
         cliente.setHabilitacao(habilitacaoTextField.getText());
         cliente.setNascimento(nascimentoDatePicker.getValue());
-        return cliente;
     }
 
     @Override
