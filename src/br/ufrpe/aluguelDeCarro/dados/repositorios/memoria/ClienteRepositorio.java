@@ -77,6 +77,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
     @Override
     public void cadastrar(Cliente cliente) {
         this.setarId(cliente);
+        this.clientes.add(cliente.clone());
     }
 
     /**

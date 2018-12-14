@@ -69,6 +69,7 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
     @Override
     public void cadastrar(Categoria categoria) {
         this.setarId(categoria);
+        this.categorias.add(categoria.clone());
     }
 
     /**

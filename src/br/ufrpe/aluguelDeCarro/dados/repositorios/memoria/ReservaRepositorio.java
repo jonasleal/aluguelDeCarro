@@ -60,6 +60,7 @@ public class ReservaRepositorio implements IReservaRepositorio {
     @Override
     public void cadastrar(Reserva reserva) {
         this.setarId(reserva);
+        this.reservas.add(reserva.clone());
     }
 
     /**

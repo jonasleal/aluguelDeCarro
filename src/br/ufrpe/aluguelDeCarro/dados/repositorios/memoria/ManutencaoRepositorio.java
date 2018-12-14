@@ -60,6 +60,7 @@ public class ManutencaoRepositorio implements IManutencaoRepositorio {
     @Override
     public void cadastrar(Manutencao manutencao) {
         this.setarId(manutencao);
+        this.manutencoes.add(manutencao.clone());
     }
 
     /**

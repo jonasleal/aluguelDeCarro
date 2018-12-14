@@ -75,6 +75,7 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
     @Override
     public void cadastrar(Usuario usuario) {
         this.setarId(usuario);
+        this.usuarios.add(usuario.clone());
     }
 
     /**
