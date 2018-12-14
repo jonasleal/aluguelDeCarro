@@ -77,9 +77,6 @@ public class AluguelController implements Initializable {
     private JFXComboBox<Carro> carroComboBox;
 
     @FXML
-    private JFXButton deletarButton;
-
-    @FXML
     private JFXButton novoButton;
 
     @FXML
@@ -89,10 +86,6 @@ public class AluguelController implements Initializable {
     private ObservableList<Categoria> categorias;
     private ObservableList<Carro> carros;
     private FachadaGerente fachada = new FachadaGerente();
-
-    @FXML
-    void deletar(ActionEvent event) {
-    }
 
     @FXML
     void novo(ActionEvent event) {

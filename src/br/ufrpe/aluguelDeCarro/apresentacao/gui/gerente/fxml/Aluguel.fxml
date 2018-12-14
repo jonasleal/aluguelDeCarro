@@ -28,9 +28,8 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <VBox alignment="CENTER" minHeight="10.0" minWidth="10.0" spacing="40.0"
-                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                              AnchorPane.topAnchor="0.0">
+                        <VBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <Label text="Detalhes do aluguel">
                                     <font>
@@ -71,22 +70,20 @@
                                                       promptText="Valor estimado"/>
                                         <JFXTextField fx:id="custoAdicionalTextField" labelFloat="true"
                                                       promptText="Custo adicional"/>
-                                        <FlowPane hgap="5.0" prefHeight="200.0" prefWidth="200.0">
+                                        <FlowPane hgap="5.0" prefWrapLength="0.0">
                                             <children>
                                                 <JFXComboBox fx:id="clienteComboBox" labelFloat="true"
-                                                             promptText="Cliente"/>
+                                                             promptText="Cliente" visibleRowCount="7"/>
                                                 <JFXComboBox fx:id="categoriaComboBox" labelFloat="true"
-                                                             promptText="Categoria"/>
-                                                <JFXComboBox fx:id="carroComboBox" labelFloat="true"
-                                                             promptText="Carro"/>
+                                                             promptText="Categoria" visibleRowCount="7"/>
+                                                <JFXComboBox fx:id="carroComboBox" labelFloat="true" promptText="Carro"
+                                                             visibleRowCount="7"/>
                                             </children>
                                         </FlowPane>
                                     </children>
                                 </VBox>
                                 <HBox alignment="TOP_CENTER" spacing="10.0">
                                     <children>
-                                        <JFXButton fx:id="deletarButton" onAction="#deletar"
-                                                   style="-fx-background-color: #e57373;" text="Deletar"/>
                                         <JFXButton fx:id="novoButton" onAction="#novo"
                                                    style="-fx-background-color: #e0e0e0;" text="Novo"/>
                                         <JFXButton fx:id="salvarButton" defaultButton="true" onAction="#salvar"
