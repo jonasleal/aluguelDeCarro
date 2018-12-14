@@ -105,7 +105,7 @@ public class PrincipalApresentacao {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
             Singleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
-        } catch (AluguelInvalidoException | CarroInvalidoException e) {
+        } catch (AluguelInvalidoException | CarroInvalidoException | ClienteInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
         }
@@ -127,7 +127,7 @@ public class PrincipalApresentacao {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
                 Singleton.getInstance().getCarroNegocio().cadastrar(carro, (Gerente) usuarioLogado);
-            } catch (CarroInvalidoException | FormatoHabilitacaoException | PessoaInvalidaException e) {
+            } catch (CarroInvalidoException | ClienteInvalidoException | PessoaInvalidaException e) {
                 System.out.println(e.getMessage());
                 cadastrarCarro();
             }
