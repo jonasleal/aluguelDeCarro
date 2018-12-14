@@ -52,13 +52,14 @@ public class CategoriaController implements Initializable {
     private JFXButton salvarButton;
 
     private ObservableList<Categoria> categorias;
+    private FachadaGerente fachada = new FachadaGerente();
 
     @FXML
     void deletar(ActionEvent event) {
         Categoria categoria = tableView.getSelectionModel().getSelectedItem();
         if (categoria != null) {
             try {
-                FachadaGerente.getInstance().desativarCategoria(categoria.getId());
+                fachada.desativarCategoria(categoria.getId());
                 categorias.remove(categoria);
                 mostrarDetalhes(null);
                 ViewUtil.mostrarTooltip(deletarButton, "Categoria deletada com sucesso");
@@ -79,7 +80,7 @@ public class CategoriaController implements Initializable {
         if (validarCampo()) {
             Categoria categoria = lerInputs();
             try {
-                FachadaGerente.getInstance().cadastrarCategoria(categoria);
+                fachada.cadastrarCategoria(categoria);
                 categorias.add(categoria);
                 mostrarDetalhes(null);
                 ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
@@ -115,7 +116,7 @@ public class CategoriaController implements Initializable {
                 (observable, oldValue, newValue) -> mostrarDetalhes(newValue));
 
         categorias = FXCollections.observableArrayList();
-        categorias.addAll(FachadaGerente.getInstance().consultarCategorias());
+        categorias.addAll(fachada.consultarCategorias());
         tableView.setItems(categorias);
     }
 

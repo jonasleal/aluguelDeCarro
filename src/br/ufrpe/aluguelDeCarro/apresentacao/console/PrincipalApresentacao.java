@@ -19,6 +19,9 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
  * @author Fernando
  */
 public class PrincipalApresentacao {
+
+    private FachadaGerente fachada = new FachadaGerente();
+
     private final CarroApresentacao carroApresentacao;
     private final ClienteApresentacao clienteApresentacao;
     private final UsuarioApresentacao gerenteApresentacao;
@@ -47,7 +50,7 @@ public class PrincipalApresentacao {
         Usuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
-        FachadaGerente.getInstance().setUsuarioLogado(usuario);
+        fachada.setUsuarioLogado(usuario);
     }
 
     /**
@@ -59,7 +62,7 @@ public class PrincipalApresentacao {
         while (usuario == null)
             usuario = this.gerenteApresentacao.lerDadosPeloTeclado();
         try {
-            FachadaGerente.getInstance().cadastrarUsuario(usuario);
+            fachada.cadastrarUsuario(usuario);
         } catch (PessoaInvalidaException | ClienteInvalidoException | UsuarioInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarUsuario();
@@ -103,7 +106,7 @@ public class PrincipalApresentacao {
     private void cadastrarAluguel() {
         Aluguel aluguel = this.aluguelApresentacao.lerDadosPeloTeclado();
         try {
-            FachadaGerente.getInstance().cadastrarAluguel(aluguel);
+            fachada.cadastrarAluguel(aluguel);
         } catch (CarroInvalidoException | AluguelInvalidoException | ClienteInvalidoException | UsuarioInvalidoException | CategoriaInvalidaException e) {
             System.out.println(e.getMessage());
             cadastrarAluguel();
@@ -113,7 +116,7 @@ public class PrincipalApresentacao {
     private void cadastrarCliente() {
         Cliente cliente = this.clienteApresentacao.lerDadosPeloTeclado();
         try {
-            FachadaGerente.getInstance().cadastrarCliente(cliente);
+            fachada.cadastrarCliente(cliente);
         } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             System.out.println(e.getMessage());
             cadastrarCliente();
@@ -121,11 +124,11 @@ public class PrincipalApresentacao {
     }
 
     private void cadastrarCarro() {
-        Usuario usuarioLogado = FachadaGerente.getInstance().getUsuarioLogado();
+        Usuario usuarioLogado = fachada.getUsuarioLogado();
         if (usuarioLogado.isGerente()) {
             Carro carro = this.carroApresentacao.lerDadosPeloTeclado();
             try {
-                FachadaGerente.getInstance().cadastrarCarro(carro);
+                fachada.cadastrarCarro(carro);
             } catch (CarroInvalidoException e) {
                 System.out.println(e.getMessage());
                 cadastrarCarro();

@@ -88,6 +88,7 @@ public class AluguelController implements Initializable {
     private ObservableList<Aluguel> alugueis;
     private ObservableList<Categoria> categorias;
     private ObservableList<Carro> carros;
+    private FachadaGerente fachada = new FachadaGerente();
 
     @FXML
     void deletar(ActionEvent event) {
@@ -103,7 +104,7 @@ public class AluguelController implements Initializable {
     void salvar(ActionEvent event) {
         Aluguel aluguel = lerInputs();
         try {
-            FachadaGerente.getInstance().cadastrarAluguel(aluguel);
+            fachada.cadastrarAluguel(aluguel);
         } catch (CustoAdicionalNegativoException e) {
             custoAdicionalTextField.requestFocus();
             ViewUtil.mostrarTooltip(custoAdicionalTextField, e.getMessage());
@@ -159,7 +160,7 @@ public class AluguelController implements Initializable {
 
     private void configurarComboBox() {
         configurarConverter();
-        clienteComboBox.getItems().addAll(FachadaGerente.getInstance().consultarClientes());
+        clienteComboBox.getItems().addAll(fachada.consultarClientes());
         categorias = FXCollections.observableArrayList();
         categoriaComboBox.setItems(categorias);
         categoriaComboBox.setOnMouseClicked(event -> carregarCategorias());
@@ -178,7 +179,7 @@ public class AluguelController implements Initializable {
             @Override
             public Cliente fromString(String cpf) {
                 try {
-                    return FachadaGerente.getInstance().consultarCliente(cpf);
+                    return fachada.consultarCliente(cpf);
                 } catch (ClienteNaoEncontradoException e) {
                     return null;
                 }
@@ -193,7 +194,7 @@ public class AluguelController implements Initializable {
             @Override
             public Categoria fromString(String nome) {
                 try {
-                    return FachadaGerente.getInstance().consultarCategoria(nome);
+                    return fachada.consultarCategoria(nome);
                 } catch (CategoriaNaoEncontradaException e) {
                     return null;
                 }
@@ -208,7 +209,7 @@ public class AluguelController implements Initializable {
             @Override
             public Carro fromString(String placa) {
                 try {
-                    return FachadaGerente.getInstance().consultarCarro(placa);
+                    return fachada.consultarCarro(placa);
                 } catch (CarroNaoEncontradoException e) {
                     return null;
                 }
@@ -219,7 +220,7 @@ public class AluguelController implements Initializable {
     private void carregarCarros() {
         if (!categoriaComboBox.getSelectionModel().isEmpty()) {
             carros.clear();
-            carros.addAll(FachadaGerente.getInstance().consultarCarros(categoriaComboBox.getValue()));
+            carros.addAll(fachada.consultarCarros(categoriaComboBox.getValue()));
         } else {
             carroComboBox.hide();
             categoriaComboBox.requestFocus();
@@ -231,7 +232,7 @@ public class AluguelController implements Initializable {
         Aluguel aluguel = lerInputs();
         if (aluguel.getRetirada() != null && aluguel.getDevolucaoEstimada() != null) {
             categorias.clear();
-            categorias.addAll(FachadaGerente.getInstance().verificarCategoriasDisponiveis(aluguel));
+            categorias.addAll(fachada.verificarCategoriasDisponiveis(aluguel));
         } else {
             categoriaComboBox.hide();
             retiradaDatePicker.requestFocus();
@@ -241,7 +242,7 @@ public class AluguelController implements Initializable {
 
     private void configurarTabela() {
         alugueis = FXCollections.observableArrayList();
-        alugueis.addAll(FachadaGerente.getInstance().consultarAlugueis());
+        alugueis.addAll(fachada.consultarAlugueis());
         tableView.setItems(alugueis);
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> mostrarDetalhes(newValue));

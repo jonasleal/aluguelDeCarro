@@ -87,13 +87,14 @@ public class CarroController implements Initializable {
     private JFXButton salvarButton;
 
     private ObservableList<Carro> carros;
-
+    private FachadaGerente fachada = new FachadaGerente();
+    
     @FXML
     void deletar(ActionEvent event) {
         Carro carro = tableView.getSelectionModel().getSelectedItem();
         if (carro != null) {
             try {
-                FachadaGerente.getInstance().desativarCarro(carro.getId());
+                fachada.desativarCarro(carro.getId());
                 carros.remove(carro);
                 mostrarDetalhes(null);
                 tableView.getSelectionModel().clearSelection();
@@ -118,7 +119,7 @@ public class CarroController implements Initializable {
         if (validarInputs()) {
             Carro carro = lerInputs();
             try {
-                FachadaGerente.getInstance().cadastrarCarro(carro);
+                fachada.cadastrarCarro(carro);
                 carros.add(carro);
                 mostrarDetalhes(null);
                 tableView.getSelectionModel().clearSelection();
@@ -164,7 +165,7 @@ public class CarroController implements Initializable {
         modeloColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getModelo()));
 
         carros = FXCollections.observableArrayList();
-        carros.addAll(FachadaGerente.getInstance().consultarCarros());
+        carros.addAll(fachada.consultarCarros());
 
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> mostrarDetalhes(newValue)));
@@ -175,7 +176,7 @@ public class CarroController implements Initializable {
         cambioComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Cambio.values())));
         direcaoComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Direcao.values())));
         categoriaComboBox.setItems(FXCollections.observableArrayList(
-                FachadaGerente.getInstance().consultarCategorias()));
+                fachada.consultarCategorias()));
         categoriaComboBox.setConverter(new StringConverter<Categoria>() {
             @Override
             public String toString(Categoria object) {
@@ -185,7 +186,7 @@ public class CarroController implements Initializable {
             @Override
             public Categoria fromString(String string) {
                 try {
-                    return FachadaGerente.getInstance().consultarCategoria(string);
+                    return fachada.consultarCategoria(string);
                 } catch (CategoriaNaoEncontradaException e) {
                     return null;
                 }

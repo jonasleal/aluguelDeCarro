@@ -13,6 +13,8 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
  */
 class LoginApresentacao {
 
+    private FachadaGerente fachada = new FachadaGerente();
+
     /**
      * solicita ao usuário os dados de login
      *
@@ -23,7 +25,7 @@ class LoginApresentacao {
         try {
             System.out.println("Informe o numero do cpf");
             String cpf = InputUtil.getScan().nextLine();
-            usuario = FachadaGerente.getInstance().consultarUsuario(cpf);
+            usuario = fachada.consultarUsuario(cpf);
             if (usuario != null) {
                 System.out.println("Informe a senha");
                 if (usuario.validarSenha(Criptografia.criptografarSenha(InputUtil.getScan().nextLine())))

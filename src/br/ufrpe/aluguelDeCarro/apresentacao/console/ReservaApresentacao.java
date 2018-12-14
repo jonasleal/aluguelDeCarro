@@ -16,6 +16,8 @@ import java.util.List;
  */
 class ReservaApresentacao {
 
+    private FachadaGerente fachada = new FachadaGerente();
+
     /**
      * solicita ao usuário os dados da reserva
      *
@@ -42,7 +44,7 @@ class ReservaApresentacao {
      */
     private String getCarros() {
         StringBuilder stringBuilder = new StringBuilder();
-        List<Carro> carros = FachadaGerente.getInstance().consultarCarros();
+        List<Carro> carros = fachada.consultarCarros();
         if (carros != null && !carros.isEmpty()) {
             carros.forEach(carro -> stringBuilder.append(carro.getId()).append(" - ").append(carro));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -56,7 +58,7 @@ class ReservaApresentacao {
      */
     private String getClientes() {
         StringBuilder stringBuilder = new StringBuilder();
-        List<Cliente> clientes = FachadaGerente.getInstance().consultarClientes();
+        List<Cliente> clientes = fachada.consultarClientes();
         if (clientes != null && !clientes.isEmpty()) {
             clientes.forEach(cliente -> stringBuilder.append(cliente.getId()).append(" - ").append(cliente));
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);

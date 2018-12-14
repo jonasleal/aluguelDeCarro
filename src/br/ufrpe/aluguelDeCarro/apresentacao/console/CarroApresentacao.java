@@ -13,6 +13,8 @@ import br.ufrpe.aluguelDeCarro.servicos.InputUtil;
  */
 class CarroApresentacao {
 
+    private FachadaGerente fachada = new FachadaGerente();
+
     /**
      * solicita ao usuário os dados do carro
      *
@@ -78,7 +80,7 @@ class CarroApresentacao {
     }
 
     void visualizarCarros() {
-        FachadaGerente.getInstance().consultarCarros().forEach(System.out::println);
+        fachada.consultarCarros().forEach(System.out::println);
 
     }
 }

@@ -60,13 +60,14 @@ public class ClienteController implements Initializable {
     private JFXButton salvarButton;
 
     private ObservableList<Cliente> clientes;
+    private FachadaGerente fachada = new FachadaGerente();
 
     @FXML
     void deletar(ActionEvent event) {
         Cliente cliente = tableView.getSelectionModel().getSelectedItem();
         try {
             if (cliente != null) {
-                FachadaGerente.getInstance().desativarCliente(cliente.getId());
+                fachada.desativarCliente(cliente.getId());
                 clientes.remove(cliente);
                 limparSelecaoTabela();
                 ViewUtil.mostrarTooltip(deletarButton, "Cliente deletado com sucesso");
@@ -99,7 +100,7 @@ public class ClienteController implements Initializable {
 
     private void alterar(Cliente cliente) {
         try {
-            FachadaGerente.getInstance().alterarCliente(cliente);
+            fachada.alterarCliente(cliente);
             limparSelecaoTabela();
             clientes.set(clientes.indexOf(cliente), cliente);
             ViewUtil.mostrarTooltip(salvarButton, "Cliente alterado com sucesso");
@@ -122,7 +123,7 @@ public class ClienteController implements Initializable {
 
     private void cadastrar(Cliente cliente) {
         try {
-            FachadaGerente.getInstance().cadastrarCliente(cliente);
+            fachada.cadastrarCliente(cliente);
             clientes.add(cliente);
             limparSelecaoTabela();
             ViewUtil.mostrarTooltip(salvarButton, "Cliente salvo com sucesso");
@@ -161,7 +162,7 @@ public class ClienteController implements Initializable {
         cpfColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCpf()));
 
         clientes = FXCollections.observableArrayList();
-        clientes.addAll(FachadaGerente.getInstance().consultarClientes());
+        clientes.addAll(fachada.consultarClientes());
         tableView.setItems(clientes);
 
         tableView.getSelectionModel().selectedItemProperty().addListener(
