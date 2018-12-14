@@ -88,7 +88,7 @@ public class CarroController implements Initializable {
 
     private ObservableList<Carro> carros;
     private FachadaGerente fachada = new FachadaGerente();
-    
+
     @FXML
     void deletar(ActionEvent event) {
         Carro carro = tableView.getSelectionModel().getSelectedItem();
@@ -96,8 +96,7 @@ public class CarroController implements Initializable {
             try {
                 fachada.desativarCarro(carro.getId());
                 carros.remove(carro);
-                mostrarDetalhes(null);
-                tableView.getSelectionModel().clearSelection();
+                limparSelecao();
                 ViewUtil.mostrarTooltip(deletarButton, "Carro deletado com sucesso");
             } catch (IdNaoEncontradoException e) {
                 ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
@@ -110,33 +109,64 @@ public class CarroController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        mostrarDetalhes(null);
-        tableView.getSelectionModel().clearSelection();
+        limparSelecao();
     }
 
     @FXML
     void salvar(ActionEvent event) {
         if (validarInputs()) {
-            Carro carro = lerInputs();
-            try {
-                fachada.cadastrarCarro(carro);
-                carros.add(carro);
-                mostrarDetalhes(null);
-                tableView.getSelectionModel().clearSelection();
-                ViewUtil.mostrarTooltip(salvarButton, "Carro salvo com sucesso");
-            } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException | CarroJaCadastradoException e) {
-                placaTextField.requestFocus();
-                ViewUtil.mostrarTooltip(placaTextField, e.getMessage());
-            } catch (MarcaObrigatorioException | FormatoMarcaException e) {
-                marcaTextField.requestFocus();
-                ViewUtil.mostrarTooltip(marcaTextField, e.getMessage());
-            } catch (ModeloObrigatorioException | FormatoModeloException e) {
-                modeloTextField.requestFocus();
-                ViewUtil.mostrarTooltip(modeloTextField, e.getMessage());
-            } catch (CarroInvalidoException e) {
-                ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
-            }
+            Carro carro = tableView.getSelectionModel().getSelectedItem();
+            if (carro == null) cadastrar();
+            else alterar(carro);
         }
+    }
+
+    private void alterar(Carro carro) {
+        try {
+            lerInputs(carro);
+            fachada.alterarCarro(carro);
+            carros.set(carros.indexOf(carro), carro);
+            limparSelecao();
+            ViewUtil.mostrarTooltip(salvarButton, "Carro alterado com sucesso");
+        } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException e) {
+            placaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(placaTextField, e.getMessage());
+        } catch (MarcaObrigatorioException | FormatoMarcaException e) {
+            marcaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(marcaTextField, e.getMessage());
+        } catch (ModeloObrigatorioException | FormatoModeloException e) {
+            modeloTextField.requestFocus();
+            ViewUtil.mostrarTooltip(modeloTextField, e.getMessage());
+        } catch (CarroInvalidoException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    private void cadastrar() {
+        try {
+            Carro carro = new Carro();
+            lerInputs(carro);
+            fachada.cadastrarCarro(carro);
+            carros.add(carro);
+            limparSelecao();
+            ViewUtil.mostrarTooltip(salvarButton, "Carro salvo com sucesso");
+        } catch (PlacaObrigatorioException | FormatoPlacaInvalidoException | CarroJaCadastradoException e) {
+            placaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(placaTextField, e.getMessage());
+        } catch (MarcaObrigatorioException | FormatoMarcaException e) {
+            marcaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(marcaTextField, e.getMessage());
+        } catch (ModeloObrigatorioException | FormatoModeloException e) {
+            modeloTextField.requestFocus();
+            ViewUtil.mostrarTooltip(modeloTextField, e.getMessage());
+        } catch (CarroInvalidoException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    private void limparSelecao() {
+        mostrarDetalhes(null);
+        tableView.getSelectionModel().clearSelection();
     }
 
     private boolean validarInputs() {
@@ -194,8 +224,7 @@ public class CarroController implements Initializable {
         });
     }
 
-    private Carro lerInputs() {
-        Carro carro = new Carro();
+    private void lerInputs(Carro carro) {
         carro.setPlaca(placaTextField.getText());
         carro.setModelo(modeloTextField.getText());
         carro.setMarca(marcaTextField.getText());
@@ -209,7 +238,6 @@ public class CarroController implements Initializable {
         carro.setCategoria(categoriaComboBox.getValue());
         carro.setDirecao(direcaoComboBox.getValue());
         carro.setCambio(cambioComboBox.getValue());
-        return carro;
     }
 
     private void mostrarDetalhes(Carro carro) {

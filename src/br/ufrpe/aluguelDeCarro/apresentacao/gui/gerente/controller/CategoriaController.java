@@ -61,7 +61,7 @@ public class CategoriaController implements Initializable {
             try {
                 fachada.desativarCategoria(categoria.getId());
                 categorias.remove(categoria);
-                mostrarDetalhes(null);
+                limparSelecao();
                 ViewUtil.mostrarTooltip(deletarButton, "Categoria deletada com sucesso");
             } catch (CategoriaNaoEncontradaException e) {
                 ViewUtil.mostrarTooltip(deletarButton, "Categoria não encontrada");
@@ -71,29 +71,58 @@ public class CategoriaController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        tableView.getSelectionModel().clearSelection();
-        mostrarDetalhes(null);
+        limparSelecao();
     }
 
     @FXML
     void salvar(ActionEvent event) {
         if (validarCampo()) {
-            Categoria categoria = lerInputs();
-            try {
-                fachada.cadastrarCategoria(categoria);
-                categorias.add(categoria);
-                mostrarDetalhes(null);
-                ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
-            } catch (NomeCategoriaObrigatorioException | CategoriaJaCadastradaException e) {
-                nomeTextField.requestFocus();
-                ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
-            } catch (PrecoNegativoException e) {
-                precoTextField.requestFocus();
-                ViewUtil.mostrarTooltip(precoTextField, e.getMessage());
-            } catch (CategoriaInvalidaException e) {
-                ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
-            }
+            Categoria categoria = tableView.getSelectionModel().getSelectedItem();
+            if (categoria == null) cadastrar();
+            else alterar(categoria);
+
         }
+    }
+
+    private void alterar(Categoria categoria) {
+        lerInputs(categoria);
+        try {
+            fachada.alterarCategoria(categoria);
+            categorias.set(categorias.indexOf(categoria), categoria);
+            limparSelecao();
+            ViewUtil.mostrarTooltip(salvarButton, "Categoria alterada com sucesso");
+        } catch (NomeCategoriaObrigatorioException e) {
+            nomeTextField.requestFocus();
+            ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
+        } catch (PrecoNegativoException e) {
+            precoTextField.requestFocus();
+            ViewUtil.mostrarTooltip(precoTextField, e.getMessage());
+        }
+    }
+
+
+    private void cadastrar() {
+        Categoria categoria = new Categoria();
+        lerInputs(categoria);
+        try {
+            fachada.cadastrarCategoria(categoria);
+            categorias.add(categoria);
+            limparSelecao();
+            ViewUtil.mostrarTooltip(salvarButton, "Categoria salva com sucesso");
+        } catch (NomeCategoriaObrigatorioException | CategoriaJaCadastradaException e) {
+            nomeTextField.requestFocus();
+            ViewUtil.mostrarTooltip(nomeTextField, e.getMessage());
+        } catch (PrecoNegativoException e) {
+            precoTextField.requestFocus();
+            ViewUtil.mostrarTooltip(precoTextField, e.getMessage());
+        } catch (CategoriaInvalidaException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    private void limparSelecao() {
+        mostrarDetalhes(null);
+        tableView.getSelectionModel().clearSelection();
     }
 
     private boolean validarCampo() {
@@ -101,7 +130,7 @@ public class CategoriaController implements Initializable {
             precoTextField.requestFocus();
             ViewUtil.mostrarTooltip(precoTextField, "Valor inválido");
             return false;
-        } else{
+        } else {
             return true;
         }
     }
@@ -130,10 +159,8 @@ public class CategoriaController implements Initializable {
         }
     }
 
-    private Categoria lerInputs() {
-        Categoria categoria = new Categoria();
+    private void lerInputs(Categoria categoria) {
         categoria.setNome(nomeTextField.getText());
         categoria.setDiaria(new BigDecimal(precoTextField.getText()));
-        return categoria;
     }
 }

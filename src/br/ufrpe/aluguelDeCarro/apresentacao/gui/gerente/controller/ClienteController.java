@@ -88,18 +88,13 @@ public class ClienteController implements Initializable {
     @FXML
     void salvar(ActionEvent event) {
         Cliente cliente = tableView.getSelectionModel().getSelectedItem();
-        if (cliente == null) {
-            cliente = new Cliente();
-            lerInputs(cliente);
-            cadastrar(cliente);
-        } else {
-            lerInputs(cliente);
-            alterar(cliente);
-        }
+        if (cliente == null) cadastrar();
+        else alterar(cliente);
     }
 
     private void alterar(Cliente cliente) {
         try {
+            lerInputs(cliente);
             fachada.alterarCliente(cliente);
             limparSelecaoTabela();
             clientes.set(clientes.indexOf(cliente), cliente);
@@ -121,8 +116,10 @@ public class ClienteController implements Initializable {
         }
     }
 
-    private void cadastrar(Cliente cliente) {
+    private void cadastrar() {
         try {
+            Cliente cliente = new Cliente();
+            lerInputs(cliente);
             fachada.cadastrarCliente(cliente);
             clientes.add(cliente);
             limparSelecaoTabela();

@@ -96,15 +96,50 @@ public class AluguelController implements Initializable {
 
     @FXML
     void novo(ActionEvent event) {
-        tableView.getSelectionModel().clearSelection();
+        limparSelecao();
+    }
+
+    private void limparSelecao() {
         mostrarDetalhes(null);
+        tableView.getSelectionModel().clearSelection();
     }
 
     @FXML
     void salvar(ActionEvent event) {
-        Aluguel aluguel = lerInputs();
+        Aluguel aluguel = tableView.getSelectionModel().getSelectedItem();
+        if (aluguel == null) cadastrar();
+        else alterar(aluguel);
+    }
+
+    private void alterar(Aluguel aluguel) {
         try {
+            lerInputs(aluguel);
+            fachada.alterarAluguel(aluguel);
+            limparSelecao();
+            alugueis.add(aluguel);
+            ViewUtil.mostrarTooltip(salvarButton, "Aluguel alterado com sucesso");
+        } catch (CustoAdicionalNegativoException e) {
+            custoAdicionalTextField.requestFocus();
+            ViewUtil.mostrarTooltip(custoAdicionalTextField, e.getMessage());
+        } catch (DataEstimadaInconsistenteException | DataEstimadaPassado | DataDevolucacaoEstimadaObrigatoriaException e) {
+            devolucaoEstimadaTimePicker.requestFocus();
+            ViewUtil.mostrarTooltip(devolucaoEstimadaDatePicker, e.getMessage());
+        } catch (DataRetiradaInconsistenteException | DataRetiradaFuturoException | DataRetiradaPassadoException | DataRetiradaObrigatoriaException e) {
+            retiradaDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(retiradaDatePicker, e.getMessage());
+        } catch (AluguelInvalidoException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    private void cadastrar() {
+        try {
+            Aluguel aluguel = new Aluguel();
+            lerInputs(aluguel);
             fachada.cadastrarAluguel(aluguel);
+            limparSelecao();
+            alugueis.add(aluguel);
+            ViewUtil.mostrarTooltip(salvarButton, "Aluguel salvo com sucesso");
         } catch (CustoAdicionalNegativoException e) {
             custoAdicionalTextField.requestFocus();
             ViewUtil.mostrarTooltip(custoAdicionalTextField, e.getMessage());
@@ -229,7 +264,8 @@ public class AluguelController implements Initializable {
     }
 
     private void carregarCategorias() {
-        Aluguel aluguel = lerInputs();
+        Aluguel aluguel = new Aluguel();
+        lerInputs(aluguel);
         if (aluguel.getRetirada() != null && aluguel.getDevolucaoEstimada() != null) {
             categorias.clear();
             categorias.addAll(fachada.verificarCategoriasDisponiveis(aluguel));
@@ -250,8 +286,7 @@ public class AluguelController implements Initializable {
         carroColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCarro().getPlaca()));
     }
 
-    private Aluguel lerInputs() {
-        Aluguel aluguel = new Aluguel();
+    private void lerInputs(Aluguel aluguel) {
         if (!custoAdicionalTextField.getText().isEmpty()) {
             aluguel.setCustoAdicional(new BigDecimal(custoAdicionalTextField.getText()));
         } else {
@@ -275,7 +310,6 @@ public class AluguelController implements Initializable {
         aluguel.setCliente(clienteComboBox.getValue());
         aluguel.setCategoria(categoriaComboBox.getValue());
         aluguel.setCarro(carroComboBox.getValue());
-        return aluguel;
     }
 
     private void mostrarDetalhes(Aluguel aluguel) {

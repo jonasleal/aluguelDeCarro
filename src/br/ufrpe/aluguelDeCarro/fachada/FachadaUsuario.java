@@ -21,96 +21,98 @@ import java.util.List;
  */
 public class FachadaUsuario {
 
+    private final NegociosSingleton singleton = NegociosSingleton.getInstance();
+
     public Usuario getUsuarioLogado() {
-        return NegociosSingleton.getInstance().getUsuarioLogado();
+        return singleton.getUsuarioLogado();
     }
 
     public void setUsuarioLogado(Usuario usuario) {
-        NegociosSingleton.getInstance().setUsuarioLogado(usuario);
+        singleton.setUsuarioLogado(usuario);
     }
 
     public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
-        NegociosSingleton.getInstance().getClienteNegocio().cadastrar(cliente);
+        singleton.getClienteNegocio().cadastrar(cliente);
     }
 
     public void alterarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
-        NegociosSingleton.getInstance().getClienteNegocio().alterar(cliente);
+        singleton.getClienteNegocio().alterar(cliente);
     }
 
     public Cliente consultarCliente(String cpf) throws ClienteNaoEncontradoException {
-        return NegociosSingleton.getInstance().getClienteNegocio().consultar(cpf);
+        return singleton.getClienteNegocio().consultar(cpf);
     }
 
     public List<Cliente> consultarClientes() {
-        return NegociosSingleton.getInstance().getClienteNegocio().consultarTodos();
+        return singleton.getClienteNegocio().consultarTodos();
     }
 
     public void cadastrarCarro(Carro carro) throws CarroInvalidoException {
-        NegociosSingleton.getInstance().getCarroNegocio().cadastrar(carro);
+        singleton.getCarroNegocio().cadastrar(carro);
     }
 
     public void alterarCarro(Carro carro) throws CarroInvalidoException {
-        NegociosSingleton.getInstance().getCarroNegocio().alterar(carro);
+        singleton.getCarroNegocio().alterar(carro);
     }
 
     public Carro consultarCarro(String placa) throws CarroNaoEncontradoException {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultar(placa);
+        return singleton.getCarroNegocio().consultar(placa);
     }
 
     public List<Carro> consultarCarros() {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultarTodos();
+        return singleton.getCarroNegocio().consultarTodos();
     }
 
     public void cadastrarReserva(Reserva reserva) {
-        NegociosSingleton.getInstance().getReservaNegocio().cadastrar(reserva);
+        singleton.getReservaNegocio().cadastrar(reserva);
     }
 
     public void alterarReserva(Reserva reserva) {
-        NegociosSingleton.getInstance().getReservaNegocio().alterar(reserva);
+        singleton.getReservaNegocio().alterar(reserva);
     }
 
     public Reserva consultarReserva(int id) throws ReservaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getReservaNegocio().consultar(id);
+        return singleton.getReservaNegocio().consultar(id);
     }
 
     public List<Reserva> consultarReservas() {
-        return NegociosSingleton.getInstance().getReservaNegocio().consultarTodos();
+        return singleton.getReservaNegocio().consultarTodos();
     }
 
     public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, CategoriaInvalidaException, UsuarioInvalidoException {
-        NegociosSingleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
+        singleton.getAluguelNegocio().cadastrar(aluguel);
     }
 
     public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
-        NegociosSingleton.getInstance().getAluguelNegocio().alterar(aluguel);
+        singleton.getAluguelNegocio().alterar(aluguel);
     }
 
     public Aluguel consultarAluguel(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
-        return NegociosSingleton.getInstance().getAluguelNegocio().consultar(id);
+        return singleton.getAluguelNegocio().consultar(id);
     }
 
     public List<Aluguel> consultarAlugueis() {
-        return NegociosSingleton.getInstance().getAluguelNegocio().consultarTodos();
+        return singleton.getAluguelNegocio().consultarTodos();
     }
 
     public void cadastrarCategoria(Categoria categoria) throws CategoriaInvalidaException {
-        NegociosSingleton.getInstance().getCategoriaNegocio().cadastrar(categoria);
+        singleton.getCategoriaNegocio().cadastrar(categoria);
     }
 
     public void alterarCategoria(Categoria categoria) throws CategoriaInvalidaException {
-        NegociosSingleton.getInstance().getCategoriaNegocio().alterar(categoria);
+        singleton.getCategoriaNegocio().alterar(categoria);
     }
 
     public Categoria consultarCategoria(int id) throws CategoriaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultar(id);
+        return singleton.getCategoriaNegocio().consultar(id);
     }
 
     public Categoria consultarCategoria(String nome) throws CategoriaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultar(nome);
+        return singleton.getCategoriaNegocio().consultar(nome);
     }
 
     public List<Categoria> consultarCategorias() {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultarTodos();
+        return singleton.getCategoriaNegocio().consultarTodos();
     }
 
 }

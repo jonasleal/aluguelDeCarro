@@ -31,164 +31,166 @@ import java.util.stream.Collectors;
  */
 public class FachadaGerente {
 
+    private final NegociosSingleton singleton = NegociosSingleton.getInstance();
+
     public Usuario getUsuarioLogado() {
-        return NegociosSingleton.getInstance().getUsuarioLogado();
+        return singleton.getUsuarioLogado();
     }
 
     public void setUsuarioLogado(Usuario usuario) {
-        NegociosSingleton.getInstance().setUsuarioLogado(usuario);
+        singleton.setUsuarioLogado(usuario);
     }
 
     public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
-        NegociosSingleton.getInstance().getClienteNegocio().cadastrar(cliente);
+        singleton.getClienteNegocio().cadastrar(cliente);
     }
 
     public void alterarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
-        NegociosSingleton.getInstance().getClienteNegocio().alterar(cliente);
+        singleton.getClienteNegocio().alterar(cliente);
     }
 
     public void desativarCliente(int id) throws ClienteNaoEncontradoException {
-        NegociosSingleton.getInstance().getClienteNegocio().desativar(id);
+        singleton.getClienteNegocio().desativar(id);
     }
 
     public Cliente consultarCliente(String cpf) throws ClienteNaoEncontradoException {
-        return NegociosSingleton.getInstance().getClienteNegocio().consultar(cpf);
+        return singleton.getClienteNegocio().consultar(cpf);
     }
 
     public List<Cliente> consultarClientes() {
-        return NegociosSingleton.getInstance().getClienteNegocio().consultarTodos();
+        return singleton.getClienteNegocio().consultarTodos();
     }
 
     public void cadastrarCarro(Carro carro) throws CarroInvalidoException {
-        NegociosSingleton.getInstance().getCarroNegocio().cadastrar(carro);
+        singleton.getCarroNegocio().cadastrar(carro);
     }
 
     public void alterarCarro(Carro carro) throws CarroInvalidoException {
-        NegociosSingleton.getInstance().getCarroNegocio().alterar(carro);
+        singleton.getCarroNegocio().alterar(carro);
     }
 
     public void desativarCarro(int id) throws IdNaoEncontradoException {
-        NegociosSingleton.getInstance().getCarroNegocio().desativar(id);
+        singleton.getCarroNegocio().desativar(id);
     }
 
     public Carro consultarCarro(String placa) throws CarroNaoEncontradoException {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultar(placa);
+        return singleton.getCarroNegocio().consultar(placa);
     }
 
     public List<Carro> consultarCarros() {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultarTodos();
+        return singleton.getCarroNegocio().consultarTodos();
     }
 
     public List<Carro> consultarCarros(Categoria categoria) {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultar(categoria);
+        return singleton.getCarroNegocio().consultar(categoria);
     }
 
     public void cadastrarReserva(Reserva reserva) {
-        NegociosSingleton.getInstance().getReservaNegocio().cadastrar(reserva);
+        singleton.getReservaNegocio().cadastrar(reserva);
     }
 
     public void alterarReserva(Reserva reserva) {
-        NegociosSingleton.getInstance().getReservaNegocio().alterar(reserva);
+        singleton.getReservaNegocio().alterar(reserva);
     }
 
     public void desativarReserva(int id) throws ReservaNaoEncontradaException {
-        NegociosSingleton.getInstance().getReservaNegocio().desativar(id);
+        singleton.getReservaNegocio().desativar(id);
     }
 
     public Reserva consultarReserva(int id) throws ReservaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getReservaNegocio().consultar(id);
+        return singleton.getReservaNegocio().consultar(id);
     }
 
     public List<Reserva> consultarReservas() {
-        return NegociosSingleton.getInstance().getReservaNegocio().consultarTodos();
+        return singleton.getReservaNegocio().consultarTodos();
     }
 
     public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
-        NegociosSingleton.getInstance().getAluguelNegocio().cadastrar(aluguel);
+        singleton.getAluguelNegocio().cadastrar(aluguel);
     }
 
     public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
-        NegociosSingleton.getInstance().getAluguelNegocio().alterar(aluguel);
+        singleton.getAluguelNegocio().alterar(aluguel);
     }
 
     public Aluguel consultarAluguel(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
-        return NegociosSingleton.getInstance().getAluguelNegocio().consultar(id);
+        return singleton.getAluguelNegocio().consultar(id);
     }
 
     public List<Aluguel> consultarAlugueis() {
-        return NegociosSingleton.getInstance().getAluguelNegocio().consultarTodos();
+        return singleton.getAluguelNegocio().consultarTodos();
     }
 
     public void cadastrarCategoria(Categoria categoria) throws CategoriaInvalidaException {
-        NegociosSingleton.getInstance().getCategoriaNegocio().cadastrar(categoria);
+        singleton.getCategoriaNegocio().cadastrar(categoria);
     }
 
     public void alterarCategoria(Categoria categoria) throws PrecoNegativoException, NomeCategoriaObrigatorioException {
-        NegociosSingleton.getInstance().getCategoriaNegocio().alterar(categoria);
+        singleton.getCategoriaNegocio().alterar(categoria);
     }
 
     public void desativarCategoria(int id) throws CategoriaNaoEncontradaException {
-        NegociosSingleton.getInstance().getCategoriaNegocio().desativar(id);
+        singleton.getCategoriaNegocio().desativar(id);
     }
 
     public Categoria consultarCategoria(int id) throws CategoriaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultar(id);
+        return singleton.getCategoriaNegocio().consultar(id);
     }
 
     public Categoria consultarCategoria(String nome) throws CategoriaNaoEncontradaException {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultar(nome);
+        return singleton.getCategoriaNegocio().consultar(nome);
     }
 
     public List<Categoria> consultarCategorias() {
-        return NegociosSingleton.getInstance().getCategoriaNegocio().consultarTodos();
+        return singleton.getCategoriaNegocio().consultarTodos();
     }
 
     public void cadastrarManutencao(Manutencao manutencao) {
-        NegociosSingleton.getInstance().getManutencaoNegocio().cadastrar(manutencao);
+        singleton.getManutencaoNegocio().cadastrar(manutencao);
     }
 
     public void alterarManutencao(Manutencao manutencao) {
-        NegociosSingleton.getInstance().getManutencaoNegocio().alterar(manutencao);
+        singleton.getManutencaoNegocio().alterar(manutencao);
     }
 
     public void desativarManutencao(int id) throws ManutencaoNaoEncontradaException {
-        NegociosSingleton.getInstance().getManutencaoNegocio().desativar(id);
+        singleton.getManutencaoNegocio().desativar(id);
     }
 
     public Manutencao consultarManutencao(int id) throws ManutencaoNaoEncontradaException {
-        return NegociosSingleton.getInstance().getManutencaoNegocio().consultar(id);
+        return singleton.getManutencaoNegocio().consultar(id);
     }
 
     public List<Manutencao> consultarManutencoes() {
-        return NegociosSingleton.getInstance().getManutencaoNegocio().consultarTodos();
+        return singleton.getManutencaoNegocio().consultarTodos();
     }
 
     public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
-        NegociosSingleton.getInstance().getUsuarioNegocio().cadastrar(usuario);
+        singleton.getUsuarioNegocio().cadastrar(usuario);
     }
 
     public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
-        NegociosSingleton.getInstance().getUsuarioNegocio().alterar(usuario);
+        singleton.getUsuarioNegocio().alterar(usuario);
     }
 
     public void desativarUsuario(int id) throws UsuarioNaoEncontradoException {
-        NegociosSingleton.getInstance().getUsuarioNegocio().desativar(id);
+        singleton.getUsuarioNegocio().desativar(id);
     }
 
     public Usuario consultarUsuario(int id) throws UsuarioNaoEncontradoException {
-        return NegociosSingleton.getInstance().getUsuarioNegocio().consultar(id);
+        return singleton.getUsuarioNegocio().consultar(id);
     }
 
     public Usuario consultarUsuario(String cpf) throws UsuarioNaoEncontradoException {
-        return NegociosSingleton.getInstance().getUsuarioNegocio().consultar(cpf);
+        return singleton.getUsuarioNegocio().consultar(cpf);
     }
 
     public List<Usuario> consultarUsuarios() {
-        return NegociosSingleton.getInstance().getUsuarioNegocio().consultarTodos();
+        return singleton.getUsuarioNegocio().consultarTodos();
     }
 
     public List<Categoria> verificarCategoriasDisponiveis(Aluguel aluguel) {
-        List<Reserva> reservas = NegociosSingleton.getInstance().getReservaNegocio().consultarTodos();
+        List<Reserva> reservas = singleton.getReservaNegocio().consultarTodos();
         List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);
         Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);
         List<Reserva> reservasSemConflito = reservasSemConflitoComAluguel(reservas, aluguel);
@@ -198,7 +200,7 @@ public class FachadaGerente {
     }
 
     private List<Categoria> categoriasNaoContidasNasReservas(List<Reserva> reservas) {
-        List<Categoria> categorias = NegociosSingleton.getInstance().getCategoriaNegocio().consultarTodos();
+        List<Categoria> categorias = singleton.getCategoriaNegocio().consultarTodos();
         categorias.removeAll(reservas.stream().map(Reserva::getCategoria).collect(Collectors.toSet()));
         return categorias;
     }
@@ -258,6 +260,6 @@ public class FachadaGerente {
     }
 
     private long quantidadeDeCarrosPor(Categoria categoria) {
-        return NegociosSingleton.getInstance().getCarroNegocio().consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
+        return singleton.getCarroNegocio().consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
     }
 }

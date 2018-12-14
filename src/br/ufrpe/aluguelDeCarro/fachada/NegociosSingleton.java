@@ -27,42 +27,44 @@ class NegociosSingleton {
     }
 
     static NegociosSingleton getInstance() {
+        if (ourInstance == null)
+            ourInstance = new NegociosSingleton();
         return ourInstance;
     }
 
     CarroNegocio getCarroNegocio() {
-        return carroNegocio;
+        return this.carroNegocio;
     }
 
     ClienteNegocio getClienteNegocio() {
-        return clienteNegocio;
+        return this.clienteNegocio;
     }
 
     UsuarioNegocio getUsuarioNegocio() {
-        return usuarioNegocio;
+        return this.usuarioNegocio;
     }
 
     AluguelNegocio getAluguelNegocio() {
-        return aluguelNegocio;
+        return this.aluguelNegocio;
     }
 
     CategoriaNegocio getCategoriaNegocio() {
-        return categoriaNegocio;
+        return this.categoriaNegocio;
     }
 
     ManutencaoNegocio getManutencaoNegocio() {
-        return manutencaoNegocio;
+        return this.manutencaoNegocio;
     }
 
     ReservaNegocio getReservaNegocio() {
-        return reservaNegocio;
+        return this.reservaNegocio;
     }
 
     /**
      * @return o usuário que está utilizando o sistema no momemnto
      */
     Usuario getUsuarioLogado() {
-        return usuarioLogado;
+        return this.usuarioLogado;
     }
 
     /**
