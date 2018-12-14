@@ -2,13 +2,9 @@ package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICategoriaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaJaCadastradaException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.*;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,22 +23,16 @@ public class CategoriaNegocio {
         this.repositorio.cadastrar(categoria);
     }
 
-    private void validarParaCadastrar(Categoria categoria) throws NomeCategoriaObrigatorioException, CategoriaJaCadastradaException, PrecoNegativoException {
-        validacaoBasica(categoria);
+    private void validarParaCadastrar(Categoria categoria) throws NomeCategoriaObrigatorioException, CategoriaJaCadastradaException, PrecoNegativoException, CategoriaObrigatorioException {
+        if (categoria == null) throw new CategoriaObrigatorioException();
+        categoria.validar();
         String nome = categoria.getNome();
         if (this.repositorio.existe(nome)) throw new CategoriaJaCadastradaException(nome);
     }
 
-    public void alterar(Categoria categoria) throws NomeCategoriaObrigatorioException, PrecoNegativoException {
-        validacaoBasica(categoria);
+    public void alterar(Categoria categoria) throws CategoriaInvalidaException {
+        categoria.validar();
         this.repositorio.alterar(categoria);
-    }
-
-    private void validacaoBasica(Categoria categoria) throws NomeCategoriaObrigatorioException, PrecoNegativoException {
-        String nome = categoria.getNome();
-        if (nome == null || nome.isEmpty()) throw new NomeCategoriaObrigatorioException();
-        BigDecimal preco = categoria.getDiaria();
-        if (preco.compareTo(BigDecimal.ZERO) < 1) throw new PrecoNegativoException(preco);
     }
 
     public void desativar(int id) throws CategoriaNaoEncontradaException {

@@ -5,6 +5,9 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -86,6 +89,10 @@ public class Categoria implements Cloneable {
         return id == categoria.id;
     }
 
+    public void validar() throws PrecoNegativoException, NomeCategoriaObrigatorioException {
+        if (this.nome == null || this.nome.isEmpty()) throw new NomeCategoriaObrigatorioException();
+        if (this.diaria.compareTo(BigDecimal.ZERO) < 1) throw new PrecoNegativoException(this.diaria);
+    }
     @Override
     public int hashCode() {
         return Objects.hash(id);

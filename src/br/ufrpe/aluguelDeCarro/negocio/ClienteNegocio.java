@@ -6,7 +6,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteJaCadastradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.pessoa.DataNascimentoObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 
@@ -25,17 +24,15 @@ public class ClienteNegocio {
 
     public void cadastrar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente == null) throw new ClienteObrigatorioException();
+        cliente.validar();
         String cpf = cliente.getCpf();
         if (this.repositorio.existe(cpf)) throw new ClienteJaCadastradoException(cpf);
-        if (cliente.getNascimento() == null) throw new DataNascimentoObrigatorioException();
-        cliente.validar();
         cliente.setAtivo(true);
         repositorio.cadastrar(cliente);
     }
 
     public void alterar(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         if (cliente == null) throw new ClienteObrigatorioException();
-        if (cliente.getNascimento() == null) throw new DataNascimentoObrigatorioException();
         cliente.validar();
         repositorio.alterar(cliente);
     }

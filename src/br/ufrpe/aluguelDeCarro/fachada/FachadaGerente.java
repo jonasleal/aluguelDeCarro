@@ -9,8 +9,6 @@ import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.NomeCategoriaObrigatorioException;
-import br.ufrpe.aluguelDeCarro.excecoes.categoria.PrecoNegativoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
@@ -97,11 +95,11 @@ public class FachadaGerente {
         return singleton.getReservaNegocio().consultarTodos();
     }
 
-    public void cadastrarAluguel(Aluguel aluguel) throws CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
+    public void cadastrarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         singleton.getAluguelNegocio().cadastrar(aluguel);
     }
 
-    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException {
+    public void alterarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         singleton.getAluguelNegocio().alterar(aluguel);
     }
 
@@ -117,7 +115,7 @@ public class FachadaGerente {
         singleton.getCategoriaNegocio().cadastrar(categoria);
     }
 
-    public void alterarCategoria(Categoria categoria) throws PrecoNegativoException, NomeCategoriaObrigatorioException {
+    public void alterarCategoria(Categoria categoria) throws CategoriaInvalidaException {
         singleton.getCategoriaNegocio().alterar(categoria);
     }
 

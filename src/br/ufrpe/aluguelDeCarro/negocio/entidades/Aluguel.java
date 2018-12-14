@@ -1,11 +1,15 @@
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.aluguel.CustoAdicionalNegativoException;
-import br.ufrpe.aluguelDeCarro.excecoes.aluguel.ValorEstimadoNegativoException;
+import br.ufrpe.aluguelDeCarro.excecoes.aluguel.*;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioObrigatorioException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -165,8 +169,15 @@ public class Aluguel implements Cloneable {
      * categoria ou valor da diária não for passado ou for passado um valor
      * diferente dos valores validos.
      */
-    public void validar() throws PessoaInvalidaException, CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException {
+    public void validar() throws PessoaInvalidaException, CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
+        if (this.getCliente() == null) throw new ClienteObrigatorioException();
+        if (this.getCarro() == null) throw new CarroObrigatorioException();
+        if (this.getUsuario() == null) throw new UsuarioObrigatorioException();
+        if (this.getCategoria() == null) throw new CategoriaObrigatorioException();
+        if (this.getRetirada() == null) throw new DataRetiradaObrigatoriaException();
+        if (this.getDevolucaoEstimada() == null) throw new DataDevolucacaoEstimadaObrigatoriaException();
         this.cliente.validar();
+        this.categoria.validar();
         this.carro.validar();
         this.usuario.validar();
 

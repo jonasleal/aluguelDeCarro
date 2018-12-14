@@ -97,6 +97,8 @@ public class CategoriaController implements Initializable {
         } catch (PrecoNegativoException e) {
             precoTextField.requestFocus();
             ViewUtil.mostrarTooltip(precoTextField, e.getMessage());
+        } catch (CategoriaInvalidaException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         }
     }
 
