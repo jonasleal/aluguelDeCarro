@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.pessoa;
 
 /**
- *
  * @author JonasJr
  */
-public class PessoaInvalidaException extends Exception{
+public class PessoaInvalidaException extends Exception {
 
     public PessoaInvalidaException() {
     }
@@ -17,9 +16,9 @@ public class PessoaInvalidaException extends Exception{
     public PessoaInvalidaException(String message) {
         super(message);
     }
-    
+
     public PessoaInvalidaException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }

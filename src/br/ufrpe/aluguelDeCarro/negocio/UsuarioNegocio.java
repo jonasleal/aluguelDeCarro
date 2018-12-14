@@ -78,4 +78,8 @@ public class UsuarioNegocio {
     public Usuario getUsuarioLogado() {
         return this.usuarioLogado;
     }
+
+    public void logout() {
+        this.usuarioLogado = null;
+    }
 }

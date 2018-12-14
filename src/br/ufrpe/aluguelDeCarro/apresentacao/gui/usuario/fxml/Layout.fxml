@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171"
-           fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.usuario.controller.LayoutController">
-    <children>
-        <AnchorPane prefHeight="400.0" prefWidth="600.0">
-            <children>
-                <AnchorPane fx:id="content" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0"/>
-                <ToolBar fx:id="toolBar" prefHeight="48.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0"
-                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-            </children>
-        </AnchorPane>
-    </children>
-</StackPane>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+  <AnchorPane fx:id="rootLayoutUsuario" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.usuario.controller.LayoutController">
+      <children>
+          <AnchorPane fx:id="contentLayoutUsuario" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0" />
+          <ToolBar fx:id="toolBarLayoutUsuario" prefHeight="48.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <JFXButton onAction="#irParaCliente" style="-fx-background-color: #e0e0e0;" text="Cliente" />
+            <JFXButton onAction="#irParaCarro" style="-fx-background-color: #e0e0e0;" text="Carro" />
+            <JFXButton onAction="#irParaAluguel" style="-fx-background-color: #e0e0e0;" text="Aluguel" />
+            <JFXButton onAction="#irParaReserva" style="-fx-background-color: #e0e0e0;" text="Reserva" />
+            <JFXButton onAction="#irParaLogin" style="-fx-background-color: #e0e0e0;" text="Logout" />
+         </items>
+      </ToolBar>
+      </children>
+  </AnchorPane>

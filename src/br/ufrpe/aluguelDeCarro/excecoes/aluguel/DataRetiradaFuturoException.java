@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
  * @author JonasJr
  */
 public class DataRetiradaFuturoException extends AluguelInvalidoException {
@@ -27,13 +26,13 @@ public class DataRetiradaFuturoException extends AluguelInvalidoException {
 
     @Override
     public String getMessage() {
-        if(data != null){
+        if (data != null) {
             return super.getMessage() + " " + data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         }
         return getMessage();
     }
-    
-    
+
+
     public DataRetiradaFuturoException(String message, Throwable cause) {
         super(message, cause);
     }

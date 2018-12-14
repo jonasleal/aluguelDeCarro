@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.categoria;
 
 /**
- *
  * @author JonasJr
  */
-public class CategoriaInvalidaException extends Exception{
+public class CategoriaInvalidaException extends Exception {
 
     public CategoriaInvalidaException() {
         super("Categoria invalida");
@@ -22,5 +21,5 @@ public class CategoriaInvalidaException extends Exception{
     public CategoriaInvalidaException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }

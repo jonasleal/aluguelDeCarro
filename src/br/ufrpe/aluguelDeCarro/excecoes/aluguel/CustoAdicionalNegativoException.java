@@ -8,11 +8,10 @@ package br.ufrpe.aluguelDeCarro.excecoes.aluguel;
 import java.math.BigDecimal;
 
 /**
- *
  * @author JonasJr
  */
-public class CustoAdicionalNegativoException extends AluguelInvalidoException{
-     private BigDecimal valor;
+public class CustoAdicionalNegativoException extends AluguelInvalidoException {
+    private BigDecimal valor;
 
     public CustoAdicionalNegativoException() {
         super("Custo adicional deve ser positivo");

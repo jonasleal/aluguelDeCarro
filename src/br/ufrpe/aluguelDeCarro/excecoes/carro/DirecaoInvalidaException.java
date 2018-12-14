@@ -6,16 +6,13 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
-public class DirecaoInvalidaException extends CarroInvalidoException{
+public class DirecaoInvalidaException extends CarroInvalidoException {
 
     public DirecaoInvalidaException() {
         super("Direção invalida");
     }
-    
-    
-    
-    
+
+
 }

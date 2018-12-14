@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class ReservaNegocio {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Reserva reserva){
+    public void cadastrar(Reserva reserva) {
         reserva.setAtivo(true);
         this.repositorio.cadastrar(reserva);
     }
 
-    public void alterar(Reserva reserva){
+    public void alterar(Reserva reserva) {
         this.repositorio.alterar(reserva);
     }
 
@@ -33,7 +33,7 @@ public class ReservaNegocio {
         return this.repositorio.consultar(id);
     }
 
-    public List<Reserva> consultarTodos(){
+    public List<Reserva> consultarTodos() {
         return this.repositorio.consultarTodos();
     }
 }

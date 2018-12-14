@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
 public class FormatoPlacaInvalidoException extends CarroInvalidoException {
@@ -17,7 +16,7 @@ public class FormatoPlacaInvalidoException extends CarroInvalidoException {
         super("A placa deve conter 3 letras e 4 digitos");
     }
 
-    
+
     public FormatoPlacaInvalidoException(String placa) {
         this();
         this.placa = placa;
@@ -25,14 +24,11 @@ public class FormatoPlacaInvalidoException extends CarroInvalidoException {
 
     @Override
     public String getMessage() {
-        if(placa.isEmpty()){
+        if (placa.isEmpty()) {
             return super.getMessage();
         }
         return super.getMessage() + ": " + placa;
     }
-    
-    
-    
-    
+
 
 }

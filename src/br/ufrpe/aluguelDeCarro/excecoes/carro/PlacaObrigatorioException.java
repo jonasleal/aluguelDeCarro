@@ -6,16 +6,13 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
-public class PlacaObrigatorioException extends CarroInvalidoException{
+public class PlacaObrigatorioException extends CarroInvalidoException {
 
     public PlacaObrigatorioException() {
         super("Placa é obrigatoria");
     }
-    
-    
-    
-    
+
+
 }

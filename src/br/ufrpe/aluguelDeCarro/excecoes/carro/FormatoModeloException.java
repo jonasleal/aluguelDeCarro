@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
 public class FormatoModeloException extends CarroInvalidoException {

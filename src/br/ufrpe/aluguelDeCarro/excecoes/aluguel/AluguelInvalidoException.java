@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.aluguel;
 
 /**
- *
  * @author JonasJr
  */
-public class AluguelInvalidoException extends Exception{
+public class AluguelInvalidoException extends Exception {
 
     public AluguelInvalidoException() {
         super("aluguel invalido");
@@ -22,7 +21,6 @@ public class AluguelInvalidoException extends Exception{
     public AluguelInvalidoException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    
-    
+
+
 }

@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
 public class CambioInvalidoException extends CarroInvalidoException {
@@ -14,5 +13,5 @@ public class CambioInvalidoException extends CarroInvalidoException {
     public CambioInvalidoException() {
         super("Cambio invalido");
     }
-    
+
 }

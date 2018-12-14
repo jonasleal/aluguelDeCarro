@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
  * @author JonasJr
  */
 public class DataEstimadaPassado extends AluguelInvalidoException {

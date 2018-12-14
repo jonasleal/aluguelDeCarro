@@ -6,14 +6,13 @@
 package br.ufrpe.aluguelDeCarro.excecoes.cliente;
 
 /**
- *
  * @author JonasJr
  */
-public class HabilitacaoObrigatoriException extends ClienteInvalidoException{
+public class HabilitacaoObrigatoriException extends ClienteInvalidoException {
 
     public HabilitacaoObrigatoriException() {
         super("Habilitação é obrigatoria");
     }
-    
-    
+
+
 }

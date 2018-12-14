@@ -6,13 +6,12 @@
 package br.ufrpe.aluguelDeCarro.excecoes.pessoa;
 
 /**
- *
  * @author JonasJr
  */
-public class CpfNaoEncontradoException extends PessoaInvalidaException{
+public class CpfNaoEncontradoException extends PessoaInvalidaException {
 
     public CpfNaoEncontradoException() {
         super("CPF não encontrado");
     }
-    
+
 }

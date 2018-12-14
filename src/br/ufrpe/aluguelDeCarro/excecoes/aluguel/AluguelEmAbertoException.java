@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.aluguel;
 
 /**
- *
  * @author JonasJr
  */
 public class AluguelEmAbertoException extends AluguelInvalidoException {
@@ -26,8 +25,8 @@ public class AluguelEmAbertoException extends AluguelInvalidoException {
     public String getMessage() {
         return super.getMessage() + ": " + cpf;
     }
-    
-    
+
+
     public AluguelEmAbertoException(String message, Throwable cause) {
         super(message, cause);
     }

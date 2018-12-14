@@ -203,7 +203,7 @@ public class AluguelNegocio {
      * iguais registra a devolução, caso contrário levanta exceção com a causa.
      *
      * @param aluguel - aluguel no estado finalizado.
-     * //     * @throws AluguelException - Contem a mensagem e causa do erro.
+     *                //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
     public void devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException {
         validarDevolucao(aluguel);

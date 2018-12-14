@@ -262,4 +262,8 @@ public class FachadaGerente {
     private long quantidadeDeCarrosPor(Categoria categoria) {
         return singleton.getCarroNegocio().consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
     }
+
+    public void logout() {
+        this.singleton.getUsuarioNegocio().logout();
+    }
 }

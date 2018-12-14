@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
-public class MarcaObrigatorioException extends CarroInvalidoException{
+public class MarcaObrigatorioException extends CarroInvalidoException {
 
     public MarcaObrigatorioException() {
         super("Marca é obrigatorio");
@@ -18,5 +17,5 @@ public class MarcaObrigatorioException extends CarroInvalidoException{
     public MarcaObrigatorioException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }

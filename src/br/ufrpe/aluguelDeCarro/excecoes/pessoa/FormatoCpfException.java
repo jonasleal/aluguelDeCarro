@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.pessoa;
 
 /**
- *
  * @author JonasJr
  */
-public class FormatoCpfException extends PessoaInvalidaException{
+public class FormatoCpfException extends PessoaInvalidaException {
 
     public FormatoCpfException() {
         super("CPF deve conter 11 caracteres numéricos");

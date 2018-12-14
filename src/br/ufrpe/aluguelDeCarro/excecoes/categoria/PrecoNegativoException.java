@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package br.ufrpe.aluguelDeCarro.excecoes.categoria;
+
 import java.math.BigDecimal;
 
 /**
- *
  * @author JonasJr
  */
 public class PrecoNegativoException extends CategoriaInvalidaException {
@@ -25,9 +25,8 @@ public class PrecoNegativoException extends CategoriaInvalidaException {
 
     @Override
     public String getMessage() {
-        return super.getMessage() + ": R$" + preco;}
-    
-    
-    
-    
+        return super.getMessage() + ": R$" + preco;
+    }
+
+
 }

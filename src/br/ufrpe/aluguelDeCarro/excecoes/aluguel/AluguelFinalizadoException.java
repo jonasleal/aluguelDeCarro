@@ -6,13 +6,12 @@
 package br.ufrpe.aluguelDeCarro.excecoes.aluguel;
 
 /**
- *
  * @author JonasJr
  */
 public class AluguelFinalizadoException extends AluguelInvalidoException {
-    
+
     public AluguelFinalizadoException() {
         super("Este aluguel esta finalizado");
     }
-    
+
 }

@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.pessoa;
 
 /**
- *
  * @author JonasJr
  */
 public class MenorDeIdadeException extends PessoaInvalidaException {

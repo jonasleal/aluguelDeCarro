@@ -8,7 +8,6 @@ package br.ufrpe.aluguelDeCarro.excecoes.aluguel;
 import java.math.BigDecimal;
 
 /**
- *
  * @author JonasJr
  */
 public class ValorEstimadoNegativoException extends AluguelInvalidoException {

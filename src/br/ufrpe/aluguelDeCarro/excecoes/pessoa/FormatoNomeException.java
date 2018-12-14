@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.pessoa;
 
 /**
- *
  * @author JonasJr
  */
 public class FormatoNomeException extends PessoaInvalidaException {
@@ -24,7 +23,7 @@ public class FormatoNomeException extends PessoaInvalidaException {
 
     @Override
     public String getMessage() {
-        if(nome != null && !nome.isEmpty()){
+        if (nome != null && !nome.isEmpty()) {
             return super.getMessage() + ": " + nome;
         }
         return super.getMessage();

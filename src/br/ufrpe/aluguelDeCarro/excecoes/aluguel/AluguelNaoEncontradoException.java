@@ -10,7 +10,6 @@ import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.servicos.CpfUtil;
 
 /**
- *
  * @author JonasJr
  */
 public class AluguelNaoEncontradoException extends AluguelInvalidoException {

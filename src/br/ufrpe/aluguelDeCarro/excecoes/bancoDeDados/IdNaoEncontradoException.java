@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados;
 
 /**
- *
  * @author JonasJr
  */
 public class IdNaoEncontradoException extends Exception {

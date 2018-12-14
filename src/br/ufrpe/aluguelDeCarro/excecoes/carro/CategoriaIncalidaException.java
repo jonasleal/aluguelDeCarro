@@ -6,13 +6,12 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
 public class CategoriaIncalidaException extends CarroInvalidoException {
-    
+
     public CategoriaIncalidaException() {
         super("Categoria Invalida");
     }
-    
+
 }

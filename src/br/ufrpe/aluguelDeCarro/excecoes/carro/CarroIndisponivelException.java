@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.excecoes.carro;
 
 /**
- *
  * @author JonasJr
  */
-public class CarroIndisponivelException extends CarroInvalidoException{
+public class CarroIndisponivelException extends CarroInvalidoException {
     private String placa;
 
     public CarroIndisponivelException() {
@@ -24,6 +23,6 @@ public class CarroIndisponivelException extends CarroInvalidoException{
     public CarroIndisponivelException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    
+
+
 }

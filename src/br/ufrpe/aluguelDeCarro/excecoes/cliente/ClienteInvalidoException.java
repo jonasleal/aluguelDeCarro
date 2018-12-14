@@ -6,7 +6,6 @@
 package br.ufrpe.aluguelDeCarro.excecoes.cliente;
 
 /**
- *
  * @author JonasJr
  */
 public class ClienteInvalidoException extends Exception {

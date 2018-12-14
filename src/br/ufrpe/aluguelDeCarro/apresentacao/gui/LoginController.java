@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +25,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
-    private StackPane root;
+    private AnchorPane rootLogin;
 
     @FXML
     private JFXTextField cpfTextField;
@@ -36,6 +35,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private JFXButton loginButton;
+
     private FachadaGerente fachada = new FachadaGerente();
 
     @FXML
@@ -58,24 +58,35 @@ public class LoginController implements Initializable {
 
     private void direcionarTelaAdequada() {
         if (fachada.getUsuarioLogado().isGerente()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("gerente/fxml/Layout.fxml"));
             try {
+                AnchorPane contentAnchorPaneLayoutGeral = (AnchorPane) rootLogin.getParent();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("gerente/fxml/Layout.fxml"));
                 AnchorPane layout = loader.load();
-                root.getChildren().clear();
-                root.getChildren().add(layout);
+                contentAnchorPaneLayoutGeral.getChildren().clear();
+                setConstrains(layout);
+                contentAnchorPaneLayoutGeral.getChildren().add(layout);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("usuario/fxml/Layout.fxml"));
             try {
+                AnchorPane contentAnchorPaneLayoutGeral = (AnchorPane) rootLogin.getParent();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("usuario/fxml/Layout.fxml"));
                 AnchorPane layout = loader.load();
-                root.getChildren().clear();
-                root.getChildren().add(layout);
+                contentAnchorPaneLayoutGeral.getChildren().clear();
+                setConstrains(layout);
+                contentAnchorPaneLayoutGeral.getChildren().add(layout);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void setConstrains(AnchorPane conteudo) {
+        AnchorPane.setBottomAnchor(conteudo, 0.0);
+        AnchorPane.setRightAnchor(conteudo, 0.0);
+        AnchorPane.setLeftAnchor(conteudo, 0.0);
+        AnchorPane.setTopAnchor(conteudo, 0.0);
     }
 
     @Override
