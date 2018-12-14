@@ -23,14 +23,6 @@ public class FachadaUsuario {
 
     private final NegociosSingleton singleton = NegociosSingleton.getInstance();
 
-    public Usuario getUsuarioLogado() {
-        return singleton.getUsuarioLogado();
-    }
-
-    public void setUsuarioLogado(Usuario usuario) {
-        singleton.setUsuarioLogado(usuario);
-    }
-
     public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         singleton.getClienteNegocio().cadastrar(cliente);
     }

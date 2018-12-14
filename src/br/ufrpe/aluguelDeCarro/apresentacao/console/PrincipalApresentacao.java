@@ -50,7 +50,11 @@ public class PrincipalApresentacao {
         Usuario usuario = null;
         while (usuario == null)
             usuario = this.loginApresentacao.lerDadosPeloTeclado();
-        fachada.setUsuarioLogado(usuario);
+        try {
+            fachada.login(usuario.getCpf(), usuario.getSenha());
+        } catch (UsuarioInvalidoException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

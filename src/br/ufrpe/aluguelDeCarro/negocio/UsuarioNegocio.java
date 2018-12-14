@@ -6,10 +6,9 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
-import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioObrigatorioException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.*;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
 import java.util.List;
@@ -21,18 +20,24 @@ public class UsuarioNegocio {
 
     private final IUsuarioRepositorio repositorio;
 
+    private Usuario usuarioLogado;
+
     public UsuarioNegocio(IUsuarioRepositorio repositorio) {
         this.repositorio = repositorio;
     }
 
-    public void cadastrar(Usuario usuario) throws ClienteInvalidoException, PessoaInvalidaException, UsuarioObrigatorioException {
+    public void cadastrar(Usuario usuario) throws PessoaInvalidaException, UsuarioInvalidoException, ClienteInvalidoException {
         if (usuario == null) throw new UsuarioObrigatorioException();
+        String cpf = usuario.getCpf();
+        if (this.repositorio.existe(cpf)) throw new UsuarioJaCadastradoException(cpf);
+        String senha = usuario.getSenha();
+        if (senha == null || senha.isEmpty()) throw new SenhaObrigatoriaException();
         usuario.validar();
         usuario.setAtivo(true);
         repositorio.cadastrar(usuario);
     }
 
-    public void alterar(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioObrigatorioException {
+    public void alterar(Usuario usuario) throws PessoaInvalidaException, UsuarioObrigatorioException, ClienteInvalidoException {
         if (usuario == null) throw new UsuarioObrigatorioException();
         usuario.validar();
         this.repositorio.alterar(usuario);
@@ -52,5 +57,25 @@ public class UsuarioNegocio {
 
     public List<Usuario> consultarTodos() {
         return this.repositorio.consultarTodos();
+    }
+
+    public void login(String cpf, String senha) throws UsuarioInvalidoException {
+        if (this.repositorio.existe(cpf)) {
+            Usuario usuario = this.consultar(cpf);
+            if (usuario.validarSenha(senha)) {
+                this.usuarioLogado = usuario;
+            } else {
+                throw new SenhaIncorretaException();
+            }
+        } else {
+            throw new UsuarioNaoEncontradoException();
+        }
+    }
+
+    /**
+     * @return o usuário que está utilizando o sistema no momemnto
+     */
+    public Usuario getUsuarioLogado() {
+        return this.usuarioLogado;
     }
 }

@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.console;
 
-import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 import br.ufrpe.aluguelDeCarro.servicos.Criptografia;

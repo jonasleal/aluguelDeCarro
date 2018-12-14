@@ -1,4 +1,4 @@
-package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
+package br.ufrpe.aluguelDeCarro.apresentacao.gui.usuario.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * @author Fernando
  */
-public class ReservaReservaView implements Initializable {
+public class ReservaController implements Initializable {
     @FXML
     private TableView<?> tableView;
 
@@ -35,18 +35,10 @@ public class ReservaReservaView implements Initializable {
     private ChoiceBox<?> carroChoiceBox;
 
     @FXML
-    private JFXButton deletarButton;
-
-    @FXML
     private JFXButton novoButton;
 
     @FXML
     private JFXButton salvarButton;
-
-    @FXML
-    void deletar(ActionEvent event) {
-
-    }
 
     @FXML
     void novo(ActionEvent event) {

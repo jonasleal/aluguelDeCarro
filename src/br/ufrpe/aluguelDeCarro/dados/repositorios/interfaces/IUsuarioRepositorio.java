@@ -5,7 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
-import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
 import java.util.ArrayList;
@@ -24,6 +24,8 @@ public interface IUsuarioRepositorio {
     void alterar(Usuario usuarioEditado);
 
     void desativar(int id) throws UsuarioNaoEncontradoException;
+
+    boolean existe(String cpf);
 
     ArrayList<Usuario> consultarTodos();
 

@@ -37,7 +37,7 @@ public class Cliente extends Pessoa implements Cloneable {
     }
 
     @Override
-    public void validar() throws ClienteInvalidoException, PessoaInvalidaException {
+    public void validar() throws PessoaInvalidaException, ClienteInvalidoException {
         if (this.habilitacao == null) {
             throw new HabilitacaoObrigatoriException();
         }

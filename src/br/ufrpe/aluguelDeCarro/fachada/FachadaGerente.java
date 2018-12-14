@@ -3,7 +3,6 @@ package br.ufrpe.aluguelDeCarro.fachada;
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ManutencaoNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
-import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.AluguelNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
@@ -16,6 +15,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
 import java.time.LocalDateTime;
@@ -32,14 +32,6 @@ import java.util.stream.Collectors;
 public class FachadaGerente {
 
     private final NegociosSingleton singleton = NegociosSingleton.getInstance();
-
-    public Usuario getUsuarioLogado() {
-        return singleton.getUsuarioLogado();
-    }
-
-    public void setUsuarioLogado(Usuario usuario) {
-        singleton.setUsuarioLogado(usuario);
-    }
 
     public void cadastrarCliente(Cliente cliente) throws PessoaInvalidaException, ClienteInvalidoException {
         singleton.getClienteNegocio().cadastrar(cliente);
@@ -165,11 +157,11 @@ public class FachadaGerente {
         return singleton.getManutencaoNegocio().consultarTodos();
     }
 
-    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
+    public void cadastrarUsuario(Usuario usuario) throws PessoaInvalidaException, UsuarioInvalidoException, ClienteInvalidoException {
         singleton.getUsuarioNegocio().cadastrar(usuario);
     }
 
-    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, ClienteInvalidoException, UsuarioInvalidoException {
+    public void alterarUsuario(Usuario usuario) throws PessoaInvalidaException, UsuarioInvalidoException, ClienteInvalidoException {
         singleton.getUsuarioNegocio().alterar(usuario);
     }
 
@@ -183,6 +175,14 @@ public class FachadaGerente {
 
     public Usuario consultarUsuario(String cpf) throws UsuarioNaoEncontradoException {
         return singleton.getUsuarioNegocio().consultar(cpf);
+    }
+
+    public void login(String cpf, String senha) throws UsuarioInvalidoException {
+        singleton.getUsuarioNegocio().login(cpf, senha);
+    }
+
+    public Usuario getUsuarioLogado() {
+        return singleton.getUsuarioNegocio().getUsuarioLogado();
     }
 
     public List<Usuario> consultarUsuarios() {

@@ -1,7 +1,7 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IUsuarioRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.UsuarioNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
 
 import java.util.ArrayList;
@@ -97,6 +97,16 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
     public void desativar(int id) throws UsuarioNaoEncontradoException {
         Usuario usuario = this.consultarReferencia(id);
         usuario.setAtivo(false);
+    }
+
+    @Override
+    public boolean existe(String cpf) {
+        try {
+            this.consultar(cpf);
+            return true;
+        } catch (UsuarioNaoEncontradoException e) {
+            return false;
+        }
     }
 
     /**

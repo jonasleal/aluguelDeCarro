@@ -1,8 +1,13 @@
 package br.ufrpe.aluguelDeCarro.fachada;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.negocio.*;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
+
+import java.time.LocalDate;
 
 class NegociosSingleton {
 
@@ -14,7 +19,6 @@ class NegociosSingleton {
     private final CategoriaNegocio categoriaNegocio;
     private final ManutencaoNegocio manutencaoNegocio;
     private final ReservaNegocio reservaNegocio;
-    private Usuario usuarioLogado;
 
     private NegociosSingleton() {
         this.carroNegocio = new CarroNegocio(new CarroRepositorio());
@@ -24,6 +28,12 @@ class NegociosSingleton {
         this.categoriaNegocio = new CategoriaNegocio(new CategoriaRepositorio());
         this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
         this.reservaNegocio = new ReservaNegocio(new ReservaRepositorio());
+        try {
+            this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
+            System.out.println("Login: 16125653013");
+        } catch (PessoaInvalidaException | UsuarioInvalidoException | ClienteInvalidoException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     static NegociosSingleton getInstance() {
@@ -59,19 +69,4 @@ class NegociosSingleton {
     ReservaNegocio getReservaNegocio() {
         return this.reservaNegocio;
     }
-
-    /**
-     * @return o usuário que está utilizando o sistema no momemnto
-     */
-    Usuario getUsuarioLogado() {
-        return this.usuarioLogado;
-    }
-
-    /**
-     * @param usuarioLogado o usuário que está utilizando o sistema no momento
-     */
-    void setUsuarioLogado(Usuario usuarioLogado) {
-        this.usuarioLogado = usuarioLogado;
-    }
-
 }

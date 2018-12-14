@@ -1,4 +1,4 @@
-package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
+package br.ufrpe.aluguelDeCarro.apresentacao.gui.usuario.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +20,15 @@ public class MenuController implements Initializable {
 
     @FXML
     void irParaAluguel(ActionEvent event) {
-        carregarConteudo("../fxml/Aluguel.fxml");
+        try {
+            loader = new FXMLLoader(getClass().getResource("../fxml/Aluguel.fxml"));
+            content.getChildren().clear();
+            AnchorPane conteudo = loader.load();
+            setConstrains(conteudo);
+            content.getChildren().add(conteudo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setConstrains(AnchorPane conteudo) {
@@ -32,37 +40,34 @@ public class MenuController implements Initializable {
 
     @FXML
     void irParaCarro(ActionEvent event) {
-        carregarConteudo("../fxml/Carro.fxml");
-    }
-
-    @FXML
-    void irParaCategoria(ActionEvent event) {
-        carregarConteudo("../fxml/Categoria.fxml");
+        try {
+            loader = new FXMLLoader(getClass().getResource("../fxml/Carro.fxml"));
+            content.getChildren().clear();
+            AnchorPane conteudo = loader.load();
+            setConstrains(conteudo);
+            content.getChildren().add(conteudo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void irParaCliente(ActionEvent event) {
-        carregarConteudo("../fxml/Cliente.fxml");
-    }
-
-    @FXML
-    void irParaManutencao(ActionEvent event) {
-        carregarConteudo("../fxml/Manutencao.fxml");
+        try {
+            loader = new FXMLLoader(getClass().getResource("../fxml/Cliente.fxml"));
+            content.getChildren().clear();
+            AnchorPane conteudo = loader.load();
+            setConstrains(conteudo);
+            content.getChildren().add(conteudo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void irParaReserva(ActionEvent event) {
-        carregarConteudo("../fxml/Reserva.fxml");
-    }
-
-    @FXML
-    void irParaUsuario(ActionEvent event) {
-        carregarConteudo("../fxml/Usuario.fxml");
-    }
-
-    private void carregarConteudo(String s) {
         try {
-            loader = new FXMLLoader(getClass().getResource(s));
+            loader = new FXMLLoader(getClass().getResource("../fxml/Reserva.fxml"));
             content.getChildren().clear();
             AnchorPane conteudo = loader.load();
             setConstrains(conteudo);

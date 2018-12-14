@@ -3,6 +3,7 @@ package br.ufrpe.aluguelDeCarro;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
+import br.ufrpe.aluguelDeCarro.servicos.Criptografia;
 
 import java.util.List;
 
