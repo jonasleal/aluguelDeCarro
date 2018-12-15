@@ -1,6 +1,6 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces;
 
-import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.ReservaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -86,6 +88,13 @@ public class Reserva implements Cloneable {
 
     public void setDevolucaoPrevista(LocalDateTime devolucaoPrevista) {
         this.devolucaoPrevista = devolucaoPrevista;
+    }
+
+    public void validar() throws ReservaInvalidaException {
+        if (this.retiradaPrevista == null) throw new DataRetiradaObrigatoriaException();
+        if (this.devolucaoPrevista == null) throw new DataDevolucaoObrigatoriaException();
+        if (this.cliente == null) throw new ClienteObrigatorioException();
+        if (this.categoria == null) throw new CategoriaObrigatoriaException();
     }
 
     @Override

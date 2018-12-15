@@ -4,7 +4,10 @@ import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICategoriaRepositorio;
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.DataDevolucaoPassadoException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.DataRetiradaPassadoException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.ReservaInvalidaException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.ReservaObrigatoriaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
@@ -34,20 +37,29 @@ public class ReservaNegocio {
         this.categoriaRepositorio = categoriaRepositorio;
     }
 
-    public void cadastrar(Reserva reserva) {
+    public void cadastrar(Reserva reserva) throws ReservaInvalidaException {
+        if (reserva == null) throw new ReservaObrigatoriaException();
+        reserva.validar();
+        if (reserva.getRetiradaPrevista().isBefore(LocalDateTime.now()))
+            throw new DataRetiradaPassadoException(reserva.getRetiradaPrevista());
+        if (reserva.getDevolucaoPrevista().isBefore(LocalDateTime.now()))
+            throw new DataDevolucaoPassadoException(reserva.getDevolucaoPrevista());
         reserva.setAtivo(true);
         this.reservaRepositorio.cadastrar(reserva);
     }
 
-    public void alterar(Reserva reserva) {
+    public void alterar(Reserva reserva) throws ReservaInvalidaException {
+        if (reserva == null) throw new ReservaObrigatoriaException();
+        if (reserva.getDevolucaoPrevista().isBefore(LocalDateTime.now()))
+            throw new DataDevolucaoPassadoException(reserva.getDevolucaoPrevista());
         this.reservaRepositorio.alterar(reserva);
     }
 
-    public void desativar(int id) throws ReservaNaoEncontradaException {
+    public void desativar(int id) throws ReservaInvalidaException {
         this.reservaRepositorio.desativar(id);
     }
 
-    public Reserva consultar(int id) throws ReservaNaoEncontradaException {
+    public Reserva consultar(int id) throws ReservaInvalidaException {
         return this.reservaRepositorio.consultar(id);
     }
 
@@ -66,7 +78,7 @@ public class ReservaNegocio {
                 .collect(Collectors.toSet());
         List<Categoria> categoriasNaoContidasNasReservas = categoriasNaoContidasNasReservas(reservas);
         categoriasNaoContidasNasReservas = categoriasNaoContidasNasReservas.stream()
-                .filter(categoria -> categoriasPorAlugueis.contains(categoria))
+                .filter(categoriasPorAlugueis::contains)
                 .collect(Collectors.toList());
         categorias.addAll(categoriasNaoContidasNasReservas);
         List<Categoria> categoriasNaoContidasNosAlugueis = categoriasNaoContidasNosAlugueis(alugueis);
@@ -77,7 +89,7 @@ public class ReservaNegocio {
         return new ArrayList<>(categorias);
     }
 
-    public List<Categoria> categoriasDisponiveisPorReservas(Reserva reserva) {
+    private List<Categoria> categoriasDisponiveisPorReservas(Reserva reserva) {
         List<Reserva> reservas = this.reservaRepositorio.consultarTodos();
         List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, reserva);
         Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);

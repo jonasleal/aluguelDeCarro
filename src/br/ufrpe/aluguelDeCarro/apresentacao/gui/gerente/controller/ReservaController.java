@@ -1,8 +1,8 @@
 package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
-import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.*;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
@@ -80,7 +80,7 @@ public class ReservaController implements Initializable {
                 reservas.remove(reserva);
                 tableView.getSelectionModel().clearSelection();
                 ViewUtil.mostrarTooltip(deletarButton, "Reserva deletada com sucesso");
-            } catch (ReservaNaoEncontradaException e) {
+            } catch (ReservaInvalidaException e) {
                 ViewUtil.mostrarTooltip(deletarButton, e.getMessage());
             }
         } else {
@@ -125,12 +125,28 @@ public class ReservaController implements Initializable {
     }
 
     private void cadastrar() {
-        Reserva reserva = new Reserva();
-        lerInputs(reserva);
-        fachada.cadastrarReserva(reserva);
-        mostrarDetalhes(null);
-        reservas.add(reserva);
-        ViewUtil.mostrarTooltip(salvarButton, "Reserva salva com sucesso");
+        try {
+            Reserva reserva = new Reserva();
+            lerInputs(reserva);
+            fachada.cadastrarReserva(reserva);
+            mostrarDetalhes(null);
+            reservas.add(reserva);
+            ViewUtil.mostrarTooltip(salvarButton, "Reserva salva com sucesso");
+        } catch (DataRetiradaObrigatoriaException | DataRetiradaPassadoException e) {
+            retiradaDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(retiradaDatePicker, e.getMessage());
+        } catch (DataDevolucaoObrigatoriaException | DataDevolucaoPassadoException e) {
+            devolucaoDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(devolucaoDatePicker, e.getMessage());
+        } catch (ClienteObrigatorioException e) {
+            clienteComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
+        } catch (CategoriaObrigatoriaException e) {
+            categoriaComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
+        } catch (ReservaInvalidaException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
     }
 
     private void lerInputs(Reserva reserva) {
@@ -147,11 +163,27 @@ public class ReservaController implements Initializable {
     }
 
     private void alterar(Reserva reserva) {
-        lerInputs(reserva);
-        fachada.alterarReserva(reserva);
-        mostrarDetalhes(null);
-        reservas.set(reservas.indexOf(reserva), reserva);
-        ViewUtil.mostrarTooltip(salvarButton, "Reserva alterada com sucesso");
+        try {
+            lerInputs(reserva);
+            fachada.alterarReserva(reserva);
+            mostrarDetalhes(null);
+            reservas.set(reservas.indexOf(reserva), reserva);
+            ViewUtil.mostrarTooltip(salvarButton, "Reserva alterada com sucesso");
+        } catch (DataRetiradaObrigatoriaException e) {
+            retiradaDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(retiradaDatePicker, e.getMessage());
+        } catch (DataDevolucaoObrigatoriaException | DataDevolucaoPassadoException e) {
+            devolucaoDatePicker.requestFocus();
+            ViewUtil.mostrarTooltip(devolucaoDatePicker, e.getMessage());
+        } catch (ClienteObrigatorioException e) {
+            clienteComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
+        } catch (CategoriaObrigatoriaException e) {
+            categoriaComboBox.requestFocus();
+            ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
+        } catch (ReservaInvalidaException e) {
+            ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
     }
 
     @Override

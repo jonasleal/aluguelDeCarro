@@ -1,13 +1,13 @@
 package br.ufrpe.aluguelDeCarro.dados.repositorios.memoria;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
-import br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException;
+import br.ufrpe.aluguelDeCarro.excecoes.reserva.ReservaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static br.ufrpe.aluguelDeCarro.excecoes.ReservaNaoEncontradaException.ID;
+import static br.ufrpe.aluguelDeCarro.excecoes.reserva.ReservaNaoEncontradaException.ID;
 
 /**
  * A classe armazena uma lista de instancias de reservas
