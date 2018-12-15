@@ -40,14 +40,9 @@
                                     <children>
                                         <FlowPane>
                                             <children>
-                                                <StackPane>
-                                                    <children>
-                                                        <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
-                                                                       promptText="Retirada"/>
-                                                    </children>
-                                                </StackPane>
-                                                <JFXTimePicker fx:id="retiradaTimePicker" defaultColor="#4059a9"
-                                                               overLay="true"/>
+                                                <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
+                                                               promptText="Retirada"/>
+                                                <JFXTimePicker fx:id="retiradaTimePicker" defaultColor="#4059a9"/>
                                             </children>
                                         </FlowPane>
                                         <FlowPane>
@@ -55,15 +50,14 @@
                                                 <JFXDatePicker fx:id="devolucaoEstimadaDatePicker"
                                                                defaultColor="#4059a9" promptText="Devolução estimada"/>
                                                 <JFXTimePicker fx:id="devolucaoEstimadaTimePicker"
-                                                               defaultColor="#4059a9" overLay="true"/>
+                                                               defaultColor="#4059a9"/>
                                             </children>
                                         </FlowPane>
                                         <FlowPane>
                                             <children>
                                                 <JFXDatePicker fx:id="devolucaoRealDatePicker" defaultColor="#4059a9"
                                                                promptText="Devolução Real"/>
-                                                <JFXTimePicker fx:id="devolucaoRealTimePicker" defaultColor="#4059a9"
-                                                               overLay="true"/>
+                                                <JFXTimePicker fx:id="devolucaoRealTimePicker" defaultColor="#4059a9"/>
                                             </children>
                                         </FlowPane>
                                         <JFXTextField fx:id="valorEstimadoTextField" editable="false" labelFloat="true"

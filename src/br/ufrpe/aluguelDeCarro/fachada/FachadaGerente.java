@@ -92,6 +92,7 @@ public class FachadaGerente {
     }
 
     public void cadastrarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
+        aluguel.setUsuario(this.getUsuarioLogado());
         singleton.getAluguelNegocio().cadastrar(aluguel);
     }
 
@@ -105,6 +106,10 @@ public class FachadaGerente {
 
     public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
         return singleton.getAluguelNegocio().consultarCategoriasDisponiveisParaAluguel(aluguel);
+    }
+
+    public List<Categoria> consultarCategoriasDisponiveisParaReserva(Reserva reserva) {
+        return singleton.getReservaNegocio().consultarCategoriasDisponiveisParaReserva(reserva);
     }
 
     public List<Aluguel> consultarAlugueis() {

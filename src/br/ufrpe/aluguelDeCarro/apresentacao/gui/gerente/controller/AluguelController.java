@@ -170,7 +170,6 @@ public class AluguelController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         configurarTabela();
         configurarComboBox();
-        configurarTimePicker();
         configurarOnActionDatas();
     }
 
@@ -186,12 +185,6 @@ public class AluguelController implements Initializable {
     private void limparComboBoxes() {
         categorias.clear();
         carros.clear();
-    }
-
-    private void configurarTimePicker() {
-        retiradaTimePicker.setOverLay(false);
-        devolucaoRealTimePicker.setOverLay(false);
-        devolucaoEstimadaTimePicker.setOverLay(false);
     }
 
     private void configurarComboBox() {
@@ -267,13 +260,19 @@ public class AluguelController implements Initializable {
     private void carregarCategorias() {
         Aluguel aluguel = new Aluguel();
         lerInputs(aluguel);
-        if (aluguel.getRetirada() != null && aluguel.getDevolucaoEstimada() != null) {
-            categorias.clear();
-            categorias.addAll(fachada.consultarCategoriasDisponiveisParaAluguel(aluguel));
+        if (aluguel.getRetirada() != null) {
+            if (aluguel.getDevolucaoEstimada() != null) {
+                categorias.clear();
+                categorias.addAll(fachada.consultarCategoriasDisponiveisParaAluguel(aluguel));
+            } else {
+                categoriaComboBox.hide();
+                devolucaoEstimadaDatePicker.requestFocus();
+                ViewUtil.mostrarTooltip(categoriaComboBox, "Preencha a data de devolução");
+            }
         } else {
             categoriaComboBox.hide();
             retiradaDatePicker.requestFocus();
-            ViewUtil.mostrarTooltip(categoriaComboBox, "Preencha a data de retirada e devolução");
+            ViewUtil.mostrarTooltip(categoriaComboBox, "Preencha a data de retirada");
         }
     }
 

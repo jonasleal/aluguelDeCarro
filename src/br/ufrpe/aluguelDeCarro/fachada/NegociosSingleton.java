@@ -32,7 +32,7 @@ class NegociosSingleton {
         this.aluguelNegocio = new AluguelNegocio(aluguelRepositorio, categoriaRepositorio, carroRepositorio, reservaRepositorio);
         this.categoriaNegocio = new CategoriaNegocio(categoriaRepositorio);
         this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
-        this.reservaNegocio = new ReservaNegocio(reservaRepositorio);
+        this.reservaNegocio = new ReservaNegocio(reservaRepositorio, aluguelRepositorio, carroRepositorio, categoriaRepositorio);
         try {
             this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
             System.out.println("Login: 16125653013");
