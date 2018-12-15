@@ -6,10 +6,8 @@
 package br.ufrpe.aluguelDeCarro.dados.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.EnderocoObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
-import br.ufrpe.aluguelDeCarro.excecoes.pessoa.FormatoNomeException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
@@ -20,53 +18,67 @@ import java.time.LocalDate;
 public class Cliente extends Pessoa implements Cloneable {
 
     private String habilitacao;
-    private String rua;
-    private String cidade;
-    private String estado;
-    private String complemento;
-    private int numero;
+    private String email;
+    private String telefone;
+    private Endereco endereco;
 
     public Cliente() {
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+    
     public String getRua() {
-        return rua;
+        return this.endereco.getRua();
     }
 
     public void setRua(String rua) {
-        this.rua = rua;
+        this.endereco.setRua(rua);
     }
 
     public String getCidade() {
-        return cidade;
+        return this.endereco.getCidade();
     }
 
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        this.endereco.setCidade(cidade);
     }
 
     public String getEstado() {
-        return estado;
+        return this.endereco.getEstado();
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        this.endereco.setEstado(estado);
     }
 
     public String getComplemento() {
-        return complemento;
+        return this.endereco.getComplemento();
     }
 
     public void setComplemento(String complemento) {
-        this.complemento = complemento;
+        this.endereco.setComplemento(complemento);
     }
 
     public int getNumero() {
-        return numero;
+        return this.endereco.getNumero();
     }
 
     public void setNumero(int numero) {
-        this.numero = numero;
+        this.endereco.setNumero(numero);
     }
 
     public Cliente(String cpf, String nome, LocalDate nascimento, String habilitacao) {
@@ -90,15 +102,9 @@ public class Cliente extends Pessoa implements Cloneable {
         if (this.habilitacao.isEmpty() || this.habilitacao.length() != 11) {
             throw new FormatoHabilitacaoException(habilitacao);
         }
-        if (this.cidade == null || this.cidade.isEmpty()) {
-            throw new EnderocoObrigatorioException();
-        }
-        if (this.rua == null || this.rua.isEmpty()) {
-            throw new EnderocoObrigatorioException();
-        }
-        if (this.estado == null || this.estado.isEmpty()) {
-            throw new EnderocoObrigatorioException();
-        }
+
+        endereco.validar();
+
     }
 
     @Override

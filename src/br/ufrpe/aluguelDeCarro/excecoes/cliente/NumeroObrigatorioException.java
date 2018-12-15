@@ -9,10 +9,10 @@ package br.ufrpe.aluguelDeCarro.excecoes.cliente;
  *
  * @author JonasJr
  */
-public class EnderocoObrigatorioException extends ClienteInvalidoException {
+public class NumeroObrigatorioException extends ClienteInvalidoException {
 
-    public EnderocoObrigatorioException() {
-        super("Endereço é obrigatorio");
+    public NumeroObrigatorioException() {
+        super("Número é obrigatorio");
     }
 
 }
