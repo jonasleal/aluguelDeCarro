@@ -21,13 +21,18 @@ class NegociosSingleton {
     private final ReservaNegocio reservaNegocio;
 
     private NegociosSingleton() {
-        this.carroNegocio = new CarroNegocio(new CarroRepositorio());
-        this.clienteNegocio = new ClienteNegocio(new ClienteRepositorio());
+        CarroRepositorio carroRepositorio = new CarroRepositorio();
+        ClienteRepositorio clienteRepositorio = new ClienteRepositorio();
+        CategoriaRepositorio categoriaRepositorio = new CategoriaRepositorio();
+        ReservaRepositorio reservaRepositorio = new ReservaRepositorio();
+        AluguelRepositorio aluguelRepositorio = new AluguelRepositorio();
+        this.carroNegocio = new CarroNegocio(carroRepositorio);
+        this.clienteNegocio = new ClienteNegocio(clienteRepositorio);
         this.usuarioNegocio = new UsuarioNegocio(new UsuarioRepositorio());
-        this.aluguelNegocio = new AluguelNegocio(new AluguelRepositorio());
-        this.categoriaNegocio = new CategoriaNegocio(new CategoriaRepositorio());
+        this.aluguelNegocio = new AluguelNegocio(aluguelRepositorio, categoriaRepositorio, carroRepositorio, reservaRepositorio);
+        this.categoriaNegocio = new CategoriaNegocio(categoriaRepositorio);
         this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
-        this.reservaNegocio = new ReservaNegocio(new ReservaRepositorio());
+        this.reservaNegocio = new ReservaNegocio(reservaRepositorio);
         try {
             this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
             System.out.println("Login: 16125653013");

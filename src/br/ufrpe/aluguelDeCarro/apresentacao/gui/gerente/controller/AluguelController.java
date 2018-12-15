@@ -269,7 +269,7 @@ public class AluguelController implements Initializable {
         lerInputs(aluguel);
         if (aluguel.getRetirada() != null && aluguel.getDevolucaoEstimada() != null) {
             categorias.clear();
-            categorias.addAll(fachada.verificarCategoriasDisponiveis(aluguel));
+            categorias.addAll(fachada.consultarCategoriasDisponiveisParaAluguel(aluguel));
         } else {
             categoriaComboBox.hide();
             retiradaDatePicker.requestFocus();

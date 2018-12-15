@@ -6,6 +6,9 @@
 package br.ufrpe.aluguelDeCarro.negocio;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IAluguelRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICarroRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.ICategoriaRepositorio;
+import br.ufrpe.aluguelDeCarro.dados.repositorios.interfaces.IReservaRepositorio;
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.*;
 import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroIndisponivelException;
@@ -14,9 +17,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Carro;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,21 +25,30 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author JonasJr
  */
 public class AluguelNegocio {
 
-    private final IAluguelRepositorio repositorio;
+    private final IAluguelRepositorio aluguelRepositorio;
+    private final ICategoriaRepositorio categoriaRepositorio;
+    private final ICarroRepositorio carroRepositorio;
+    private final IReservaRepositorio reservaRepositorio;
 
-    public AluguelNegocio(IAluguelRepositorio repositorio) {
-        this.repositorio = repositorio;
+    public AluguelNegocio(IAluguelRepositorio repositorio, ICategoriaRepositorio categoriaRepositorio, ICarroRepositorio carroRepositorio, IReservaRepositorio reservaRepositorio) {
+        this.aluguelRepositorio = repositorio;
+        this.categoriaRepositorio = categoriaRepositorio;
+        this.carroRepositorio = carroRepositorio;
+        this.reservaRepositorio = reservaRepositorio;
     }
 
     private void validarDevolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         aluguel.validar();
-        Aluguel aluguelOriginal = repositorio.consultar(aluguel.getId());
+        Aluguel aluguelOriginal = aluguelRepositorio.consultar(aluguel.getId());
         LocalDateTime dataNoBanco = aluguelOriginal.getDevolucaoReal();
         if (dataNoBanco != null) throw new AluguelFinalizadoException();
         dataNoBanco = aluguelOriginal.getDevolucaoEstimada();
@@ -50,7 +60,7 @@ public class AluguelNegocio {
 
     private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CategoriaInvalidaException, ClienteInvalidoException {
         aluguel.validar();
-        if (this.repositorio.existe(aluguel.getCliente()))
+        if (this.aluguelRepositorio.existe(aluguel.getCliente()))
             throw new AluguelEmAbertoException(aluguel.getCliente().getCpf());
         LocalDate dataNoObjeto = aluguel.getRetirada().toLocalDate();
         if (dataNoObjeto.compareTo(LocalDate.now()) < 0) throw new DataRetiradaPassadoException(dataNoObjeto);
@@ -71,20 +81,23 @@ public class AluguelNegocio {
     public void cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, PessoaInvalidaException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         if (aluguel != null) {
             this.validarParaAlugar(aluguel);
+            Carro carro = aluguel.getCarro();
+            carro.setDisponivel(false);
+            this.carroRepositorio.alterar(carro);
             aluguel.setAtivo(true);
-            aluguel.getCarro().setDisponivel(false);
+            this.aluguelRepositorio.cadastrar(aluguel);
         }
     }
 
     public void alterar(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         if (aluguel != null) {
             aluguel.validar();
-            this.repositorio.alterar(aluguel);
+            this.aluguelRepositorio.alterar(aluguel);
         }
     }
 
     public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
-        return this.repositorio.consultar(id);
+        return this.aluguelRepositorio.consultar(id);
     }
 
     /**
@@ -152,7 +165,7 @@ public class AluguelNegocio {
      * @return Intancia do aluguel aberto para este cliente.
      */
     public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
-        return this.repositorio.consultar(cliente);
+        return this.aluguelRepositorio.consultar(cliente);
     }
 
     /**
@@ -162,7 +175,7 @@ public class AluguelNegocio {
      * @return Intancia do aluguel aberto para este carro.
      */
     public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
-        return repositorio.consultar(carro);
+        return aluguelRepositorio.consultar(carro);
     }
 
     /**
@@ -178,7 +191,81 @@ public class AluguelNegocio {
     }
 
     public ArrayList<Aluguel> consultarTodos() {
-        return this.repositorio.consultarTodos();
+        return this.aluguelRepositorio.consultarTodos();
+    }
+
+    public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
+        List<Reserva> reservas = this.reservaRepositorio.consultarTodos();
+        List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);
+        Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);
+        List<Reserva> reservasSemConflito = reservasSemConflitoComAluguel(reservas, aluguel);
+        collect.addAll(categoriasDasReservasSemConflito(reservasSemConflito));
+        collect.addAll(categoriasNaoContidasNasReservas(reservas));
+        return new ArrayList<>(collect);
+    }
+
+    private List<Categoria> categoriasNaoContidasNasReservas(List<Reserva> reservas) {
+        List<Categoria> categorias = this.categoriaRepositorio.consultarTodos();
+        categorias.removeAll(reservas.stream().map(Reserva::getCategoria).collect(Collectors.toSet()));
+        return categorias;
+    }
+
+    private List<Categoria> categoriasDasReservasSemConflito(List<Reserva> reservasSemConflito) {
+        return reservasSemConflito
+                .stream()
+                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > 1)
+                .map(Reserva::getCategoria)
+                .collect(Collectors.toList());
+    }
+
+    private Set<Categoria> categoriasDasReservasComConflito(List<Reserva> reservasComConflito) {
+        return reservasComConflito
+                .stream()
+                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > quantidadeDeReservasPor(reservasComConflito, reserva.getCategoria()))
+                .map(Reserva::getCategoria)
+                .collect(Collectors.toSet());
+    }
+
+    private List<Reserva> reservasComConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
+        return reservas
+                .stream()
+                .filter(reserva -> conflitoAluguelReserva(
+                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Reserva> reservasSemConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
+        return reservas
+                .stream()
+                .filter(reserva -> !conflitoAluguelReserva(
+                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                .collect(Collectors.toList());
+    }
+
+    private long quantidadeDeReservasPor(List<Reserva> reservas, Categoria categoria) {
+        return reservas.stream().filter(reserva -> reserva.getCategoria().equals(categoria)).count();
+    }
+
+    private boolean conflitoAluguelReserva(LocalDateTime aluguelRetirada, LocalDateTime aluguelDevolucao, LocalDateTime reservaRetirada, LocalDateTime reservaDevolucao) {
+        return estaNoIntervalo(reservaRetirada, aluguelRetirada, aluguelDevolucao) ||
+                estaNoIntervalo(reservaDevolucao, aluguelRetirada, aluguelDevolucao) ||
+                estaNoIntervalo(aluguelRetirada, reservaRetirada, reservaDevolucao);
+    }
+
+    /**
+     * Verifica se o parametro time está no intervalo (incluso) end e time
+     *
+     * @param start data inicial do intervalo
+     * @param end   data final do intervalo
+     * @param time  data a ser avaliada
+     * @return {@code true} se a data estiver contida no intervalo, {@code false} caso contrário
+     */
+    private boolean estaNoIntervalo(LocalDateTime time, LocalDateTime start, LocalDateTime end) {
+        return !time.isBefore(start) && !time.isAfter(end);
+    }
+
+    private long quantidadeDeCarrosPor(Categoria categoria) {
+        return this.carroRepositorio.consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
     }
 
 }

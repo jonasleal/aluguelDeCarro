@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
     }
 
-//    private List<Categoria> verificarCategoriasDisponiveis(Aluguel aluguel) {
+//    private List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
 //        List<Reserva> reservas = this.reservaNegocio.consultarTodos();
 //        List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);
 //        Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);

@@ -16,11 +16,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Esta classe serve para centralizar todas classes de negócio
@@ -107,6 +103,10 @@ public class FachadaGerente {
         return singleton.getAluguelNegocio().consultar(id);
     }
 
+    public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
+        return singleton.getAluguelNegocio().consultarCategoriasDisponiveisParaAluguel(aluguel);
+    }
+
     public List<Aluguel> consultarAlugueis() {
         return singleton.getAluguelNegocio().consultarTodos();
     }
@@ -185,80 +185,6 @@ public class FachadaGerente {
 
     public List<Usuario> consultarUsuarios() {
         return singleton.getUsuarioNegocio().consultarTodos();
-    }
-
-    public List<Categoria> verificarCategoriasDisponiveis(Aluguel aluguel) {
-        List<Reserva> reservas = singleton.getReservaNegocio().consultarTodos();
-        List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);
-        Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);
-        List<Reserva> reservasSemConflito = reservasSemConflitoComAluguel(reservas, aluguel);
-        collect.addAll(categoriasDasReservasSemConflito(reservasSemConflito));
-        collect.addAll(categoriasNaoContidasNasReservas(reservas));
-        return new ArrayList<>(collect);
-    }
-
-    private List<Categoria> categoriasNaoContidasNasReservas(List<Reserva> reservas) {
-        List<Categoria> categorias = singleton.getCategoriaNegocio().consultarTodos();
-        categorias.removeAll(reservas.stream().map(Reserva::getCategoria).collect(Collectors.toSet()));
-        return categorias;
-    }
-
-    private List<Categoria> categoriasDasReservasSemConflito(List<Reserva> reservasSemConflito) {
-        return reservasSemConflito
-                .stream()
-                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > 1)
-                .map(Reserva::getCategoria)
-                .collect(Collectors.toList());
-    }
-
-    private Set<Categoria> categoriasDasReservasComConflito(List<Reserva> reservasComConflito) {
-        return reservasComConflito
-                .stream()
-                .filter(reserva -> quantidadeDeCarrosPor(reserva.getCategoria()) > quantidadeDeReservasPor(reservasComConflito, reserva.getCategoria()))
-                .map(Reserva::getCategoria)
-                .collect(Collectors.toSet());
-    }
-
-    private List<Reserva> reservasComConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
-        return reservas
-                .stream()
-                .filter(reserva -> conflitoAluguelReserva(
-                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
-                .collect(Collectors.toList());
-    }
-
-    private List<Reserva> reservasSemConflitoComAluguel(List<Reserva> reservas, Aluguel aluguel) {
-        return reservas
-                .stream()
-                .filter(reserva -> !conflitoAluguelReserva(
-                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
-                .collect(Collectors.toList());
-    }
-
-    private long quantidadeDeReservasPor(List<Reserva> reservas, Categoria categoria) {
-        return reservas.stream().filter(reserva -> reserva.getCategoria().equals(categoria)).count();
-    }
-
-    private boolean conflitoAluguelReserva(LocalDateTime aluguelRetirada, LocalDateTime aluguelDevolucao, LocalDateTime reservaRetirada, LocalDateTime reservaDevolucao) {
-        return estaNoIntervalo(reservaRetirada, aluguelRetirada, aluguelDevolucao) ||
-                estaNoIntervalo(reservaDevolucao, aluguelRetirada, aluguelDevolucao) ||
-                estaNoIntervalo(aluguelRetirada, reservaRetirada, reservaDevolucao);
-    }
-
-    /**
-     * Verifica se o parametro time está no intervalo (incluso) end e time
-     *
-     * @param start data inicial do intervalo
-     * @param end   data final do intervalo
-     * @param time  data a ser avaliada
-     * @return {@code true} se a data estiver contida no intervalo, {@code false} caso contrário
-     */
-    private boolean estaNoIntervalo(LocalDateTime time, LocalDateTime start, LocalDateTime end) {
-        return !time.isBefore(start) && !time.isAfter(end);
-    }
-
-    private long quantidadeDeCarrosPor(Categoria categoria) {
-        return singleton.getCarroNegocio().consultarTodos().stream().filter(carro -> carro.getCategoria().equals(categoria)).count();
     }
 
     public void logout() {

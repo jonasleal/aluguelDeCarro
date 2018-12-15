@@ -83,6 +83,10 @@ public class FachadaUsuario {
         return singleton.getAluguelNegocio().consultar(id);
     }
 
+    public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
+        return singleton.getAluguelNegocio().consultarCategoriasDisponiveisParaAluguel(aluguel);
+    }
+
     public List<Aluguel> consultarAlugueis() {
         return singleton.getAluguelNegocio().consultarTodos();
     }
