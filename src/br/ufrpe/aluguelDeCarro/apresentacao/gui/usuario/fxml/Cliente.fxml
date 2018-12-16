@@ -51,6 +51,31 @@
                                                                AnchorPane.rightAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
+                                        <JFXTextField fx:id="ruaTextField" labelFloat="true" promptText="Rua"/>
+                                        <FlowPane hgap="5.0">
+                                            <children>
+                                                <JFXTextField fx:id="complementoTextField" labelFloat="true"
+                                                              prefWidth="200.0" promptText="Complemento"/>
+                                                <JFXTextField fx:id="numeroTextField" labelFloat="true"
+                                                              prefWidth="200.0" promptText="Número"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane hgap="5.0">
+                                            <children>
+                                                <JFXTextField fx:id="cidadeTextField" labelFloat="true"
+                                                              prefWidth="200.0" promptText="Cidade"/>
+                                                <JFXTextField fx:id="estadoTextField" labelFloat="true"
+                                                              prefWidth="200.0" promptText="Estado"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane hgap="5.0">
+                                            <children>
+                                                <JFXTextField fx:id="emailTextField" labelFloat="true" prefWidth="200.0"
+                                                              promptText="Email"/>
+                                                <JFXTextField fx:id="telefoneTextField" labelFloat="true"
+                                                              prefWidth="200.0" promptText="Telefone"/>
+                                            </children>
+                                        </FlowPane>
                                     </children>
                                 </VBox>
                                 <HBox alignment="TOP_CENTER" spacing="10.0">

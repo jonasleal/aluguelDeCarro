@@ -5,9 +5,7 @@
  */
 package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.FormatoHabilitacaoException;
-import br.ufrpe.aluguelDeCarro.excecoes.cliente.HabilitacaoObrigatoriException;
+import br.ufrpe.aluguelDeCarro.excecoes.cliente.*;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 
 import java.time.LocalDate;
@@ -24,6 +22,7 @@ public class Cliente extends Pessoa implements Cloneable {
 
     public Cliente() {
         this.habilitacao = "";
+        this.endereco = new Endereco();
     }
 
     public String getEmail() {
@@ -98,6 +97,8 @@ public class Cliente extends Pessoa implements Cloneable {
     @Override
     public void validar() throws PessoaInvalidaException, ClienteInvalidoException {
         if (this.habilitacao == null) throw new HabilitacaoObrigatoriException();
+        if (this.email == null || this.email.trim().isEmpty()) throw new EmailObrigatorioException();
+        if (this.telefone == null || this.telefone.trim().isEmpty()) throw new TelefoneObrigatorioException();
         if (this.habilitacao.isEmpty() || this.habilitacao.length() != 11)
             throw new FormatoHabilitacaoException(habilitacao);
         super.validar();

@@ -51,6 +51,27 @@ public class ClienteController implements Initializable {
     private JFXDatePicker nascimentoDatePicker;
 
     @FXML
+    private JFXTextField ruaTextField;
+
+    @FXML
+    private JFXTextField complementoTextField;
+
+    @FXML
+    private JFXTextField numeroTextField;
+
+    @FXML
+    private JFXTextField cidadeTextField;
+
+    @FXML
+    private JFXTextField estadoTextField;
+
+    @FXML
+    private JFXTextField emailTextField;
+
+    @FXML
+    private JFXTextField telefoneTextField;
+
+    @FXML
     private JFXButton deletarButton;
 
     @FXML
@@ -87,9 +108,11 @@ public class ClienteController implements Initializable {
 
     @FXML
     void salvar(ActionEvent event) {
-        Cliente cliente = tableView.getSelectionModel().getSelectedItem();
-        if (cliente == null) cadastrar();
-        else alterar(cliente);
+        if (validarCampo()) {
+            Cliente cliente = tableView.getSelectionModel().getSelectedItem();
+            if (cliente == null) cadastrar();
+            else alterar(cliente);
+        }
     }
 
     private void alterar(Cliente cliente) {
@@ -111,6 +134,21 @@ public class ClienteController implements Initializable {
         } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
             habilitacaoTextField.requestFocus();
             ViewUtil.mostrarTooltip(habilitacaoTextField, e.getMessage());
+        } catch (RuaObrigatorioException e) {
+            ruaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(ruaTextField, e.getMessage());
+        } catch (CidadeObrigatorioException e) {
+            cidadeTextField.requestFocus();
+            ViewUtil.mostrarTooltip(cidadeTextField, e.getMessage());
+        } catch (EstadoObrigatorioException e) {
+            estadoTextField.requestFocus();
+            ViewUtil.mostrarTooltip(estadoTextField, e.getMessage());
+        } catch (EmailObrigatorioException e) {
+            emailTextField.requestFocus();
+            ViewUtil.mostrarTooltip(emailTextField, e.getMessage());
+        } catch (TelefoneObrigatorioException e) {
+            telefoneTextField.requestFocus();
+            ViewUtil.mostrarTooltip(telefoneTextField, e.getMessage());
         } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         }
@@ -136,6 +174,21 @@ public class ClienteController implements Initializable {
         } catch (FormatoHabilitacaoException | HabilitacaoObrigatoriException e) {
             habilitacaoTextField.requestFocus();
             ViewUtil.mostrarTooltip(habilitacaoTextField, e.getMessage());
+        } catch (RuaObrigatorioException e) {
+            ruaTextField.requestFocus();
+            ViewUtil.mostrarTooltip(ruaTextField, e.getMessage());
+        } catch (CidadeObrigatorioException e) {
+            cidadeTextField.requestFocus();
+            ViewUtil.mostrarTooltip(cidadeTextField, e.getMessage());
+        } catch (EstadoObrigatorioException e) {
+            estadoTextField.requestFocus();
+            ViewUtil.mostrarTooltip(estadoTextField, e.getMessage());
+        } catch (EmailObrigatorioException e) {
+            emailTextField.requestFocus();
+            ViewUtil.mostrarTooltip(emailTextField, e.getMessage());
+        } catch (TelefoneObrigatorioException e) {
+            telefoneTextField.requestFocus();
+            ViewUtil.mostrarTooltip(telefoneTextField, e.getMessage());
         } catch (PessoaInvalidaException | ClienteInvalidoException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
         }
@@ -151,6 +204,27 @@ public class ClienteController implements Initializable {
         cliente.setNome(nomeTextField.getText());
         cliente.setHabilitacao(habilitacaoTextField.getText());
         cliente.setNascimento(nascimentoDatePicker.getValue());
+        cliente.setEmail(emailTextField.getText());
+        cliente.setTelefone(telefoneTextField.getText());
+        cliente.setRua(ruaTextField.getText());
+        cliente.setComplemento(complementoTextField.getText());
+        if (numeroTextField.getText() != null && !numeroTextField.getText().isEmpty())
+            cliente.setNumero(Integer.parseInt(numeroTextField.getText().trim()));
+        cliente.setCidade(cidadeTextField.getText());
+        cliente.setEstado(estadoTextField.getText());
+    }
+
+    private boolean validarCampo() {
+        if (numeroTextField.getText() != null && !numeroTextField.getText().isEmpty()) {
+            if (!numeroTextField.getText().matches("\\d+")) {
+                numeroTextField.requestFocus();
+                ViewUtil.mostrarTooltip(numeroTextField, "Valor inválido");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -172,11 +246,25 @@ public class ClienteController implements Initializable {
             nomeTextField.setText(cliente.getNome());
             habilitacaoTextField.setText(cliente.getHabilitacao());
             nascimentoDatePicker.setValue(cliente.getNascimento());
+            ruaTextField.setText(cliente.getRua());
+            complementoTextField.setText(cliente.getComplemento());
+            numeroTextField.setText(String.valueOf(cliente.getNumero()));
+            cidadeTextField.setText(cliente.getCidade());
+            estadoTextField.setText(cliente.getEstado());
+            emailTextField.setText(cliente.getEmail());
+            telefoneTextField.setText(cliente.getTelefone());
         } else {
             cpfTextField.clear();
             nomeTextField.clear();
             habilitacaoTextField.clear();
             nascimentoDatePicker.setValue(null);
+            ruaTextField.clear();
+            complementoTextField.clear();
+            numeroTextField.clear();
+            cidadeTextField.clear();
+            estadoTextField.clear();
+            emailTextField.clear();
+            telefoneTextField.clear();
         }
     }
 }

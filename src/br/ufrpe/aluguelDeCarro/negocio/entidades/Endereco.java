@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrpe.aluguelDeCarro.dados.entidades;
+package br.ufrpe.aluguelDeCarro.negocio.entidades;
 
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.CidadeObrigatorioException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
@@ -21,6 +21,12 @@ public class Endereco {
     private String estado;
     private String complemento;
     private int numero;
+
+    public Endereco() {
+        this.rua = "";
+        this.cidade = "";
+        this.estado = "";
+    }
 
     public String getRua() {
         return rua;
@@ -63,13 +69,13 @@ public class Endereco {
     }
 
     public void validar() throws ClienteInvalidoException {
-        if (this.cidade == null || this.cidade.isEmpty()) {
+        if (this.cidade == null || this.cidade.trim().isEmpty()) {
             throw new CidadeObrigatorioException();
         }
-        if (this.rua == null || this.rua.isEmpty()) {
+        if (this.rua == null || this.rua.trim().isEmpty()) {
             throw new RuaObrigatorioException();
         }
-        if (this.estado == null || this.estado.isEmpty()) {
+        if (this.estado == null || this.estado.trim().isEmpty()) {
             throw new EstadoObrigatorioException();
         }
     }
