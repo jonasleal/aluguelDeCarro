@@ -24,6 +24,8 @@ public interface ICarroRepositorio {
 
     List<Carro> consultar(Categoria categoria);
 
+    List<Carro> consultarAtivos(Categoria categoria);
+
     void cadastrar(Carro carro);
 
     void alterar(Carro carroEditado);
@@ -31,6 +33,8 @@ public interface ICarroRepositorio {
     void desativar(int id) throws IdNaoEncontradoException;
 
     ArrayList<Carro> consultarTodos();
+
+    ArrayList<Carro> consultarTodosAtivos();
 
     boolean existe(int id);
 

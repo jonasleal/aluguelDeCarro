@@ -2,6 +2,7 @@ package br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller;
 
 import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.aluguel.*;
+import br.ufrpe.aluguelDeCarro.excecoes.bancoDeDados.IdNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
@@ -83,6 +84,9 @@ public class AluguelController implements Initializable {
     @FXML
     private JFXButton salvarButton;
 
+    @FXML
+    private JFXButton finalizarButton;
+
     private ObservableList<Aluguel> alugueis;
     private ObservableList<Categoria> categorias;
     private ObservableList<Carro> carros;
@@ -110,7 +114,7 @@ public class AluguelController implements Initializable {
             lerInputs(aluguel);
             fachada.alterarAluguel(aluguel);
             limparSelecao();
-            alugueis.add(aluguel);
+            alugueis.set(alugueis.indexOf(aluguel), aluguel);
             ViewUtil.mostrarTooltip(salvarButton, "Aluguel alterado com sucesso");
         } catch (CustoAdicionalNegativoException e) {
             custoAdicionalTextField.requestFocus();
@@ -163,6 +167,20 @@ public class AluguelController implements Initializable {
         } catch (ClienteInvalidoException e) {
             clienteComboBox.requestFocus();
             ViewUtil.mostrarTooltip(clienteComboBox, e.getMessage());
+        }
+    }
+
+    @FXML
+    public void finalizar(ActionEvent event) {
+        Aluguel aluguel = tableView.getSelectionModel().getSelectedItem();
+        if (aluguel != null) {
+            try {
+                fachada.finalizarAluguel(aluguel);
+                ViewUtil.mostrarTooltip(finalizarButton, "Aluguel finalizado com sucesso");
+                limparSelecao();
+            } catch (PessoaInvalidaException | AluguelInvalidoException | CarroInvalidoException | IdNaoEncontradoException | UsuarioInvalidoException | CategoriaInvalidaException | ClienteInvalidoException e) {
+                ViewUtil.mostrarTooltip(finalizarButton, e.getMessage());
+            }
         }
     }
 
@@ -318,12 +336,20 @@ public class AluguelController implements Initializable {
             retiradaTimePicker.setValue(aluguel.getRetirada().toLocalTime());
             devolucaoEstimadaDatePicker.setValue(aluguel.getDevolucaoEstimada().toLocalDate());
             devolucaoEstimadaTimePicker.setValue(aluguel.getDevolucaoEstimada().toLocalTime());
-            devolucaoRealDatePicker.setValue(aluguel.getDevolucaoReal().toLocalDate());
-            devolucaoRealTimePicker.setValue(aluguel.getDevolucaoReal().toLocalTime());
+            if (aluguel.getDevolucaoReal() != null) {
+                devolucaoRealDatePicker.setValue(aluguel.getDevolucaoReal().toLocalDate());
+                devolucaoRealTimePicker.setValue(aluguel.getDevolucaoReal().toLocalTime());
+            }
+            aluguel.calcularValorEstimado();
             valorEstimadoTextField.setText(String.valueOf(aluguel.getValorEstimado()));
-            custoAdicionalTextField.setText(String.valueOf(aluguel.getCustoAdicional()));
+            if (aluguel.getCustoAdicional() != null)
+                custoAdicionalTextField.setText(String.valueOf(aluguel.getCustoAdicional()));
+            carregarCategorias();
             categoriaComboBox.setValue(aluguel.getCategoria());
-            carroComboBox.setValue(aluguel.getCarro());
+            if (aluguel.getCarro() != null) {
+                carros.add(aluguel.getCarro());
+                carroComboBox.setValue(aluguel.getCarro());
+            }
             clienteComboBox.setValue(aluguel.getCliente());
         } else {
             retiradaDatePicker.setValue(null);
@@ -338,5 +364,9 @@ public class AluguelController implements Initializable {
             carroComboBox.getSelectionModel().clearSelection();
             clienteComboBox.getSelectionModel().clearSelection();
         }
+    }
+
+    public void setAluguel(Aluguel aluguel) {
+        mostrarDetalhes(aluguel);
     }
 }

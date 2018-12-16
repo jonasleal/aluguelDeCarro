@@ -67,6 +67,19 @@ public class ReservaNegocio {
         return this.reservaRepositorio.consultarTodos();
     }
 
+    public Aluguel iniciarAluguel(Reserva reserva) throws ReservaInvalidaException {
+        if (reserva == null) throw new ReservaObrigatoriaException();
+        reserva = this.reservaRepositorio.consultar(reserva.getId());
+        reserva.validar();
+        Aluguel aluguel = new Aluguel();
+        aluguel.setRetirada(reserva.getRetiradaPrevista());
+        aluguel.setDevolucaoEstimada(reserva.getDevolucaoPrevista());
+        aluguel.setCategoria(reserva.getCategoria());
+        aluguel.setCliente(reserva.getCliente());
+        this.reservaRepositorio.desativar(reserva.getId());
+        return aluguel;
+    }
+
     public List<Categoria> consultarCategoriasDisponiveisParaReserva(Reserva reserva) {
         ArrayList<Reserva> reservas = this.reservaRepositorio.consultarTodos();
         ArrayList<Aluguel> alugueis = this.aluguelRepositorio.consultarTodos();

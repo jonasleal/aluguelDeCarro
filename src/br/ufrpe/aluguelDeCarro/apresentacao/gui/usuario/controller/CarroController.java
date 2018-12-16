@@ -83,7 +83,7 @@ public class CarroController implements Initializable {
         modeloColumn.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getModelo()));
 
         carros = FXCollections.observableArrayList();
-        carros.addAll(fachada.consultarCarros());
+        carros.addAll(fachada.consultarCarrosAtivos());
 
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> mostrarDetalhes(newValue)));

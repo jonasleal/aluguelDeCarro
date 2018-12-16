@@ -79,21 +79,20 @@ public class AluguelNegocio {
      * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
      */
     public void cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, PessoaInvalidaException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
-        if (aluguel != null) {
-            this.validarParaAlugar(aluguel);
-            Carro carro = aluguel.getCarro();
-            carro.setDisponivel(false);
-            this.carroRepositorio.alterar(carro);
-            aluguel.setAtivo(true);
-            this.aluguelRepositorio.cadastrar(aluguel);
-        }
+        if (aluguel == null) throw new AluguelObrigatorioException();
+        this.validarParaAlugar(aluguel);
+        Carro carro = aluguel.getCarro();
+        carro.setDisponivel(false);
+        this.carroRepositorio.alterar(carro);
+        aluguel.setAtivo(true);
+        this.aluguelRepositorio.cadastrar(aluguel);
+
     }
 
     public void alterar(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
-        if (aluguel != null) {
-            aluguel.validar();
-            this.aluguelRepositorio.alterar(aluguel);
-        }
+        if (aluguel == null) throw new AluguelObrigatorioException();
+        aluguel.validar();
+        this.aluguelRepositorio.alterar(aluguel);
     }
 
     public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
@@ -111,7 +110,12 @@ public class AluguelNegocio {
         aluguel.setDevolucaoReal(LocalDateTime.now());
         LocalDateTime dataEstimada = aluguel.getDevolucaoEstimada();
         LocalDateTime dataDevolucao = aluguel.getDevolucaoReal();
-        Period periodoTotal = Period.between(dataEstimada.toLocalDate(), dataDevolucao.toLocalDate());
+        Period periodoTotal;
+        if (dataDevolucao.isBefore(dataEstimada)) {
+            periodoTotal = Period.ZERO;
+        } else {
+            periodoTotal = Period.between(dataEstimada.toLocalDate(), dataDevolucao.toLocalDate());
+        }
 
         if (considerarHorario) {
             int minutosTolerancia = 30;
@@ -121,6 +125,7 @@ public class AluguelNegocio {
         }
         long dias = periodoTotal.get(ChronoUnit.DAYS);
         BigDecimal adicional = aluguel.getCategoria().getDiaria().multiply(new BigDecimal(dias));
+
         aluguel.setCustoAdicional(adicional);
     }
 
@@ -133,12 +138,20 @@ public class AluguelNegocio {
      *                          30 minutos.
      * @return Objeto aluguel no estado finalizado.
      */
-    public Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
+    private Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(cliente);
         if (aluguel != null) {
             calcularDebito(aluguel, considerarHorario);
         }
         return aluguel;
+    }
+
+    public void finalizar(Aluguel aluguel) throws PessoaInvalidaException, AluguelInvalidoException, CarroInvalidoException, IdNaoEncontradoException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
+        aluguel = consultarDebito(aluguel.getCliente(), true);
+        devolucao(aluguel);
+        Carro carro = aluguel.getCarro();
+        carro.setDisponivel(true);
+        this.carroRepositorio.alterar(carro);
     }
 
     /**
@@ -185,7 +198,7 @@ public class AluguelNegocio {
      * @param aluguel - aluguel no estado finalizado.
      *                //     * @throws AluguelException - Contem a mensagem e causa do erro.
      */
-    public void devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, CategoriaInvalidaException, PessoaInvalidaException, CarroInvalidoException, UsuarioInvalidoException, ClienteInvalidoException {
+    private void devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, CategoriaInvalidaException, PessoaInvalidaException, CarroInvalidoException, UsuarioInvalidoException, ClienteInvalidoException {
         validarDevolucao(aluguel);
         this.alterar(aluguel);
     }

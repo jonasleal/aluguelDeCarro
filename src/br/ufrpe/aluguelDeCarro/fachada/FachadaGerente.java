@@ -67,8 +67,16 @@ public class FachadaGerente {
         return singleton.getCarroNegocio().consultarTodos();
     }
 
+    public List<Carro> consultarCarrosAtivos() {
+        return singleton.getCarroNegocio().consultarTodosAtivos();
+    }
+
     public List<Carro> consultarCarros(Categoria categoria) {
         return singleton.getCarroNegocio().consultar(categoria);
+    }
+
+    public List<Carro> consultarCarrosAtivos(Categoria categoria) {
+        return singleton.getCarroNegocio().consultarAtivos(categoria);
     }
 
     public void cadastrarReserva(Reserva reserva) throws ReservaInvalidaException {
@@ -91,6 +99,10 @@ public class FachadaGerente {
         return singleton.getReservaNegocio().consultarTodos();
     }
 
+    public Aluguel iniciarAluguel(Reserva reserva) throws ReservaInvalidaException {
+        return singleton.getReservaNegocio().iniciarAluguel(reserva);
+    }
+
     public void cadastrarAluguel(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
         aluguel.setUsuario(this.getUsuarioLogado());
         singleton.getAluguelNegocio().cadastrar(aluguel);
@@ -102,6 +114,10 @@ public class FachadaGerente {
 
     public Aluguel consultarAluguel(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
         return singleton.getAluguelNegocio().consultar(id);
+    }
+
+    public void finalizarAluguel(Aluguel aluguel) throws PessoaInvalidaException, AluguelInvalidoException, CarroInvalidoException, IdNaoEncontradoException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
+        singleton.getAluguelNegocio().finalizar(aluguel);
     }
 
     public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {

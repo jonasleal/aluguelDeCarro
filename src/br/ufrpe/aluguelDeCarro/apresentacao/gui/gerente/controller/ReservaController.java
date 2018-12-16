@@ -4,6 +4,7 @@ import br.ufrpe.aluguelDeCarro.excecoes.CategoriaNaoEncontradaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteNaoEncontradoException;
 import br.ufrpe.aluguelDeCarro.excecoes.reserva.*;
 import br.ufrpe.aluguelDeCarro.fachada.FachadaGerente;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.Aluguel;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Categoria;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Cliente;
 import br.ufrpe.aluguelDeCarro.negocio.entidades.Reserva;
@@ -17,11 +18,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -30,6 +34,10 @@ import java.util.ResourceBundle;
  * @author Fernando
  */
 public class ReservaController implements Initializable {
+
+    @FXML
+    private AnchorPane rootReserva;
+
     @FXML
     private TableView<Reserva> tableView;
 
@@ -65,6 +73,9 @@ public class ReservaController implements Initializable {
 
     @FXML
     private JFXButton salvarButton;
+
+    @FXML
+    private JFXButton iniciarAluguelButton;
 
     private ObservableList<Categoria> categorias;
     private ObservableList<Reserva> reservas;
@@ -106,6 +117,7 @@ public class ReservaController implements Initializable {
             devolucaoDatePicker.setValue(reserva.getDevolucaoPrevista().toLocalDate());
             devolucaoTimePicker.setValue(reserva.getDevolucaoPrevista().toLocalTime());
             clienteComboBox.setValue(reserva.getCliente());
+            carregarCategorias();
             categoriaComboBox.setValue(reserva.getCategoria());
         } else {
             retiradaDatePicker.setValue(null);
@@ -129,7 +141,7 @@ public class ReservaController implements Initializable {
             Reserva reserva = new Reserva();
             lerInputs(reserva);
             fachada.cadastrarReserva(reserva);
-            mostrarDetalhes(null);
+            limparSelecao();
             reservas.add(reserva);
             ViewUtil.mostrarTooltip(salvarButton, "Reserva salva com sucesso");
         } catch (DataRetiradaObrigatoriaException | DataRetiradaPassadoException e) {
@@ -183,6 +195,26 @@ public class ReservaController implements Initializable {
             ViewUtil.mostrarTooltip(categoriaComboBox, e.getMessage());
         } catch (ReservaInvalidaException e) {
             ViewUtil.mostrarTooltip(salvarButton, e.getMessage());
+        }
+    }
+
+    @FXML
+    public void iniciarAluguel(ActionEvent event) {
+        try {
+            Reserva reserva = tableView.getSelectionModel().getSelectedItem();
+            Aluguel aluguel = fachada.iniciarAluguel(reserva);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Aluguel.fxml"));
+            AnchorPane root = loader.load();
+            setConstrains(root);
+            AluguelController controller = loader.getController();
+            controller.setAluguel(aluguel);
+            AnchorPane parent = (AnchorPane) rootReserva.getParent();
+            parent.getChildren().clear();
+            parent.getChildren().add(root);
+        } catch (ReservaObrigatoriaException e) {
+            ViewUtil.mostrarTooltip(iniciarAluguelButton, "Selecione uma reserva para iniciar o aluguel");
+        } catch (ReservaInvalidaException | IOException e) {
+            ViewUtil.mostrarTooltip(iniciarAluguelButton, e.getMessage());
         }
     }
 
@@ -274,5 +306,12 @@ public class ReservaController implements Initializable {
     private void limparCategorias() {
         this.categoriaComboBox.getSelectionModel().clearSelection();
         this.categorias.clear();
+    }
+
+    private void setConstrains(AnchorPane conteudo) {
+        AnchorPane.setBottomAnchor(conteudo, 0.0);
+        AnchorPane.setRightAnchor(conteudo, 0.0);
+        AnchorPane.setLeftAnchor(conteudo, 0.0);
+        AnchorPane.setTopAnchor(conteudo, 0.0);
     }
 }

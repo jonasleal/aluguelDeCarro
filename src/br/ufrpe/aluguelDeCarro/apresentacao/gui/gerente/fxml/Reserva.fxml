@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootReserva" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.171"
             fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.gerente.controller.ReservaController">
     <children>
@@ -75,6 +75,9 @@
                                         <JFXButton fx:id="salvarButton" defaultButton="true" onAction="#salvar"
                                                    style="-fx-background-color: #81c784;" text="Salvar"
                                                    wrapText="true"/>
+                                        <JFXButton fx:id="iniciarAluguelButton" defaultButton="true"
+                                                   onAction="#iniciarAluguel" style="-fx-background-color: #64b5f6;"
+                                                   text="Iniciar aluguel" wrapText="true"/>
                                     </children>
                                 </HBox>
                             </children>

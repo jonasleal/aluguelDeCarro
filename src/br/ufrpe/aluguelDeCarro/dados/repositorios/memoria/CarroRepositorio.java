@@ -87,6 +87,16 @@ public class CarroRepositorio implements ICarroRepositorio {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Carro> consultarAtivos(Categoria categoria) {
+        return this.carros
+                .stream()
+                .filter(Carro::isAtivo)
+                .filter(carro -> carro.getCategoria().equals(categoria))
+                .map(Carro::clone)
+                .collect(Collectors.toList());
+    }
+
     /**
      * @param carro instancia a ser cadastrada
      */
@@ -126,6 +136,15 @@ public class CarroRepositorio implements ICarroRepositorio {
                 .stream()
                 .filter(Carro::isAtivo)
                 .filter(Carro::isDisponivel)
+                .map(Carro::clone)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ArrayList<Carro> consultarTodosAtivos() {
+        return (ArrayList<Carro>) this.carros
+                .stream()
+                .filter(Carro::isAtivo)
                 .map(Carro::clone)
                 .collect(Collectors.toList());
     }

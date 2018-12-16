@@ -56,12 +56,21 @@ public class CarroNegocio {
         return this.repositorio.consultar(categoria);
     }
 
+
+    public List<Carro> consultarAtivos(Categoria categoria) {
+        return this.repositorio.consultarAtivos(categoria);
+    }
+
     public void desativar(int id) throws IdNaoEncontradoException {
         this.repositorio.desativar(id);
     }
 
     public ArrayList<Carro> consultarTodos() {
         return this.repositorio.consultarTodos();
+    }
+
+    public ArrayList<Carro> consultarTodosAtivos() {
+        return this.repositorio.consultarTodosAtivos();
     }
 
 }

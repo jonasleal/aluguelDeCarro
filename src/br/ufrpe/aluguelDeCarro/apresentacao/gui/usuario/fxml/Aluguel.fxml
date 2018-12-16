@@ -89,6 +89,9 @@
                                         <JFXButton fx:id="salvarButton" defaultButton="true" onAction="#salvar"
                                                    style="-fx-background-color: #81c784;" text="Salvar"
                                                    wrapText="true"/>
+                                        <JFXButton fx:id="finalizarButton" defaultButton="true" onAction="#finalizar"
+                                                   style="-fx-background-color: #64b5f6;" text="Finalizar"
+                                                   wrapText="true"/>
                                     </children>
                                 </HBox>
                             </children>

@@ -200,12 +200,18 @@ public class Aluguel implements Cloneable {
         return this;
     }
 
+    public static BigDecimal calcularValorEstimado(LocalDateTime retirada, LocalDateTime devolucao, Categoria categoria) {
+        long horas = ChronoUnit.HOURS.between(retirada, devolucao);
+        double dias = horas / 24.0;
+        return new BigDecimal((dias * categoria.getDiaria().doubleValue()));
+    }
+
     /**
      * calcula o valor estimado do aluguel, multiplicando o valor da diaria pela quantidade de dias do aluguel, e coloca o valor no
      * atributo valorEstimado
      */
     public void calcularValorEstimado() {
-        if (this.retirada != null && this.devolucaoEstimada != null && this.carro != null) {
+        if (this.retirada != null && this.devolucaoEstimada != null) {
             long horas = ChronoUnit.HOURS.between(this.retirada, this.devolucaoEstimada);
             double dias = horas / 24.0;
             this.valorEstimado = new BigDecimal((dias * this.categoria.getDiaria().doubleValue()));

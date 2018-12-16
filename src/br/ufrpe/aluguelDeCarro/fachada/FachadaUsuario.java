@@ -67,6 +67,10 @@ public class FachadaUsuario {
         return singleton.getReservaNegocio().consultar(id);
     }
 
+    public void finalizarAluguel(Aluguel aluguel) throws PessoaInvalidaException, AluguelInvalidoException, CarroInvalidoException, IdNaoEncontradoException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
+        singleton.getAluguelNegocio().finalizar(aluguel);
+    }
+
     public List<Reserva> consultarReservas() {
         return singleton.getReservaNegocio().consultarTodos();
     }

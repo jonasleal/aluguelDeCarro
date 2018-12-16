@@ -66,12 +66,13 @@
                                                       promptText="Custo adicional"/>
                                         <FlowPane hgap="5.0" prefWrapLength="0.0">
                                             <children>
-                                                <JFXComboBox fx:id="clienteComboBox" labelFloat="true"
+                                                <JFXComboBox fx:id="clienteComboBox" labelFloat="true" prefWidth="130.0"
                                                              promptText="Cliente" visibleRowCount="7"/>
                                                 <JFXComboBox fx:id="categoriaComboBox" labelFloat="true"
-                                                             promptText="Categoria" visibleRowCount="7"/>
-                                                <JFXComboBox fx:id="carroComboBox" labelFloat="true" promptText="Carro"
+                                                             prefWidth="130.0" promptText="Categoria"
                                                              visibleRowCount="7"/>
+                                                <JFXComboBox fx:id="carroComboBox" labelFloat="true" prefWidth="130.0"
+                                                             promptText="Carro" visibleRowCount="7"/>
                                             </children>
                                         </FlowPane>
                                     </children>
@@ -82,6 +83,9 @@
                                                    style="-fx-background-color: #e0e0e0;" text="Novo"/>
                                         <JFXButton fx:id="salvarButton" defaultButton="true" onAction="#salvar"
                                                    style="-fx-background-color: #81c784;" text="Salvar"
+                                                   wrapText="true"/>
+                                        <JFXButton fx:id="finalizarButton" defaultButton="true" onAction="#finalizar"
+                                                   style="-fx-background-color: #64b5f6;" text="Finalizar"
                                                    wrapText="true"/>
                                     </children>
                                 </HBox>
