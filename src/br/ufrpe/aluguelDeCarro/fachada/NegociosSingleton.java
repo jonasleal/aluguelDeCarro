@@ -1,12 +1,15 @@
 package br.ufrpe.aluguelDeCarro.fachada;
 
 import br.ufrpe.aluguelDeCarro.dados.repositorios.memoria.*;
+import br.ufrpe.aluguelDeCarro.excecoes.carro.CarroInvalidoException;
+import br.ufrpe.aluguelDeCarro.excecoes.categoria.CategoriaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.cliente.ClienteInvalidoException;
 import br.ufrpe.aluguelDeCarro.excecoes.pessoa.PessoaInvalidaException;
 import br.ufrpe.aluguelDeCarro.excecoes.usuario.UsuarioInvalidoException;
 import br.ufrpe.aluguelDeCarro.negocio.*;
-import br.ufrpe.aluguelDeCarro.negocio.entidades.Usuario;
+import br.ufrpe.aluguelDeCarro.negocio.entidades.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 class NegociosSingleton {
@@ -35,8 +38,19 @@ class NegociosSingleton {
         this.reservaNegocio = new ReservaNegocio(reservaRepositorio, aluguelRepositorio, carroRepositorio, categoriaRepositorio);
         try {
             this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
+            Categoria categoria = new Categoria("Nome", new BigDecimal(120));
+            this.categoriaNegocio.cadastrar(categoria);
+            Carro carro = new Carro("pla1231", "modelo", "placa", 3, 4, categoria, Cambio.MANUAL, Direcao.MECANICA, false, false, false, true, false);
+            this.carroNegocio.cadastrar(carro);
+            Cliente cliente = new Cliente("12636763406", "Jose", LocalDate.now().minusYears(20), "12012012012");
+            cliente.setEmail("jo@gmail.com");
+            cliente.setTelefone("091210921");
+            cliente.setCidade("iati");
+            cliente.setEstado("estado");
+            cliente.setRua("rua");
+            this.clienteNegocio.cadastrar(cliente);
             System.out.println("Login: 16125653013");
-        } catch (PessoaInvalidaException | UsuarioInvalidoException | ClienteInvalidoException e) {
+        } catch (PessoaInvalidaException | UsuarioInvalidoException | ClienteInvalidoException | CategoriaInvalidaException | CarroInvalidoException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }

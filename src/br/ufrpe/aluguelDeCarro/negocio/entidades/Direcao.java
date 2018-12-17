@@ -9,7 +9,7 @@ package br.ufrpe.aluguelDeCarro.negocio.entidades;
  * @author JonasJr
  */
 public enum Direcao {
-    MECANICA("Mecaninca", 1),
+    MECANICA("Mecanica", 1),
     HIDRAULICA("Hidraulica", 2),
     ELETRICA("Elétrica", 3);
 

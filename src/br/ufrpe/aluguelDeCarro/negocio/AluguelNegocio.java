@@ -125,8 +125,9 @@ public class AluguelNegocio {
         }
         long dias = periodoTotal.get(ChronoUnit.DAYS);
         BigDecimal adicional = aluguel.getCategoria().getDiaria().multiply(new BigDecimal(dias));
-
-        aluguel.setCustoAdicional(adicional);
+        if (aluguel.getCustoAdicional() != null)
+            aluguel.setCustoAdicional(aluguel.getCustoAdicional().add(adicional));
+        else aluguel.setCustoAdicional(adicional);
     }
 
     /**
@@ -146,8 +147,15 @@ public class AluguelNegocio {
         return aluguel;
     }
 
+    private Aluguel consultarDebito(Aluguel aluguel, boolean considerarHorario) throws AluguelNaoEncontradoException {
+        if (aluguel != null) {
+            calcularDebito(aluguel, considerarHorario);
+        }
+        return aluguel;
+    }
+
     public void finalizar(Aluguel aluguel) throws PessoaInvalidaException, AluguelInvalidoException, CarroInvalidoException, IdNaoEncontradoException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
-        aluguel = consultarDebito(aluguel.getCliente(), true);
+        aluguel = consultarDebito(aluguel, true);
         devolucao(aluguel);
         Carro carro = aluguel.getCarro();
         carro.setDisponivel(true);

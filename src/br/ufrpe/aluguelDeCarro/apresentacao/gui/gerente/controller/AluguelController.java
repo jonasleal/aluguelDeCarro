@@ -175,9 +175,15 @@ public class AluguelController implements Initializable {
         Aluguel aluguel = tableView.getSelectionModel().getSelectedItem();
         if (aluguel != null) {
             try {
-                fachada.finalizarAluguel(aluguel);
-                ViewUtil.mostrarTooltip(finalizarButton, "Aluguel finalizado com sucesso");
-                limparSelecao();
+                if (custoAdicionalTextField.getText() != null && !custoAdicionalTextField.getText().isEmpty()) {
+                    aluguel.setCustoAdicional(new BigDecimal(custoAdicionalTextField.getText()));
+                    fachada.finalizarAluguel(aluguel);
+                    ViewUtil.mostrarTooltip(finalizarButton, "Aluguel finalizado com sucesso");
+                    limparSelecao();
+                } else {
+                    custoAdicionalTextField.requestFocus();
+                    ViewUtil.mostrarTooltip(custoAdicionalTextField, "Preencha o custo adicional (0 se não houver)");
+                }
             } catch (PessoaInvalidaException | AluguelInvalidoException | CarroInvalidoException | IdNaoEncontradoException | UsuarioInvalidoException | CategoriaInvalidaException | ClienteInvalidoException e) {
                 ViewUtil.mostrarTooltip(finalizarButton, e.getMessage());
             }
