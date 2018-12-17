@@ -99,6 +99,10 @@ public class FachadaUsuario {
         return singleton.getAluguelNegocio().consultarTodos();
     }
 
+    public List<Aluguel> consultarAlugueis(Cliente cliente) {
+        return singleton.getAluguelNegocio().consultarTodos(cliente);
+    }
+
     public void cadastrarCategoria(Categoria categoria) throws CategoriaInvalidaException {
         singleton.getCategoriaNegocio().cadastrar(categoria);
     }

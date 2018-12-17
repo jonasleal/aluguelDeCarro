@@ -32,6 +32,8 @@ public interface IAluguelRepositorio {
 
     ArrayList<Aluguel> consultarTodos();
 
+    ArrayList<Aluguel> consultarTodos(Cliente cliente);
+
     boolean existe(int id) throws IdNaoEncontradoException;
 
     boolean existe(Cliente cliente);

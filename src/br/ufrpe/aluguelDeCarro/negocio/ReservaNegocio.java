@@ -28,8 +28,6 @@ public class ReservaNegocio {
     private final ICarroRepositorio carroRepositorio;
     private final ICategoriaRepositorio categoriaRepositorio;
 
-    private List<Aluguel> alugueis;
-
     public ReservaNegocio(IReservaRepositorio reservaRepositorio, IAluguelRepositorio aluguelRepositorio, ICarroRepositorio carroRepositorio, ICategoriaRepositorio categoriaRepositorio) {
         this.reservaRepositorio = reservaRepositorio;
         this.aluguelRepositorio = aluguelRepositorio;
@@ -104,9 +102,9 @@ public class ReservaNegocio {
 
     private List<Categoria> categoriasDisponiveisPorReservas(Reserva reserva) {
         List<Reserva> reservas = this.reservaRepositorio.consultarTodos();
-        List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, reserva);
+        List<Reserva> reservasComConflito = reservasComConflitoComReserva(reservas, reserva);
         Set<Categoria> collect = categoriasDasReservasComConflito(reservasComConflito);
-        List<Reserva> reservasSemConflito = reservasSemConflitoComAluguel(reservas, reserva);
+        List<Reserva> reservasSemConflito = reservasSemConflitoComReserva(reservas, reserva);
         collect.addAll(categoriasDasReservasSemConflito(reservasSemConflito));
         return new ArrayList<>(collect);
     }
@@ -133,7 +131,7 @@ public class ReservaNegocio {
                 .collect(Collectors.toSet());
     }
 
-    private List<Reserva> reservasComConflitoComAluguel(List<Reserva> reservas, Reserva reserva) {
+    private List<Reserva> reservasComConflitoComReserva(List<Reserva> reservas, Reserva reserva) {
         return reservas
                 .stream()
                 .filter(reserva1 -> conflitoAluguelReserva(
@@ -141,7 +139,7 @@ public class ReservaNegocio {
                 .collect(Collectors.toList());
     }
 
-    private List<Reserva> reservasSemConflitoComAluguel(List<Reserva> reservas, Reserva reserva) {
+    private List<Reserva> reservasSemConflitoComReserva(List<Reserva> reservas, Reserva reserva) {
         return reservas
                 .stream()
                 .filter(reserva1 -> !conflitoAluguelReserva(

@@ -18,6 +18,7 @@
                 <JFXButton onAction="#irParaManutencao" style="-fx-background-color: #e0e0e0;" text="Manutençao"/>
                 <JFXButton onAction="#irParaCategoria" style="-fx-background-color: #e0e0e0;" text="Categoria"/>
                 <JFXButton onAction="#irParaUsuario" style="-fx-background-color: #e0e0e0;" text="Usuario"/>
+                <JFXButton onAction="#irParaHistorico" style="-fx-background-color: #e0e0e0;" text="Histórico"/>
                 <JFXButton onAction="#irParaLogin" style="-fx-background-color: #e0e0e0;" text="Logout"/>
             </items>
         </ToolBar>

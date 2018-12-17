@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            fx:controller="br.ufrpe.aluguelDeCarro.apresentacao.gui.usuario.controller.HistoricoClienteController">
+    <children>
+        <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="0.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn fx:id="cpfColumn" prefWidth="75.0" text="CPF"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0"
+                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane>
+                                    <children>
+                                        <JFXComboBox fx:id="carroComboBox" labelFloat="true" promptText="Carro"
+                                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                     AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <Label alignment="CENTER" contentDisplay="CENTER" text="Detalhes do aluguel">
+                                    <font>
+                                        <Font size="19.0"/>
+                                    </font>
+                                </Label>
+                                <VBox spacing="20.0">
+                                    <children>
+                                        <FlowPane>
+                                            <children>
+                                                <JFXDatePicker fx:id="retiradaDatePicker" defaultColor="#4059a9"
+                                                               promptText="Retirada"/>
+                                                <JFXTimePicker fx:id="retiradaTimePicker" defaultColor="#4059a9"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane>
+                                            <children>
+                                                <JFXDatePicker fx:id="devolucaoRealDatePicker" defaultColor="#4059a9"
+                                                               promptText="Devolução Real"/>
+                                                <JFXTimePicker fx:id="devolucaoRealTimePicker" defaultColor="#4059a9"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane hgap="5.0">
+                                            <children>
+                                                <JFXTextField fx:id="valorEstimadoTextField" editable="false"
+                                                              labelFloat="true" promptText="Valor estimado"/>
+                                                <JFXTextField fx:id="custoAdicionalTextField" labelFloat="true"
+                                                              promptText="Custo adicional"/>
+                                            </children>
+                                        </FlowPane>
+                                        <JFXTextField fx:id="placaTextField" labelFloat="true" promptText="Placa"/>
+                                        <FlowPane hgap="5.0">
+                                            <children>
+                                                <JFXTextField fx:id="modeloTextField" labelFloat="true"
+                                                              promptText="Modelo"/>
+                                                <JFXTextField fx:id="marcaTextField" labelFloat="true"
+                                                              promptText="Marca"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane alignment="CENTER_LEFT" hgap="5.0" vgap="8.0">
+                                            <children>
+                                                <JFXCheckBox fx:id="vidroEletricoCheckBox" checkedColor="#81c784"
+                                                             text="Vidro elétrico"/>
+                                                <JFXCheckBox fx:id="arCondicionadoCheckBox" checkedColor="#81c784"
+                                                             text="Ar condicionado"/>
+                                                <JFXCheckBox fx:id="airBagCheckBox" checkedColor="#81c784"
+                                                             text="Air bag"/>
+                                                <JFXCheckBox fx:id="travaEletricaCheckBox" checkedColor="#81c784"
+                                                             text="Trava elétrica"/>
+                                                <JFXCheckBox fx:id="freioABSCheckBox" checkedColor="#81c784"
+                                                             text="Freio ABS"/>
+                                            </children>
+                                        </FlowPane>
+                                        <FlowPane hgap="5.0" vgap="5.0">
+                                            <children>
+                                                <JFXComboBox fx:id="categoriaComboBox" labelFloat="true"
+                                                             promptText="Categoria"/>
+                                                <JFXComboBox fx:id="cambioComboBox" labelFloat="true"
+                                                             promptText="Cambio"/>
+                                                <JFXComboBox fx:id="direcaoComboBox" labelFloat="true"
+                                                             promptText="Direção"/>
+                                            </children>
+                                        </FlowPane>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets left="10.0" right="10.0" top="20.0"/>
+                            </padding>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

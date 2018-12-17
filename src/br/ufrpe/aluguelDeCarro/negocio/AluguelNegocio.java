@@ -207,6 +207,10 @@ public class AluguelNegocio {
         return this.aluguelRepositorio.consultarTodos();
     }
 
+    public ArrayList<Aluguel> consultarTodos(Cliente cliente) {
+        return this.aluguelRepositorio.consultarTodos(cliente);
+    }
+
     public List<Categoria> consultarCategoriasDisponiveisParaAluguel(Aluguel aluguel) {
         List<Reserva> reservas = this.reservaRepositorio.consultarTodos();
         List<Reserva> reservasComConflito = reservasComConflitoComAluguel(reservas, aluguel);

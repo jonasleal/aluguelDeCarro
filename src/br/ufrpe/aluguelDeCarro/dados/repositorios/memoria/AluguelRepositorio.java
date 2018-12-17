@@ -139,6 +139,16 @@ public class AluguelRepositorio implements IAluguelRepositorio {
     }
 
     @Override
+    public ArrayList<Aluguel> consultarTodos(Cliente cliente) {
+        return (ArrayList<Aluguel>) this.alugueis
+                .stream()
+                .filter(Aluguel::isAtivo)
+                .filter(aluguel -> aluguel.getCliente().equals(cliente))
+                .map(Aluguel::clone)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean existe(int id) throws IdNaoEncontradoException {
         try {
             this.consultar(id);

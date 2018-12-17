@@ -84,6 +84,7 @@ public class Cliente extends Pessoa implements Cloneable {
     public Cliente(String cpf, String nome, LocalDate nascimento, String habilitacao) {
         super(cpf, nome, nascimento);
         this.habilitacao = habilitacao;
+        this.endereco = new Endereco();
     }
 
     public String getHabilitacao() {

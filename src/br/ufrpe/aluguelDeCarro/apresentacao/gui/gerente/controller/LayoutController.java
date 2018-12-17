@@ -68,6 +68,11 @@ public class LayoutController implements Initializable {
     }
 
     @FXML
+    void irParaHistorico(ActionEvent event) {
+        carregarConteudo("../fxml/HistoricoCliente.fxml");
+    }
+
+    @FXML
     void irParaLogin(ActionEvent event) {
         new FachadaGerente().logout();
         try {
