@@ -25,6 +25,7 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
      *
      * @param id identificador do {@code Usuario}
      * @return um clone do {@code Usuario} ativo que contém o id, {@code null} caso nao encontre
+     * @throws UsuarioNaoEncontradoException
      */
     @Override
     public Usuario consultar(int id) throws UsuarioNaoEncontradoException {
@@ -57,6 +58,7 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
      *
      * @param cpf identificador do {@code Usuario}
      * @return um clone do {@code Usuario} ativo que contém o cpf, {@code null} caso nao encontre
+     * @throws UsuarioNaoEncontradoException
      */
     @Override
     public Usuario consultar(String cpf) throws UsuarioNaoEncontradoException {
@@ -92,6 +94,7 @@ public class UsuarioRepositorio implements IUsuarioRepositorio {
      * altera o atributo {@code ativo} do usuario para false
      *
      * @param id identificador do {@code Usuario}
+     * @throws UsuarioNaoEncontradoException
      */
     @Override
     public void desativar(int id) throws UsuarioNaoEncontradoException {

@@ -153,29 +153,42 @@ public class Aluguel implements Cloneable {
     /**
      * Valida os dados obrigatórios para o aluguel.
      * <p>
-     * //     * @throws AluguelException - Se o valor estimado ou custo adicional for
-     * //     * negativo.
-     * //     * @throws CpfObrigatorioException - Se o CPF do cliente ou atendente não
-     * //     * for valido.
-     * //     * @throws IdadeExcetion - Se for menor de idade.
-     * //     * @throws NomeException - Se o nome do cliente ou atendente não for valido.
-     * //     * @throws HabilitacaoException - Se o número de habilitação tiver menos ou
-     * //     * mais que 11 dígitos.
-     * //     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * //     * letras e 4 dígitos.
-     * //     * @throws MarcaException - Se não for passado uma marca.
-     * //     * @throws ModeloException - Se não for passado um modelo.
-     * //     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
-     * categoria ou valor da diária não for passado ou for passado um valor
-     * diferente dos valores validos.
+     * @throws ClienteObrigatorioException - Se o cliente nao for informado
+     * @throws CarroObrigatorioException - Se o carro nao for informado
+     * @throws UsuarioObrigatorioException - Se o usuario nao for informado
+     * @throws CategoriaObrigatorioException - Se a categoria nao for informado
+     * @throws DataRetiradaObrigatoriaException - Se a data de retirada nao for
+     * informado
+     * @throws DataDevolucacaoEstimadaObrigatoriaException - Se a data de
+     * devolução estimada nao for informado
+     * @throws ValorEstimadoNegativoException - Se o custo estimada for
+     * negativo.
+     * @throws CustoAdicionalNegativoException - Se o custo adicional for
+     * negativo.
+     * @throws PessoaInvalidaException - Se as validações de Pessoa falharem
+     * @throws ClienteInvalidoException - Se as validações de Cliente falharem
+     * @throws CategoriaInvalidaException - Se as validações de Cliente falharem
+     * 
      */
     public void validar() throws PessoaInvalidaException, CarroInvalidoException, AluguelInvalidoException, ClienteInvalidoException, UsuarioInvalidoException, CategoriaInvalidaException {
-        if (this.getCliente() == null) throw new ClienteObrigatorioException();
-        if (this.getCarro() == null) throw new CarroObrigatorioException();
-        if (this.getUsuario() == null) throw new UsuarioObrigatorioException();
-        if (this.getCategoria() == null) throw new CategoriaObrigatorioException();
-        if (this.getRetirada() == null) throw new DataRetiradaObrigatoriaException();
-        if (this.getDevolucaoEstimada() == null) throw new DataDevolucacaoEstimadaObrigatoriaException();
+        if (this.getCliente() == null) {
+            throw new ClienteObrigatorioException();
+        }
+        if (this.getCarro() == null) {
+            throw new CarroObrigatorioException();
+        }
+        if (this.getUsuario() == null) {
+            throw new UsuarioObrigatorioException();
+        }
+        if (this.getCategoria() == null) {
+            throw new CategoriaObrigatorioException();
+        }
+        if (this.getRetirada() == null) {
+            throw new DataRetiradaObrigatoriaException();
+        }
+        if (this.getDevolucaoEstimada() == null) {
+            throw new DataDevolucacaoEstimadaObrigatoriaException();
+        }
         this.cliente.validar();
         this.categoria.validar();
         this.carro.validar();
@@ -207,8 +220,8 @@ public class Aluguel implements Cloneable {
     }
 
     /**
-     * calcula o valor estimado do aluguel, multiplicando o valor da diaria pela quantidade de dias do aluguel, e coloca o valor no
-     * atributo valorEstimado
+     * calcula o valor estimado do aluguel, multiplicando o valor da diaria pela
+     * quantidade de dias do aluguel, e coloca o valor no atributo valorEstimado
      */
     public void calcularValorEstimado() {
         if (this.retirada != null && this.devolucaoEstimada != null) {

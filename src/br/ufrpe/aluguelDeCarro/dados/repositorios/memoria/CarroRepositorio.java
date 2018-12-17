@@ -29,6 +29,7 @@ public class CarroRepositorio implements ICarroRepositorio {
      *
      * @param id identificador do {@code carro}
      * @return um clone do {@code carro} ativo que contém o id, {@code null} caso nao encontre
+     * @throws IdNaoEncontradoException
      */
     @Override
     public Carro consultar(int id) throws IdNaoEncontradoException {
@@ -63,6 +64,7 @@ public class CarroRepositorio implements ICarroRepositorio {
      *
      * @param placa identificador do {@code carro}
      * @return um clone do {@code carro} ativo que contém a placa, {@code null} caso nao encontre
+     * @throws CarroNaoEncontradoException
      */
     @Override
     public Carro consultar(String placa) throws CarroNaoEncontradoException {
@@ -120,6 +122,7 @@ public class CarroRepositorio implements ICarroRepositorio {
      * altera o atributo {@code ativo} do carro para false
      *
      * @param id identificador do {@code carro}
+     * @throws IdNaoEncontradoException
      */
     @Override
     public void desativar(int id) throws IdNaoEncontradoException {

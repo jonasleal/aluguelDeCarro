@@ -13,7 +13,7 @@ public class FormatoNomeException extends PessoaInvalidaException {
     private String nome;
 
     public FormatoNomeException() {
-        super("Nome deve conter ao menos 2 caracteres alfabeticos e nao conter numeros");
+        super("Deve ser informado nome e sobrenome, somento caracteres alfabeticos");
     }
 
     public FormatoNomeException(String nome) {

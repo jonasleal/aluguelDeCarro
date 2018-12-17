@@ -82,11 +82,25 @@ public abstract class Pessoa implements Cloneable {
 
     public void validar() throws PessoaInvalidaException, ClienteInvalidoException {
         CpfUtil.validarCPF(this.cpf);
-        if (this.nascimento == null) throw new DataNascimentoObrigatorioException();
-        if (this.nome == null || this.nome.isEmpty()) throw new NomeObrigatorioException();
+        if (this.nascimento == null) {
+            throw new DataNascimentoObrigatorioException();
+        }
+        if (this.nome == null || this.nome.isEmpty()) {
+            throw new NomeObrigatorioException();
+        }
         int idade = getIdade();
-        if (idade <= 18) throw new MenorDeIdadeException(idade);
-        if (!this.nome.matches("[a-zA-Z]{2,}")) throw new FormatoNomeException(nome);
+        if (idade <= 18) {
+            throw new MenorDeIdadeException(idade);
+        }
+        if (!this.nome.matches("^(?:[\\p{Lu}&&[\\p{IsLatin}]])(?:(?:')?(?:[\\p{Ll}&&[\\p{IsLatin}]]))+"
+                + "(?:\\-(?:[\\p{Lu}&&[\\p{IsLatin}]])(?:(?:')?(?:[\\p{Ll}&&[\\p{IsLatin}]]))+)*"
+                + "(?: (?:(?:e|y|de(?:(?: la| las| lo| los))?|do|dos|da|das|del|van|von|bin|le) )"
+                + "?(?:(?:(?:d'|D'|O'|Mc|Mac|al\\-))?(?:[\\p{Lu}&&[\\p{IsLatin}]])(?:(?:')?"
+                + "(?:[\\p{Ll}&&[\\p{IsLatin}]]))+|(?:[\\p{Lu}&&[\\p{IsLatin}]])(?:(?:')?(?:[\\p"
+                + "{Ll}&&[\\p{IsLatin}]]))+(?:\\-(?:[\\p{Lu}&&[\\p{IsLatin}]])(?:(?:')?(?:[\\p{Ll}&&"
+                + "[\\p{IsLatin}]]))+)*))+(?: (?:Jr\\.|II|III|IV))?$")) {
+            throw new FormatoNomeException(nome);
+        }
     }
 
     @Override

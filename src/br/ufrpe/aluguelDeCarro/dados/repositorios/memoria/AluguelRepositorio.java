@@ -30,6 +30,8 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * @param id identificador do {@code aluguel}
      * @return um clone do {@code aluguel} ativo que contém o id, {@code null}
      * caso nao encontre
+     * @throws AluguelNaoEncontradoException
+     * @throws IdNaoEncontradoException
      */
     @Override
     public Aluguel consultar(int id) throws AluguelNaoEncontradoException, IdNaoEncontradoException {
@@ -48,6 +50,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * @param cliente cliente que realizou o aluguel
      * @return {@code aluguel} ativo e não finalizado que contém o cliente
      * {@code null} caso nao encontre
+     * @throws AluguelNaoEncontradoException
      */
     @Override
     public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
@@ -67,6 +70,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * @param carro carro contido no aluguel
      * @return aluguel ativo e não finalizado que contém o carro, null caso não
      * encontre
+     * @throws AluguelNaoEncontradoException
      */
     @Override
     public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
@@ -119,6 +123,7 @@ public class AluguelRepositorio implements IAluguelRepositorio {
      * altera o atributo {@code ativo} do aluguel para false
      *
      * @param id identificador do {@code aluguel}
+     * @throws IdNaoEncontradoException
      */
     @Override
     public void desativar(int id) throws IdNaoEncontradoException {

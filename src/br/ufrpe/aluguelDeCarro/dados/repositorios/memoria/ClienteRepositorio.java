@@ -26,6 +26,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * @param id identificador do {@code Cliente}
      * @return um clone do {@code Cliente} ativo que contém o id, {@code null}
      * caso nao encontre
+     * @throws ClienteNaoEncontradoException
      */
     @Override
     public Cliente consultar(int id) throws ClienteNaoEncontradoException {
@@ -60,6 +61,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * @param cpf identificador do {@code Cliente}
      * @return um clone do {@code Cliente} ativo que contém o cpf, {@code null}
      * caso nao encontre
+     * @throws ClienteNaoEncontradoException
      */
     @Override
     public Cliente consultar(String cpf) throws ClienteNaoEncontradoException {
@@ -94,6 +96,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
      * altera o atributo {@code ativo} do cliente para false
      *
      * @param id identificador do {@code Cliente}
+     * @throws ClienteNaoEncontradoException
      */
     @Override
     public void desativar(int id) throws ClienteNaoEncontradoException {

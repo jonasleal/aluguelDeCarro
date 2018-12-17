@@ -36,6 +36,7 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
      *
      * @param id identificador do {@code Categoria}
      * @return um clone do {@code Categoria} ativo que contém o id, {@code null} caso nao encontre
+     * @throws CategoriaNaoEncontradaException
      */
     @Override
     public Categoria consultar(int id) throws CategoriaNaoEncontradaException {
@@ -86,6 +87,7 @@ public class CategoriaRepositorio implements ICategoriaRepositorio {
      * altera o atributo {@code ativo} do categoria para false
      *
      * @param id identificador do {@code Categoria}
+     * @throws CategoriaNaoEncontradaException
      */
     @Override
     public void desativar(int id) throws CategoriaNaoEncontradaException {

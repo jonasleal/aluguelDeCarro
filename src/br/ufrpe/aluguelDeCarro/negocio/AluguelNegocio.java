@@ -50,24 +50,35 @@ public class AluguelNegocio {
         aluguel.validar();
         Aluguel aluguelOriginal = aluguelRepositorio.consultar(aluguel.getId());
         LocalDateTime dataNoBanco = aluguelOriginal.getDevolucaoReal();
-        if (dataNoBanco != null) throw new AluguelFinalizadoException();
+        if (dataNoBanco != null) {
+            throw new AluguelFinalizadoException();
+        }
         dataNoBanco = aluguelOriginal.getDevolucaoEstimada();
-        if (!aluguel.getDevolucaoEstimada().equals(dataNoBanco))
+        if (!aluguel.getDevolucaoEstimada().equals(dataNoBanco)) {
             throw new DataEstimadaInconsistenteException(dataNoBanco, aluguel.getDevolucaoEstimada());
-        if (!aluguel.getRetirada().equals(aluguelOriginal.getRetirada()))
+        }
+        if (!aluguel.getRetirada().equals(aluguelOriginal.getRetirada())) {
             throw new DataRetiradaInconsistenteException(dataNoBanco, aluguel.getRetirada());
+        }
     }
 
     private void validarParaAlugar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CategoriaInvalidaException, ClienteInvalidoException {
         aluguel.validar();
-        if (this.aluguelRepositorio.existe(aluguel.getCliente()))
+        if (this.aluguelRepositorio.existe(aluguel.getCliente())) {
             throw new AluguelEmAbertoException(aluguel.getCliente().getCpf());
+        }
         LocalDate dataNoObjeto = aluguel.getRetirada().toLocalDate();
-        if (dataNoObjeto.compareTo(LocalDate.now()) < 0) throw new DataRetiradaPassadoException(dataNoObjeto);
+        if (dataNoObjeto.compareTo(LocalDate.now()) < 0) {
+            throw new DataRetiradaPassadoException(dataNoObjeto);
+        }
         dataNoObjeto = aluguel.getDevolucaoEstimada().toLocalDate();
-        if (dataNoObjeto.compareTo(LocalDate.now()) < 1) throw new DataEstimadaPassado(dataNoObjeto);
+        if (dataNoObjeto.compareTo(LocalDate.now()) < 1) {
+            throw new DataEstimadaPassado(dataNoObjeto);
+        }
         Carro carro = aluguel.getCarro();
-        if (!carro.isAtivo() || !carro.isDisponivel()) throw new CarroIndisponivelException(carro.getPlaca());
+        if (!carro.isAtivo() || !carro.isDisponivel()) {
+            throw new CarroIndisponivelException(carro.getPlaca());
+        }
     }
 
     /**
@@ -77,9 +88,16 @@ public class AluguelNegocio {
      *
      * @param aluguel Instancia a ser cadastrada
      * @throws AluguelInvalidoException - Contem a causa e a mensagem de erro.
+     * @throws CarroInvalidoException
+     * @throws PessoaInvalidaException
+     * @throws UsuarioInvalidoException
+     * @throws CategoriaInvalidaException
+     * @throws ClienteInvalidoException
      */
     public void cadastrar(Aluguel aluguel) throws AluguelInvalidoException, CarroInvalidoException, PessoaInvalidaException, UsuarioInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
-        if (aluguel == null) throw new AluguelObrigatorioException();
+        if (aluguel == null) {
+            throw new AluguelObrigatorioException();
+        }
         this.validarParaAlugar(aluguel);
         Carro carro = aluguel.getCarro();
         carro.setDisponivel(false);
@@ -90,7 +108,9 @@ public class AluguelNegocio {
     }
 
     public void alterar(Aluguel aluguel) throws AluguelInvalidoException, UsuarioInvalidoException, PessoaInvalidaException, CarroInvalidoException, CategoriaInvalidaException, ClienteInvalidoException {
-        if (aluguel == null) throw new AluguelObrigatorioException();
+        if (aluguel == null) {
+            throw new AluguelObrigatorioException();
+        }
         aluguel.validar();
         this.aluguelRepositorio.alterar(aluguel);
     }
@@ -102,9 +122,9 @@ public class AluguelNegocio {
     /**
      * Calcula o debito do aluguel em aberto e o finaliza no momento da chamada.
      *
-     * @param aluguel           - Objeto com os dados do aluguel em aberto
+     * @param aluguel - Objeto com os dados do aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     *                          30 minutos.
+     * 30 minutos.
      */
     private void calcularDebito(Aluguel aluguel, boolean considerarHorario) {
         aluguel.setDevolucaoReal(LocalDateTime.now());
@@ -125,18 +145,20 @@ public class AluguelNegocio {
         }
         long dias = periodoTotal.get(ChronoUnit.DAYS);
         BigDecimal adicional = aluguel.getCategoria().getDiaria().multiply(new BigDecimal(dias));
-        if (aluguel.getCustoAdicional() != null)
+        if (aluguel.getCustoAdicional() != null) {
             aluguel.setCustoAdicional(aluguel.getCustoAdicional().add(adicional));
-        else aluguel.setCustoAdicional(adicional);
+        } else {
+            aluguel.setCustoAdicional(adicional);
+        }
     }
 
     /**
      * Busca e calcula o debito de um aluguel em aberto para um determinado
      * cliente entrega um aluguel finalizado no momento da chamada.
      *
-     * @param cliente           - cliente registrado no aluguel em aberto
+     * @param cliente - cliente registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     *                          30 minutos.
+     * 30 minutos.
      * @return Objeto aluguel no estado finalizado.
      */
     private Aluguel consultarDebito(Cliente cliente, boolean considerarHorario) throws AluguelNaoEncontradoException {
@@ -166,10 +188,11 @@ public class AluguelNegocio {
      * Busca e calcula o debito de um aluguel em aberto para um determinado
      * carro entrega um aluguel finalizado no momento da chamada.
      *
-     * @param carro             - carro registrado no aluguel em aberto
+     * @param carro - carro registrado no aluguel em aberto
      * @param considerarHorario - Considerar a hora da entrega com tolerância de
-     *                          30 minutos.
+     * 30 minutos.
      * @return Objeto aluguel no estado finalizado.
+     * @throws AluguelNaoEncontradoException
      */
     public Aluguel consultarDebito(Carro carro, boolean considerarHorario) throws AluguelNaoEncontradoException {
         Aluguel aluguel = consultar(carro);
@@ -184,6 +207,7 @@ public class AluguelNegocio {
      *
      * @param cliente - cliente registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para este cliente.
+     * @throws AluguelNaoEncontradoException
      */
     public Aluguel consultar(Cliente cliente) throws AluguelNaoEncontradoException {
         return this.aluguelRepositorio.consultar(cliente);
@@ -194,6 +218,7 @@ public class AluguelNegocio {
      *
      * @param carro - carro registrado no aluguel em aberto
      * @return Intancia do aluguel aberto para este carro.
+     * @throws AluguelNaoEncontradoException
      */
     public Aluguel consultar(Carro carro) throws AluguelNaoEncontradoException {
         return aluguelRepositorio.consultar(carro);
@@ -203,8 +228,8 @@ public class AluguelNegocio {
      * Verifica a consistência datas passados com as já cadastradas, se forem
      * iguais registra a devolução, caso contrário levanta exceção com a causa.
      *
-     * @param aluguel - aluguel no estado finalizado.
-     *                //     * @throws AluguelException - Contem a mensagem e causa do erro.
+     * @param aluguel - aluguel no estado finalizado. // * @throws
+     * AluguelException - Contem a mensagem e causa do erro.
      */
     private void devolucao(Aluguel aluguel) throws AluguelInvalidoException, IdNaoEncontradoException, CategoriaInvalidaException, PessoaInvalidaException, CarroInvalidoException, UsuarioInvalidoException, ClienteInvalidoException {
         validarDevolucao(aluguel);
@@ -255,7 +280,7 @@ public class AluguelNegocio {
         return reservas
                 .stream()
                 .filter(reserva -> conflitoAluguelReserva(
-                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
                 .collect(Collectors.toList());
     }
 
@@ -263,7 +288,7 @@ public class AluguelNegocio {
         return reservas
                 .stream()
                 .filter(reserva -> !conflitoAluguelReserva(
-                        aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
+                aluguel.getRetirada(), aluguel.getDevolucaoEstimada(), reserva.getRetiradaPrevista(), reserva.getDevolucaoPrevista()))
                 .collect(Collectors.toList());
     }
 
@@ -272,18 +297,19 @@ public class AluguelNegocio {
     }
 
     private boolean conflitoAluguelReserva(LocalDateTime aluguelRetirada, LocalDateTime aluguelDevolucao, LocalDateTime reservaRetirada, LocalDateTime reservaDevolucao) {
-        return estaNoIntervalo(reservaRetirada, aluguelRetirada, aluguelDevolucao) ||
-                estaNoIntervalo(reservaDevolucao, aluguelRetirada, aluguelDevolucao) ||
-                estaNoIntervalo(aluguelRetirada, reservaRetirada, reservaDevolucao);
+        return estaNoIntervalo(reservaRetirada, aluguelRetirada, aluguelDevolucao)
+                || estaNoIntervalo(reservaDevolucao, aluguelRetirada, aluguelDevolucao)
+                || estaNoIntervalo(aluguelRetirada, reservaRetirada, reservaDevolucao);
     }
 
     /**
      * Verifica se o parametro time está no intervalo (incluso) end e time
      *
      * @param start data inicial do intervalo
-     * @param end   data final do intervalo
-     * @param time  data a ser avaliada
-     * @return {@code true} se a data estiver contida no intervalo, {@code false} caso contrário
+     * @param end data final do intervalo
+     * @param time data a ser avaliada
+     * @return {@code true} se a data estiver contida no intervalo,
+     * {@code false} caso contrário
      */
     private boolean estaNoIntervalo(LocalDateTime time, LocalDateTime start, LocalDateTime end) {
         return !time.isBefore(start) && !time.isAfter(end);

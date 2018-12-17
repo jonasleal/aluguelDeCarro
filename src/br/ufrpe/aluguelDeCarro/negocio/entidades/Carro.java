@@ -195,13 +195,21 @@ public class Carro implements Cloneable {
     /**
      * Valida os dados obrigatórios para um carro
      * <p>
-     * //     * @throws PlacaException - Se a placa passada estiver fora do padrão de 3
-     * //     * letras e 4 dígitos.
-     * //     * @throws MarcaException - Se não for passado uma marca.
-     * //     * @throws ModeloException - Se não for passado um modelo.
-     * //     * @throws CarroException - Se número de portas, ocupantes, cambio, direção
-     * categoria ou valor da diária não for passado ou for passado um valor
-     * diferente dos valores validos.
+     * @throws PlacaObrigatorioException - Se não for passado uma placa.
+     * @throws MarcaObrigatorioException - Se não for passado uma marca.
+     * @throws ModeloObrigatorioException - Se não for passado um modelo.
+     * @throws NumeroDePortasException - Se for passado um numero de portas menor que 1.
+     * @throws NumeroDeOcupantesException - Se for passado um numero de ocupantes menor que 1.
+     * 
+     * @throws FormatoPlacaInvalidoException - Se a placa passada estiver fora
+     * do padrão de 3 letras e 4 dígitos.
+     * @throws FormatoMarcaException - Se a marca não tiver pelo menos dois
+     * caracteres alfabeticos
+     * @throws FormatoModeloException - Se o modelo não tiver pelo menos dois
+     * caracteres alfabeticos
+     *@throws CambioInvalidoException - Se for passado um valor diferente de Manual, Automatico ou CVT
+     *@throws DirecaoInvalidaException - Se for passado um valor diferente de Mecanica, Hidraulica ou Eletrica
+     
      */
     public void validar() throws CarroInvalidoException {
 
@@ -235,9 +243,6 @@ public class Carro implements Cloneable {
         if (direcao == null || (direcao.getValor() < 1 || direcao.getValor() > 3)) {
             throw new DirecaoInvalidaException();
         }
-//        if (categoria == null || (categoria.getValor() < 1 || categoria.getValor() > Categoria.values().length)) {
-//            throw new CarroException(CarroException.CATEGORIA_INVALIDA);
-//        }
     }
 
     @Override
@@ -272,8 +277,12 @@ public class Carro implements Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Carro carro = (Carro) o;
         return id == carro.id;
     }

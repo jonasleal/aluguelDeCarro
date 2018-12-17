@@ -27,6 +27,7 @@ public class ReservaRepositorio implements IReservaRepositorio {
      *
      * @param id identificador do {@code Reserva}
      * @return um clone do {@code Reserva} ativo que contém o id, {@code null} caso nao encontre
+     * @throws ReservaNaoEncontradaException
      */
     @Override
     public Reserva consultar(int id) throws ReservaNaoEncontradaException {
@@ -77,6 +78,7 @@ public class ReservaRepositorio implements IReservaRepositorio {
      * altera o atributo {@code ativo} do reserva para false
      *
      * @param id identificador do {@code Reserva}
+     * @throws ReservaNaoEncontradaException
      */
     @Override
     public void desativar(int id) throws ReservaNaoEncontradaException {

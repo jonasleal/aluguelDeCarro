@@ -27,6 +27,7 @@ public class ManutencaoRepositorio implements IManutencaoRepositorio {
      *
      * @param id identificador do {@code Manutencao}
      * @return um clone do {@code Manutencao} ativo que contém o id, {@code null} caso nao encontre
+     * @throws ManutencaoNaoEncontradaException
      */
     @Override
     public Manutencao consultar(int id) throws ManutencaoNaoEncontradaException {
@@ -77,6 +78,7 @@ public class ManutencaoRepositorio implements IManutencaoRepositorio {
      * altera o atributo {@code ativo} do manutencao para false
      *
      * @param id identificador do {@code Manutencao}
+     * @throws ManutencaoNaoEncontradaException
      */
     @Override
     public void desativar(int id) throws ManutencaoNaoEncontradaException {

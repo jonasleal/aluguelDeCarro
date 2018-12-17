@@ -37,12 +37,12 @@ class NegociosSingleton {
         this.manutencaoNegocio = new ManutencaoNegocio(new ManutencaoRepositorio());
         this.reservaNegocio = new ReservaNegocio(reservaRepositorio, aluguelRepositorio, carroRepositorio, categoriaRepositorio);
         try {
-            this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
-            Categoria categoria = new Categoria("Nome", new BigDecimal(120));
+            this.usuarioNegocio.cadastrar(new Usuario("16125653013", "Don Fulano", LocalDate.now().minusYears(20), "900150983cd24fb0d6963f7d28e17f72", true));
+            Categoria categoria = new Categoria("Teste", new BigDecimal(120));
             this.categoriaNegocio.cadastrar(categoria);
-            Carro carro = new Carro("pla1231", "modelo", "placa", 3, 4, categoria, Cambio.MANUAL, Direcao.MECANICA, false, false, false, true, false);
+            Carro carro = new Carro("pla1231", "modelo", "marca", 3, 4, categoria, Cambio.MANUAL, Direcao.MECANICA, false, false, false, true, false);
             this.carroNegocio.cadastrar(carro);
-            Cliente cliente = new Cliente("12636763406", "Jose", LocalDate.now().minusYears(20), "12012012012");
+            Cliente cliente = new Cliente("12636763406", "Jose Fernando", LocalDate.now().minusYears(20), "12012012012");
             cliente.setEmail("jo@gmail.com");
             cliente.setTelefone("091210921");
             cliente.setCidade("iati");
